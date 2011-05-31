@@ -13,7 +13,7 @@
     }
   }
 
-  exports.EventVat = function EventEmitter2(conf) {
+  exports.EventEmitter2 = function EventEmitter2(conf) {
     if(conf) {
       if(conf.delimiter === '*') {
         throw new Error('The event can not be delimited by the "*" (wild-card) character.')
