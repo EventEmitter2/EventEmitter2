@@ -1,312 +1,232 @@
-var eyes = require('eyes'),
-    assert = require('assert');
 
-EventEmitter = function(conf) {
-  if(conf) {
-    
-    if(conf.delimiter === '*') {
-      throw new Error('The event can not be delimited by the "*" (wild-card) character.')
+;(function(exports, undefined) {
+
+  function invokeListeners(val) {
+    if (val && val._listneners) {
+      for (var k = 0, l = val._listeners.length; k < l; k++) {
+        val._listeners[k].apply(this, args);
+      }
+      return true;
     }
-
   }
-  this._delimiter = conf ? conf.delimiter : '/';
-  this._events = {};
-};
 
-EventEmitter.prototype.isArray = function(v) {
-  return ~({}).toString.call(v).indexOf('Array');
-}
-
-EventEmitter.prototype.addListener = function(event, listener, ttl) {
-
-  var name, ns = this._events;
-
-  // Signal that a new listener is being added.
-  this.emit('newListener', event, listener);
-
-  // the name has a delimiter
-  if(~event.indexOf(this._delimiter)) {
-
-    //split the name into an array
-    name = event.split(this._delimiter);
-    
-    // continue to build out additional namespaces and attach the listener to them
-    while(name.length) {
-      
-      // get the namespace
-      var n = name.shift();
-      ns = ns[n] || (ns[n] = {});
-      
-      // if this is a wild card or the completed ns, add the event
-      if(name.length === 0) { 
-        ns._listeners ? ns._listeners.push(listener) : ns._listeners = [listener];
-        ns._ttl = ttl;
-        ns._ttd = 0;
+  exports.EventVat = function EventEmitter2(conf) {
+    if(conf) {
+      if(conf.delimiter === '*') {
+        throw new Error('The event can not be delimited by the "*" (wild-card) character.')
       }
     }
-  }
-  
-  // if the name does not have a delimiter
-  else {
+    this._delimiter = conf ? conf.delimiter : '/';
+    this._events = {};
+  };
 
-    // get a handle to the event
-    var e = ns[event] || (ns[event] = {});
+  EventEmitter2.prototype.addListener = function(event, listener, ttl) {
 
-    e._listeners ? e._listeners.push(listener) : e._listeners = [listener];
-    e._ttl = ttl;
-    e._ttd = 0;
-  }
+    var name, ns = this._events;
 
-};
+    // Signal that a new listener is being added.
+    this.emit('newListener', event, listener);
 
-EventEmitter.prototype.on = EventEmitter.prototype.addListener;
+    // the name has a delimiter
+    if(~event.indexOf(this._delimiter)) {
 
-EventEmitter.prototype.once = function() {
-  this.addListener(arguments, 1);
-};
-
-EventEmitter.prototype.emit = function(event) {
-
-  // get all the args except the event, make it a real array
-  var args = [].slice.call(arguments).slice(1);
-
-  // if there is a delimiter in the event name
-  if(~event.indexOf(this._delimiter)) {
-
-    //split the name into an array
-    name = event.split(this._delimiter);
-
-    var explore = [this._events],
-        invoked = false;
-        
-    for (var i = 0; i < name.length; i++) {
-      //
-      // Iterate over the parts of the potentially namespaced
-      // event. 
-      //
-      //     emit('foo/*/bazz') ==> ['foo', '*', 'bazz'] 
-      //
-      var part = name[i], newSets = [], removeAt = [];
+      //split the name into an array
+      name = event.split(this._delimiter);
+    
+      // continue to build out additional namespaces and attach the listener to them
+      for(var i = 0, l = name.length; i < l; i++) {
       
-      for (var j = 0; j < explore.length; j++) {
-        //
-        // Iterative "unkown" set exploration: Iterate over each "unknown"
-        // set of objects in the events tree. If a wildcard is discovered, 
-        // append that object to the unknown set and continue exploration.
-        //
-        var ns = explore[j];
-        
-        if (i === name.length - 1) {
-          //
-          // Then if we are at the end of the iteration
-          // invoke all of the listeners, if not, continue
-          // iterating deeper in the object
-          //
-          if (part === '*') {
-            for (var key in ns) {
-              //
-              // Remark: This could cause some collisions for `_listeners`,
-              // `_ttl`, and `_ttd`. 
-              //
-              if (ns[key] && ns[key]._listeners) {
-                for (var k = 0; k < ns[key]._listeners.length; k++) {
-                  ns[key]._listeners[k].apply(this, args);
-                }
-              }
-            }
-            invoked = true;
-          }
-          else {
-            if (ns[part] && ns[part]._listneners) {
-              for (var k = 0, l = ns[part]._listeners.length; k < l; k++) {
-                ns[part]._listeners[k].apply(this, args);
-              }
-              invoked = true;
-            }
-            
-            if (ns['*'] && ns['*']._listeners) {
-              for (var k = 0, l = ns['*']._listeners.length; k < l; k++) {
-                ns['*']._listeners[k].apply(this, args);
-              }
-              invoked = true;
-            }
-          }
+        // get the namespace
+        ns = ns[name[i]] || (ns[name[i]] = {});
+      
+        // if this is a wild card or the completed ns, add the event
+        if(i === name.length) {
+          ns._listeners ? ns._listeners.push(listener) : ns._listeners = [listener];
+          ns._ttl = ttl;
+          ns._ttd = 0;
         }
-        else {
-          if (part !== '*') {
-            if (!ns[part] && !ns['*']) {
-              //
-              // If it's not a wild card and there isn't a wild
-              // card stored and the exact key isn't at the 
-              // next step of the events object, break out 
-              // of the loop and end evaluation.
-              //
-              continue;
-            }
+      }
+    }
+  
+    // if the name does not have a delimiter
+    else {
 
-            if (ns[part]) {
-              //
-              // If it's not a wild card, but there is an exact
-              // match for this part of the namespaced event.
-              //
-              if (ns['*']) {
-                newSets.push(ns['*']);
+      // get a handle to the event
+      var e = ns[event] || (ns[event] = {});
+
+      e._listeners ? e._listeners.push(listener) : e._listeners = [listener];
+      e._ttl = ttl;
+      e._ttd = 0;
+    }
+
+  };
+
+  EventEmitter2.prototype.on = EventEmitter2.prototype.addListener;
+
+  EventEmitter2.prototype.once = function() {
+    this.addListener(arguments, 1);
+  };
+
+  EventEmitter2.prototype.emit = function(event) {
+
+    // get all the args except the event, make it a real array
+    var args = [].slice.call(arguments).slice(1);
+
+  
+
+    // if there is a delimiter in the event name
+    if(~event.indexOf(this._delimiter)) {
+
+      //split the name into an array
+      name = event.split(this._delimiter);
+
+      var explore = [this._events],
+          invoked = false;
+        
+      for (var i = 0; i < name.length; i++) {
+        //
+        // Iterate over the parts of the potentially namespaced
+        // event. 
+        //
+        //     emit('foo/*/bazz') ==> ['foo', '*', 'bazz'] 
+        //
+        var part = name[i], newSets = [], removeAt = [];
+      
+        for (var j = 0; j < explore.length; j++) {
+          //
+          // Iterative "unkown" set exploration: Iterate over each "unknown"
+          // set of objects in the events tree. If a wildcard is discovered, 
+          // append that object to the unknown set and continue exploration.
+          //
+          var ns = explore[j];
+        
+          if (i === name.length - 1) {
+            //
+            // Then if we are at the end of the iteration
+            // invoke all of the listeners, if not, continue
+            // iterating deeper in the object
+            //
+            if (part === '*') {
+              for (var key in ns) {
+                //
+                // Remark: This could cause some collisions for `_listeners`,
+                // `_ttl`, and `_ttd`. 
+                //
+                invokeListeners(ns[key]);
               }
-
-              explore[j] = explore[j][part];
+              invoked = true;
             }
-            else if (ns['*']) {
-              //
-              // If the part of the namespaced event is not a wildcard,
-              // but the set we are currently exploring has a wildcard
-              // at this level, nest deeper for that particular set.
-              //
-              explore[j] = explore[j]['*'];
-              
-              if (ns['*']._listeners) {
-                for (var k = 0, l = ns['*']._listeners.length; k < l; k++) {
-                  ns['*']._listeners[k].apply(this, args);
-                }
+            else {
+              if (invokeListeners(ns[part])) {
                 invoked = true;
               }
-            }
-          } 
-          else {
-            //
-            // Otherwise, this part of the namespaced event is a 'wildcard',
-            // in which case, we iterate over the keys of the current set,
-            // and add those objects to the set to be added to the "unknown" set
-            // after this level of exploration has completed.
-            //
-            for (var key in ns) {
-              if (ns.hasOwnProperty(key)) {
-                newSets.push(ns[key]);
-              }
-            }
-
-            if (ns['*'] && ns['*']._listeners) {
-              for (var k = 0, l = ns['*']._listeners.length; k < l; k++) {
-                ns['*']._listeners[k].apply(this, args);
-              }
-              invoked = true;
-            }
             
-            removeAt.push(j);
+              if (invokeListeners(ns['*'])) {
+                invoked = true;
+              }            
+            }
+          }
+          else {
+            if (part !== '*') {
+              if (!ns[part] && !ns['*']) {
+                //
+                // If it's not a wild card and there isn't a wild
+                // card stored and the exact key isn't at the 
+                // next step of the events object, break out 
+                // of the loop and end evaluation.
+                //
+                continue;
+              }
+
+              if (ns[part]) {
+                //
+                // If it's not a wild card, but there is an exact
+                // match for this part of the namespaced event.
+                //
+                if (ns['*']) {
+                  newSets.push(ns['*']);
+                }
+
+                explore[j] = explore[j][part];
+              }
+              else if (ns['*']) {
+                //
+                // If the part of the namespaced event is not a wildcard,
+                // but the set we are currently exploring has a wildcard
+                // at this level, nest deeper for that particular set.
+                //
+                explore[j] = explore[j]['*'];
+              
+                if (invokeListeners(ns['*'])) {
+                  invoked = true;
+                }
+              }
+            } 
+            else {
+              //
+              // Otherwise, this part of the namespaced event is a 'wildcard',
+              // in which case, we iterate over the keys of the current set,
+              // and add those objects to the set to be added to the "unknown" set
+              // after this level of exploration has completed.
+              //
+              for (var key in ns) {
+                if (ns.hasOwnProperty(key)) {
+                  newSets.push(ns[key]);
+                }
+              }
+
+              if (invokeListeners(ns['*'])) {
+                invoked = true;
+              }
+            
+              removeAt.push(j);
+            }
           }
         }
-      }
       
-      for (var j = 0; j < removeAt.length; j++) {
-        //
-        // Remove stale sets that are no longer of interest.
-        //
-        explore.splice(j, 1);
-      }
+        for (var j = 0; j < removeAt.length; j++) {
+          //
+          // Remove stale sets that are no longer of interest.
+          //
+          explore.splice(j, 1);
+        }
       
-      if (newSets.length) {
-        //
-        // If this level of exploration has yielded any new sets
-        // to be explored, then concatenate those sets to the "unknown" sets.
-        //
-        explore = explore.concat(newSets);
-      } 
-    }
+        if (newSets.length) {
+          //
+          // If this level of exploration has yielded any new sets
+          // to be explored, then concatenate those sets to the "unknown" sets.
+          //
+          explore = explore.concat(newSets);
+        } 
+      }
     
-    return invoked;
+      return invoked;
+    }
+
+    // if the name does not have a delimiter
+    else {
+    
+      if (!this._events[event]) {
+        return false;
+      }
+    
+      // get a handle to the listeners
+      var listeners = this._events[event]._listeners || null;
+    
+      if (!listeners) {
+        return false;
+      }
+    
+      // fire off each of them
+      for(var i = 0, l = listeners.length; i < l; i++) {
+        listeners[i].apply(this, args);
+      }
+    }
   }
 
-  // if the name does not have a delimiter
-  else {
-    
-    if (!this._events[event]) {
-      return false;
-    }
-    
-    // get a handle to the listeners
-    var listeners = this._events[event]._listeners || null;
-    
-    if (!listeners) {
-      return false;
-    }
-    
-    // fire off each of them
-    for(var i = 0, l = listeners.length; i < l; i++) {
-      listeners[i].apply(this, args);
-    }
-    
-  }
-  
-}
+  EventEmitter2.prototype.removeListener = function() {};
+  EventEmitter2.prototype.removeAllListeners = function() {};
 
-EventEmitter.prototype.removeListener = function() {};
-EventEmitter.prototype.removeAllListeners = function() {};
+  EventEmitter2.prototype.listeners = function() {};
 
-EventEmitter.prototype.listeners = function() {};
-
-// test
-
-
-
-console.log('start');
-
-
-var tests = {
- 'foo:*': 4,
- 'foo:*:bar': 2,
- 'foo:*:*': 3,
- 'foo:bar:bar': 2
-}
-
-Object.keys(tests).forEach(function (event) {
-  var vat = new EventEmitter(),
-      count = 0;
-
-  vat.on(event, function () {
-    eyes.inspect(arguments, event);
-    count++;
-  });
-
-  eyes.inspect(event, 'Beginning test for');
-
-  vat.emit('foo/box/bar', 1, 2, 3, 4);
-  vat.emit('foo/bar/*', 5, 6, 7, 8);
-  vat.emit('foo/*/*', 9, 10, 11, 12);
-  vat.emit('foo/*');
-  
-  assert.equal(count, tests[event]);
-});
-
-  // -> foo/*/bar/*/aff
-  //     |  |   | |   |
-  //     |  |   | |   |
-  //     |  |   | |   |
-  //     |  |   | |   |
-  //     |  |   | |   |
-  // -> foo/x/bar/x/aff
-  //        |     |   |
-  //        e     e   e
-
-  // FAIL
-  
-  //    foo/*/bar/*/aff
-  //     |  |   | |   |
-  //     |  |   | e   e
-  //     |  |   |
-  //     m  |   m
-  //     |  |   |
-  // -> foo/x
-  //        |
-  //        e
-  
-  // FAIL
-  
-  //    foo/*
-  //     |  | 
-  //     |  | 
-  //     |  | 
-  //     m  | 
-  //     |  | 
-  // -> foo
-  //        |
-  //        e
-
+}((typeof exports === 'undefined') ? window : exports));
