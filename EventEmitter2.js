@@ -2,7 +2,7 @@
 ;(function(exports, undefined) {
 
   function invokeListeners(val) {
-    if (val && val._listneners) {
+    if (val && val._listeners) {
       if(val._ttl) {
         for (var k = 0, l = val._listeners.length; k < l; k++) {
           val._listeners[k].apply(this, args);
