@@ -3,10 +3,13 @@
 
   function invokeListeners(val) {
     if (val && val._listneners) {
-      for (var k = 0, l = val._listeners.length; k < l; k++) {
-        val._listeners[k].apply(this, args);
+      if(val._ttl) {
+        for (var k = 0, l = val._listeners.length; k < l; k++) {
+          val._listeners[k].apply(this, args);
+          val._ttl -= 1;
+        }
+        return true;
       }
-      return true;
     }
   }
 
@@ -43,7 +46,6 @@
         if(i === name.length) {
           ns._listeners ? ns._listeners.push(listener) : ns._listeners = [listener];
           ns._ttl = ttl;
-          ns._ttd = 0;
         }
       }
     }
@@ -56,7 +58,6 @@
 
       e._listeners ? e._listeners.push(listener) : e._listeners = [listener];
       e._ttl = ttl;
-      e._ttd = 0;
     }
 
   };
@@ -71,8 +72,6 @@
 
     // get all the args except the event, make it a real array
     var args = [].slice.call(arguments).slice(1);
-
-  
 
     // if there is a delimiter in the event name
     if(~event.indexOf(this._delimiter)) {
@@ -109,8 +108,7 @@
             if (part === '*') {
               for (var key in ns) {
                 //
-                // Remark: This could cause some collisions for `_listeners`,
-                // `_ttl`, and `_ttd`. 
+                // Remark: This could cause some collisions for `_listeners`, and `_ttl`. 
                 //
                 invokeListeners(ns[key]);
               }
@@ -216,7 +214,7 @@
       if (!listeners) {
         return false;
       }
-    
+
       // fire off each of them
       for(var i = 0, l = listeners.length; i < l; i++) {
         listeners[i].apply(this, args);
@@ -224,9 +222,89 @@
     }
   }
 
-  EventEmitter2.prototype.removeListener = function() {};
-  EventEmitter2.prototype.removeAllListeners = function() {};
+  EventEmitter2.prototype.removeListener = function(event) {
+    this.listeners(event, true);
+  };
+  EventEmitter2.prototype.removeAllListeners = function() {
+    for(var event in this._events) {
+      this.listeners(event, null, true);
+    }
+  };
 
-  EventEmitter2.prototype.listeners = function() {};
+  EventEmitter2.prototype.listeners = function(event, listener, removeAllListeners) {
+
+    var listeners = []; // the array of listeners to return.
+
+    // if there is a delimiter in the event name
+    if(~event.indexOf(this._delimiter)) {
+
+      //split the name into an array
+      name = event.split(this._delimiter);
+
+      // continue to build out additional namespaces and attach the listener to them
+      for (var i = 0; i < name.length; i++) {
+
+        // get the namespace
+        ns = ns[name[i]] || (ns[name[i]] = {});
+        
+        //
+        // if this is a wild card or the completed ns, remove the event,
+        // also reset the times to live and the time to die.
+        //
+        if(ns._listeners) {
+          
+          //
+          // if there is only one argument to this method, we are just
+          // looking to see what listeners exist and then report on that.
+          //
+          if(arguments.length === 1) {
+            listeners.push(ns._listeners);
+          } else {
+            
+            //
+            // if we have some arguments, we're considering deleteing some
+            // or possibly all of the listeners associated with an event.
+            //
+            if(removeAllListeners) {
+              ns = null;
+            }
+            else {
+              for (var i = 0; i < ns._listeners.length; i++) {
+                if(ns._listeners[i] === listener) {
+                  ns = null;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    else {
+
+      //
+      // this is a simple event, no need to deconstruct the name,
+      // lets just kill any listeners associated with it.
+      //
+      var e = this._events[event];
+
+      if(!removeEvents) {     
+        listeners.push(ns._listeners);
+      }
+      else {
+        if(removeAllListeners) {
+          e = null;
+        }
+        else {
+          for (var i = 0; i < e._listeners.length; i++) {
+            if(e._listeners[i] === listener) {
+              e = null; 
+            }
+          }
+        }
+      }
+    }
+
+    return listeners;
+  };
 
 }((typeof exports === 'undefined') ? window : exports));
