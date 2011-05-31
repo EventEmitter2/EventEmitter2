@@ -1,18 +1,6 @@
 
 ;(function(exports, undefined) {
 
-  function invokeListeners(val, args) {
-    if (val && val._listeners) {
-      if(val._ttl) {
-        for (var k = 0, l = val._listeners.length; k < l; k++) {
-          val._listeners[k].apply(this, args);
-          val._ttl -= 1;
-        }
-        return true;
-      }
-    }
-  }
-
   exports.EventEmitter2 = function EventEmitter2(conf) {
     if(conf) {
       if(conf.delimiter === '*') {
@@ -70,8 +58,20 @@
 
   EventEmitter2.prototype.emit = function(event) {
 
+    function invokeListeners(val, args) {
+      if (val && val._listeners) {
+        if(val._ttl) {
+          for (var k = 0, l = val._listeners.length; k < l; k++) {
+            val._listeners[k].apply(this, args);
+            val._ttl -= 1;
+          }
+          return true;
+        }
+      }
+    }
+
     // get all the args except the event, make it a real array
-    var args = [].slice.call(arguments).slice(1);
+    var args = (arguments.length > 1) ? [].slice.call(arguments).slice(1) : arguments;
 
     // if there is a delimiter in the event name
     if(~event.indexOf(this._delimiter)) {
