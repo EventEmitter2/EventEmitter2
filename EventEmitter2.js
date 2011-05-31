@@ -1,7 +1,7 @@
 
 ;(function(exports, undefined) {
 
-  function invokeListeners(val) {
+  function invokeListeners(val, args) {
     if (val && val._listeners) {
       if(val._ttl) {
         for (var k = 0, l = val._listeners.length; k < l; k++) {
@@ -110,16 +110,16 @@
                 //
                 // Remark: This could cause some collisions for `_listeners`, and `_ttl`. 
                 //
-                invokeListeners(ns[key]);
+                invokeListeners(ns[key], args);
               }
               invoked = true;
             }
             else {
-              if (invokeListeners(ns[part])) {
+              if (invokeListeners(ns[part], args)) {
                 invoked = true;
               }
             
-              if (invokeListeners(ns['*'])) {
+              if (invokeListeners(ns['*'], args)) {
                 invoked = true;
               }            
             }
@@ -155,7 +155,7 @@
                 //
                 explore[j] = explore[j]['*'];
               
-                if (invokeListeners(ns['*'])) {
+                if (invokeListeners(ns['*'], args)) {
                   invoked = true;
                 }
               }
@@ -173,7 +173,7 @@
                 }
               }
 
-              if (invokeListeners(ns['*'])) {
+              if (invokeListeners(ns['*'], args)) {
                 invoked = true;
               }
             
