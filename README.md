@@ -1,18 +1,28 @@
-**WORK IN PROGRESS**
 
 # EventEmitter2
 
 EventEmitter2 is a an implementation of the EventEmitter found in Node.js
+
 
 ## Motivation
 
  - Namespaced events
  - Wildcards for namespaces
  - Times To Live (TTL), extends the `once` concept
- - Faster performance for emission and listener registration
  - Browser environment compatibility
+ - As good or better performance for emission and listener registration as Node.js core EventEmitter
+
 
 ## Differences 
+
+ - The constructor takes a configuration object.
+ 
+```javascript
+   var server = EventEmitter2({
+     delimiter: '#', // the delimiter used to segment namespaces, defaults to `/`.
+     maxListeners: 20 // the max number of listeners that can be assigned to an event, defaults to 10.
+   });
+```
 
  - Because wildcard events are supported, the first parameter of a listener is the actual event name that the listener reacted to.
 
