@@ -120,6 +120,10 @@ Returns an array of listeners for the specified event. This array can be manipul
 
 Execute each of the listeners in order with the list of arguments.
 
+## Test coverage
+
+There is a test suite that tries to cover each use case, it can be found <a href="https://github.com/hij1nx/EventEmitter2/tree/master/test">here</a>.
+
 ## Licence
 
 (The MIT License)
