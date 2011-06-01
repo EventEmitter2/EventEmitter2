@@ -66,7 +66,6 @@
     var self = this;
   
     function invokeListeners(val, args) {
-      console.log('invoke');
       if(val._ttl !== 0) {
         for (var k = 0, l = val._listeners.length; k < l; k++) {
           val._listeners[k].apply(this, args);
@@ -315,7 +314,7 @@
       //
       var e = this._events[event];
   
-      if(!removeEvents) {     
+      if(!removeEvents) {
         listeners.push(ns._listeners);
       }
       else {
