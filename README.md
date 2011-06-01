@@ -4,7 +4,7 @@
 EventEmitter2 is a an implementation of the EventEmitter found in Node.js
 
 
-## Motivation
+## Sparse Enhancements!
 
  - Namespaced events
  - Wildcards for namespaces
