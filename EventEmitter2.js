@@ -57,8 +57,8 @@
 
   EventEmitter2.prototype.on = EventEmitter2.prototype.addListener;
   
-  EventEmitter2.prototype.once = function() {
-    this.addListener(arguments, 1);
+  EventEmitter2.prototype.once = function(event, listener) {
+    this.addListener(event, listener, 1);
   };
   
   EventEmitter2.prototype.emit = function(event) {

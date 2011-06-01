@@ -1,16 +1,14 @@
 
 this.benchmarks = {
-  '1. Set up a single listener and emit 100,000 times using EventEmitter2.': function (test) {
+  '1. Set up a single listener and emit 10,000 times using EventEmitter2.': function (test) {
 
     var EventEmitter2, iterations;
 
     if(typeof require !== 'undefined') {
       EventEmitter2 = require('../EventEmitter2').EventEmitter2;
-      iterations = 100000;
     }
     else {
       EventEmitter2 = window.EventEmitter2;
-      iterations = 10000;
     }
 
     var emitter = new EventEmitter2(), iterations = 10000;
@@ -31,21 +29,19 @@ this.benchmarks = {
     test.done();
 
   },
-  '2. Set up a single listener and emit 100,000 times using the Node.js EventEmitter.': function (test) {
+  '2. Set up a single listener and emit 10,000 times using the Node.js EventEmitter.': function (test) {
 
     var EventEmitter, iterations;
 
     if(typeof require !== 'undefined') {
       EventEmitter = require('events').EventEmitter;
-      iterations = 100000;
     }
     else {
       EventEmitter = window.EventEmitter;
-      iterations = 10000;
     }    
     
 
-    var emitter = new EventEmitter();
+    var emitter = new EventEmitter(), iterations = 10000;;
 
     emitter.on('test2', function () {
       test.ok(true, 'The event was raised');
@@ -69,14 +65,12 @@ this.benchmarks = {
 
     if(typeof require !== 'undefined') {
       EventEmitter2 = require('../EventEmitter2').EventEmitter2;
-      iterations = 100000;
     }
     else {
       EventEmitter2 = window.EventEmitter2;
-      iterations = 10000;
     }
 
-    var emitter = new EventEmitter2();
+    var emitter = new EventEmitter2(), iterations = 10000;;
 
     emitter.on('test3', function (event, value1, value2, value3) {
       test.ok(true, 'The event was raised');
@@ -104,11 +98,9 @@ this.benchmarks = {
 
     if(typeof require !== 'undefined') {
       EventEmitter = require('events').EventEmitter;
-      iterations = 100000;
     }
     else {
       EventEmitter = window.EventEmitter;
-      iterations = 10000;
     }
 
     var emitter = new EventEmitter(), iterations = 10000;

@@ -13,8 +13,6 @@ this.basicEvents = {
 
     var emitter = new EventEmitter2;
     
-
-    
     emitter.on('test1', function () {
       test.ok(true, 'The event was raised');
     });

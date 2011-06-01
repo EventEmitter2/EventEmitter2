@@ -8,8 +8,6 @@
     <script src="EventEmitter.js"></script>
     
     <script src="basicEvents.js"></script>
-    <script src="namespacedEvents.js"></script>
-    <script src="wildcardEvents.js"></script>
     <script src="timesToLive.js"></script>
     <script src="benchmarks.js"></script>    
     <script src="vendor/nodeunit/nodeunit.js"></script>
@@ -33,9 +31,7 @@
     window.onload = function() {
 
       nodeunit.run({
-        'Basic Events': basicEvents,
-        'Namespaced Events': namespacedEvents,
-        'Wildcard Events': wildcardEvents,
+        'Events': basicEvents,
         'Times To Live': timesToLive,
         'Benchmarks': benchmarks
       });
