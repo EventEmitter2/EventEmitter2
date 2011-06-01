@@ -13,7 +13,7 @@ EventEmitter2 is a an implementation of the EventEmitter found in Node.js
  - As good or better performance for emission and listener registration as Node.js core EventEmitter
 
 
-## Differences 
+## Differences (Non breaking, compatible with existing EventEmitter)
 
  - The constructor takes a configuration object.
  
