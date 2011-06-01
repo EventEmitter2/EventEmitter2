@@ -66,15 +66,17 @@
     var self = this;
   
     function invokeListeners(val, args) {
+      console.log('invoke');
       if(val._ttl !== 0) {
         for (var k = 0, l = val._listeners.length; k < l; k++) {
           val._listeners[k].apply(this, args);
-          val._ttl -= 1;
         }
+        val._ttl -= 1;
         return true;
       }
-      else if(val._ttl === 0) {
-        self.removeListener(val._listeners); // this seems wrong.
+      else if(val._ttl <= 0) {
+
+        self.listeners(event, null, true);
       }
     }
   
@@ -90,7 +92,7 @@
       var explore = [this._events],
           invoked = false,
           key = null;
-        
+
       for (i = 0; i < name.length; i++) {
         //
         // Iterate over the parts of the potentially namespaced
@@ -187,6 +189,7 @@
               }
   
               if (ns['*'] && ns['*']._listeners && invokeListeners(ns['*'], args)) {
+
                 invoked = true;
               }
             
@@ -194,7 +197,7 @@
             }
           }
         }
-      
+
         for (j = 0; j < removeAt.length; j++) {
           //
           // Remove stale sets that are no longer of interest.
@@ -223,14 +226,20 @@
     
       // get a handle to the listeners
       var listeners = this._events[event]._listeners || null;
-    
-      if (!listeners) {
+
+      if (listeners === null) {
         return false;
       }
-  
+
       // fire off each of them
-      for(i = 0, l = listeners.length; i < l; i++) {
-        listeners[i].apply(this, args);
+      if(this._events[event]._ttl <= 0) {
+        listeners = [];
+      }
+      else {
+        for(i = 0, l = listeners.length; i < l; i++) {
+          listeners[i].apply(this, args);
+        }
+        this._events[event]._ttl--;
       }
     }
     return true;
