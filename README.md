@@ -2,6 +2,8 @@
 
 ## EventEmitter2
 
+EventEmitter2 is a an implementation of the EventEmitter 
+
 When an `EventEmitter` instance experiences an error, the typical action is
 to emit an `error` event.  Error events are treated as a special case in node.
 If there is no listener for it, then the default action is to print a stack

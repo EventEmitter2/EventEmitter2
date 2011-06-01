@@ -4,7 +4,7 @@
   var EventEmitter2 = exports.EventEmitter2 = function(conf) {
     if(conf) {
       if(conf.delimiter === '*') {
-        throw new Error('The event can not be delimited by the "*" (wild-card) character.')
+        throw new Error('The event can not be delimited by the "*" (wild-card) character.');
       }
     }
     this._delimiter = conf ? conf.delimiter : '/';
@@ -71,7 +71,7 @@
     }
   
     // get all the args except the event, make it a real array
-    var args = arguments;
+    var args = arguments, i = 0, j = 0;
   
     // if there is a delimiter in the event name
     if(~event.indexOf(this._delimiter)) {
@@ -80,18 +80,21 @@
       name = event.split(this._delimiter);
   
       var explore = [this._events],
-          invoked = false;
+          invoked = false,
+          key = null;
         
-      for (var i = 0; i < name.length; i++) {
+      for (i = 0; i < name.length; i++) {
         //
         // Iterate over the parts of the potentially namespaced
         // event. 
         //
         //     emit('foo/*/bazz') ==> ['foo', '*', 'bazz'] 
         //
-        var part = name[i], newSets = [], removeAt = [];
+        var part = name[i], 
+            newSets = [], 
+            removeAt = [];
       
-        for (var j = 0; j < explore.length; j++) {
+        for (j = 0; j < explore.length; j++) {
           //
           // Iterative "unkown" set exploration: Iterate over each "unknown"
           // set of objects in the events tree. If a wildcard is discovered, 
@@ -106,7 +109,7 @@
             // iterating deeper in the object
             //
             if (part === '*') {
-              for (var key in ns) {
+              for (key in ns) {
                 //
                 // Remark: This could cause some collisions for `_listeners`, and `_ttl`. 
                 //
@@ -167,7 +170,7 @@
               // and add those objects to the set to be added to the "unknown" set
               // after this level of exploration has completed.
               //
-              for (var key in ns) {
+              for (key in ns) {
                 if (ns.hasOwnProperty(key)) {
                   newSets.push(ns[key]);
                 }
@@ -182,7 +185,7 @@
           }
         }
       
-        for (var j = 0; j < removeAt.length; j++) {
+        for (j = 0; j < removeAt.length; j++) {
           //
           // Remove stale sets that are no longer of interest.
           //
@@ -216,15 +219,17 @@
       }
   
       // fire off each of them
-      for(var i = 0, l = listeners.length; i < l; i++) {
+      for(i = 0, l = listeners.length; i < l; i++) {
         listeners[i].apply(this, args);
       }
     }
-  }
-  
+    return true;
+  };
+
   EventEmitter2.prototype.removeListener = function(event) {
     this.listeners(event, true);
   };
+
   EventEmitter2.prototype.removeAllListeners = function() {
     for(var event in this._events) {
       this.listeners(event, null, true);
@@ -233,7 +238,7 @@
   
   EventEmitter2.prototype.listeners = function(event, listener, removeAllListeners) {
   
-    var listeners = []; // the array of listeners to return.
+    var listeners = [], i = 0, j = 0; // the array of listeners to return.
   
     // if there is a delimiter in the event name
     if(~event.indexOf(this._delimiter)) {
@@ -242,7 +247,7 @@
       name = event.split(this._delimiter);
   
       // continue to build out additional namespaces and attach the listener to them
-      for (var i = 0; i < name.length; i++) {
+      for (i = 0; i < name.length; i++) {
   
         // get the namespace
         ns = ns[name[i]] || (ns[name[i]] = {});
@@ -269,8 +274,8 @@
               ns = null;
             }
             else {
-              for (var i = 0; i < ns._listeners.length; i++) {
-                if(ns._listeners[i] === listener) {
+              for (j = 0; j < ns._listeners.length; j++) {
+                if(ns._listeners[j] === listener) {
                   ns = null;
                 }
               }
@@ -295,7 +300,7 @@
           e = null;
         }
         else {
-          for (var i = 0; i < e._listeners.length; i++) {
+          for (i = 0; i < e._listeners.length; i++) {
             if(e._listeners[i] === listener) {
               e = null; 
             }
