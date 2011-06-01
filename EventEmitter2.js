@@ -63,15 +63,18 @@
   
   EventEmitter2.prototype.emit = function(event) {
   
+    var self = this;
+  
     function invokeListeners(val, args) {
-      if (val && val._listeners) { // To-Do: this check should be hoisted upward.
-        if(val._ttl !== 0) {
-          for (var k = 0, l = val._listeners.length; k < l; k++) {
-            val._listeners[k].apply(this, args);
-            val._ttl -= 1;
-          }
-          return true;
+      if(val._ttl !== 0) {
+        for (var k = 0, l = val._listeners.length; k < l; k++) {
+          val._listeners[k].apply(this, args);
+          val._ttl -= 1;
         }
+        return true;
+      }
+      else if(val._ttl === 0) {
+        self.removeListener(val._listeners); // this seems wrong.
       }
     }
   
@@ -118,16 +121,18 @@
                 //
                 // Remark: This could cause some collisions for `_listeners`, and `_ttl`. 
                 //
-                invokeListeners(ns[key], args);
+                if (ns[key] && ns[key]._listeners) {
+                  invokeListeners(ns[key], args);
+                }
               }
               invoked = true;
             }
             else {
-              if (invokeListeners(ns[part], args)) {
+              if (ns[part] && ns[part]._listeners && invokeListeners(ns[part], args)) {
                 invoked = true;
               }
             
-              if (invokeListeners(ns['*'], args)) {
+              if (ns['*'] && ns['*']._listeners && invokeListeners(ns['*'], args)) {
                 invoked = true;
               }            
             }
@@ -163,7 +168,7 @@
                 //
                 explore[j] = explore[j]['*'];
               
-                if (invokeListeners(ns['*'], args)) {
+                if (ns['*'] && ns['*']._listeners && invokeListeners(ns['*'], args)) {
                   invoked = true;
                 }
               }
@@ -181,7 +186,7 @@
                 }
               }
   
-              if (invokeListeners(ns['*'], args)) {
+              if (ns['*'] && ns['*']._listeners && invokeListeners(ns['*'], args)) {
                 invoked = true;
               }
             
