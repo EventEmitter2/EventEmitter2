@@ -24,7 +24,7 @@ EventEmitter2 is a an implementation of the EventEmitter found in Node.js
    });
 ```
 
- - Because wildcard events are supported, the first parameter of a listener is the actual event name that the listener reacted to.
+ - The first parameter of a listener is the actual event name that the listener reacted to (because of wildcards).
 
 ```javascript
     server.on('foo/*', function(event, value1, value2) {
