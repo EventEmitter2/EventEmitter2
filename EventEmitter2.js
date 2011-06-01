@@ -7,7 +7,7 @@
         throw new Error('The event can not be delimited by the "*" (wild-card) character.');
       }
     }
-    this._delimiter = conf ? conf.delimiter : '/';
+    this._delimiter = conf ? conf.delimiter : '.';
     this._maxListeners = conf ? conf.maxListeners : 10;
     this._events = {};
   };
@@ -307,13 +307,16 @@
       var e = this._events[event];
 
       if (!removeEvents) {
+        // this is not a call to remove event listeners, so lets push to the listeners array.
         listeners.push(ns._listeners);
       }
       else {
+        // determine if we should remove all the events.
         if (removeAllListeners) {
           e = null;
         }
         else {
+          // only remove the listener specified for this event.
           for (i = 0; i < e._listeners.length; i++) {
             if (e._listeners[i] === listener) {
               e = null;

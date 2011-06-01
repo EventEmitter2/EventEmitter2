@@ -19,7 +19,7 @@ EventEmitter2 is a an implementation of the EventEmitter found in Node.js
  
 ```javascript
    var server = EventEmitter2({
-     delimiter: '#', // the delimiter used to segment namespaces, defaults to `/`.
+     delimiter: '/', // the delimiter used to segment namespaces, defaults to `.`.
      maxListeners: 20 // the max number of listeners that can be assigned to an event, defaults to 10.
    });
 ```
@@ -27,7 +27,7 @@ EventEmitter2 is a an implementation of the EventEmitter found in Node.js
  - The first parameter of a listener is the actual event name that the listener reacted to (because of wildcards).
 
 ```javascript
-    server.on('foo/*', function(event, value1, value2) {
+    server.on('foo.*', function(event, value1, value2) {
       console.log('a values were', value1, value2);
     });
 ```
@@ -35,7 +35,7 @@ EventEmitter2 is a an implementation of the EventEmitter found in Node.js
  - Times To Live, an extension of the `once` concept.
 
 ```javascript
-    server.on('foo/*', function(event, value1, value2) {
+    server.on('foo.*', function(event, value1, value2) {
       console.log('a values were', value1, value2);
     }, 15);
 ```
@@ -128,7 +128,7 @@ There is a test suite that tries to cover each use case, it can be found <a href
 
 (The MIT License)
 
-Copyright (c) 2011 hij1nx <http://www.twitter.com/hij1nx>, indexzero <http://www.twitter.com/indexzero>, nodejitsu <http://www.twitter.com/nodejitsu>
+Copyright (c) 2011 hij1nx <http://www.twitter.com/hij1nx>, indexzero <http://www.twitter.com/indexzero>, Fedor Indutny <http://www.twitter.com/nodejitsu>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the 'Software'), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
