@@ -4,15 +4,15 @@
 
     <title>EventEmitter tests.</title>
     
-    <script src="../lib/EventEmitter2.js"></script>
+    <script src="../EventEmitter2.js"></script>
     <script src="EventEmitter.js"></script>
     
-    <script src="vendor/nodeunit/nodeunit.js"></script>
     <script src="basicEvents.js"></script>
     <script src="namespacedEvents.js"></script>
     <script src="wildcardEvents.js"></script>
     <script src="timesToLive.js"></script>
     <script src="benchmarks.js"></script>    
+    <script src="vendor/nodeunit/nodeunit.js"></script>
     
     <style>
 
@@ -26,9 +26,11 @@
     </style>
   </head>
   <body>
-    <h1>EventEmitter2</h1>
+    <h1>EventEmitter2 (tests may take a minute, check console for results)</h1>
     <br/><br/>
     <script>
+
+    window.onload = function() {
 
       nodeunit.run({
         'Basic Events': basicEvents,
@@ -37,6 +39,8 @@
         'Times To Live': timesToLive,
         'Benchmarks': benchmarks
       });
+      
+    }
 
     </script>
   </body>

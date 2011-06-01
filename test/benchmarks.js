@@ -2,11 +2,18 @@
 this.benchmarks = {
   '1. Set up a single listener and emit 100,000 times using EventEmitter2.': function (test) {
 
-    if(require) {
-      var EventEmitter2 = require('../EventEmitter2').EventEmitter2;
+    var EventEmitter2, iterations;
+
+    if(typeof require !== 'undefined') {
+      EventEmitter2 = require('../EventEmitter2').EventEmitter2;
+      iterations = 100000;
+    }
+    else {
+      EventEmitter2 = window.EventEmitter2;
+      iterations = 10000;
     }
 
-    var emitter = new EventEmitter2(), iterations = 100000;
+    var emitter = new EventEmitter2(), iterations = 10000;
 
     emitter.on('test1', function () {
       test.ok(true, 'The event was raised');
@@ -18,6 +25,7 @@ this.benchmarks = {
       emitter.emit('test1');
     }
 
+    test.ok(true, 'finished tests');
     console.timeEnd('test1');
 
     test.done();
@@ -25,11 +33,19 @@ this.benchmarks = {
   },
   '2. Set up a single listener and emit 100,000 times using the Node.js EventEmitter.': function (test) {
 
-    if(require) {
-      var EventEmitter = require('events').EventEmitter;
-    }
+    var EventEmitter, iterations;
 
-    var emitter = new EventEmitter(), iterations = 100000;
+    if(typeof require !== 'undefined') {
+      EventEmitter = require('events').EventEmitter;
+      iterations = 100000;
+    }
+    else {
+      EventEmitter = window.EventEmitter;
+      iterations = 10000;
+    }    
+    
+
+    var emitter = new EventEmitter();
 
     emitter.on('test2', function () {
       test.ok(true, 'The event was raised');
@@ -41,6 +57,7 @@ this.benchmarks = {
       emitter.emit('test2');
     }
 
+    test.ok(true, 'finished tests');
     console.timeEnd('test2');
 
     test.done();
@@ -48,11 +65,18 @@ this.benchmarks = {
   },
   '3. A listener should fire a callback with multiple parameters for an event when the event name is emitted using EventEmitter2.': function (test) {
 
-    if(require) {
-      var EventEmitter2 = require('../EventEmitter2').EventEmitter2;
+    var EventEmitter2, iterations;
+
+    if(typeof require !== 'undefined') {
+      EventEmitter2 = require('../EventEmitter2').EventEmitter2;
+      iterations = 100000;
+    }
+    else {
+      EventEmitter2 = window.EventEmitter2;
+      iterations = 10000;
     }
 
-    var emitter = new EventEmitter2(), iterations = 100000;
+    var emitter = new EventEmitter2();
 
     emitter.on('test3', function (event, value1, value2, value3) {
       test.ok(true, 'The event was raised');
@@ -68,6 +92,7 @@ this.benchmarks = {
       emitter.emit('test3', 1, 2, 3);
     }
 
+    test.ok(true, 'finished tests');
     console.timeEnd('test3');
 
     test.done();
@@ -75,11 +100,18 @@ this.benchmarks = {
   },
   '4. A listener should fire a callback with multiple parameters for an event when the event name is emitted using Node.js EventEmitter.': function (test) {
 
-    if(require) {
-      var EventEmitter = require('events').EventEmitter;
+    var EventEmitter, iterations;
+
+    if(typeof require !== 'undefined') {
+      EventEmitter = require('events').EventEmitter;
+      iterations = 100000;
+    }
+    else {
+      EventEmitter = window.EventEmitter;
+      iterations = 10000;
     }
 
-    var emitter = new EventEmitter(), iterations = 100000;
+    var emitter = new EventEmitter(), iterations = 10000;
 
     emitter.on('test4', function (value1, value2, value3) {
       test.ok(true, 'The event was raised');
@@ -95,6 +127,7 @@ this.benchmarks = {
       emitter.emit('test4', 1, 2, 3);
     }
 
+    test.ok(true, 'finished tests');
     console.timeEnd('test4');
 
     test.done();

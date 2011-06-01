@@ -2,12 +2,19 @@
 this.basicEvents = {
   '1. A listener should react to an event when the event is emitted.': function (test) {
 
-    if(require) {
-      var EventEmitter2 = require('../EventEmitter2').EventEmitter2;
+    var EventEmitter2;
+
+    if(typeof require !== 'undefined') {
+      EventEmitter2 = require('../EventEmitter2').EventEmitter2;
+    }
+    else {
+      EventEmitter2 = window.EventEmitter2;
     }
 
-    var emitter = new EventEmitter2();
+    var emitter = new EventEmitter2;
+    
 
+    
     emitter.on('test1', function () {
       test.ok(true, 'The event was raised');
     });
@@ -19,8 +26,13 @@ this.basicEvents = {
   },
   '2. A listener should react with a parameter to an event when the event is emitted.': function (test) {
 
-    if(require) {
-      var EventEmitter2 = require('../EventEmitter2').EventEmitter2;
+    var EventEmitter2;
+
+    if(typeof require !== 'undefined') {
+      EventEmitter2 = require('../EventEmitter2').EventEmitter2;
+    }
+    else {
+      EventEmitter2 = window.EventEmitter2;
     }
 
     var emitter = new EventEmitter2();
@@ -37,8 +49,13 @@ this.basicEvents = {
   },  
   '3. A listener should react with multiple parameters to an event when the event is emitted.': function (test) {
 
-    if(require) {
-      var EventEmitter2 = require('../EventEmitter2').EventEmitter2;
+    var EventEmitter2;
+
+    if(typeof require !== 'undefined') {
+      EventEmitter2 = require('../EventEmitter2').EventEmitter2;
+    }
+    else {
+      EventEmitter2 = window.EventEmitter2;
     }
 
     var emitter = new EventEmitter2();
@@ -58,8 +75,13 @@ this.basicEvents = {
   },
   '4. A listener should react with multiple parameters to an event when the event name multiple times.': function (test) {
 
-    if(require) {
-      var EventEmitter2 = require('../EventEmitter2').EventEmitter2;
+    var EventEmitter2;
+
+    if(typeof require !== 'undefined') {
+      EventEmitter2 = require('../EventEmitter2').EventEmitter2;
+    }
+    else {
+      EventEmitter2 = window.EventEmitter2;
     }
 
     var emitter = new EventEmitter2();
@@ -81,14 +103,18 @@ this.basicEvents = {
   
   '5. An event can be namespaced.': function (test) {
 
-    if(require) {
-      var EventEmitter2 = require('../EventEmitter2').EventEmitter2;
+    var EventEmitter2;
+
+    if(typeof require !== 'undefined') {
+      EventEmitter2 = require('../EventEmitter2').EventEmitter2;
+    }
+    else {
+      EventEmitter2 = window.EventEmitter2;
     }
 
     var emitter = new EventEmitter2();
 
     emitter.on('test5/ns1', function () {
-
       test.ok(true, 'The event was raised');
     });
 
@@ -98,8 +124,13 @@ this.basicEvents = {
   },
   '6. An event can be namespaced and accept values.': function (test) {
 
-    if(require) {
-      var EventEmitter2 = require('../EventEmitter2').EventEmitter2;
+    var EventEmitter2;
+
+    if(typeof require !== 'undefined') {
+      EventEmitter2 = require('../EventEmitter2').EventEmitter2;
+    }
+    else {
+      EventEmitter2 = window.EventEmitter2;
     }
 
     var emitter = new EventEmitter2();
@@ -137,8 +168,13 @@ this.basicEvents = {
   },    
   '8. A listener should support wild cards.': function (test) {
 
-    if(require) {
-      var EventEmitter2 = require('../EventEmitter2').EventEmitter2;
+    var EventEmitter2;
+
+    if(typeof require !== 'undefined') {
+      EventEmitter2 = require('../EventEmitter2').EventEmitter2;
+    }
+    else {
+      EventEmitter2 = window.EventEmitter2;
     }
 
     var emitter = new EventEmitter2();
@@ -154,8 +190,13 @@ this.basicEvents = {
   },
   '9. Emitting an event should support wildcards.': function (test) {
 
-    if(require) {
-      var EventEmitter2 = require('../EventEmitter2').EventEmitter2;
+    var EventEmitter2;
+
+    if(typeof require !== 'undefined') {
+      EventEmitter2 = require('../EventEmitter2').EventEmitter2;
+    }
+    else {
+      EventEmitter2 = window.EventEmitter2;
     }
 
     var emitter = new EventEmitter2();
@@ -171,8 +212,13 @@ this.basicEvents = {
   },
   '10. A listener should support complex wild cards.': function (test) {
     
-    if(require) {
-      var EventEmitter2 = require('../EventEmitter2').EventEmitter2;
+    var EventEmitter2;
+
+    if(typeof require !== 'undefined') {
+      EventEmitter2 = require('../EventEmitter2').EventEmitter2;
+    }
+    else {
+      EventEmitter2 = window.EventEmitter2;
     }
 
     var emitter = new EventEmitter2();
@@ -188,8 +234,13 @@ this.basicEvents = {
   },
   '11. Emitting an event should support complex wildcards.': function (test) {
 
-    if(require) {
-      var EventEmitter2 = require('../EventEmitter2').EventEmitter2;
+    var EventEmitter2;
+
+    if(typeof require !== 'undefined') {
+      EventEmitter2 = require('../EventEmitter2').EventEmitter2;
+    }
+    else {
+      EventEmitter2 = window.EventEmitter2;
     }
 
     var emitter = new EventEmitter2();
@@ -205,24 +256,29 @@ this.basicEvents = {
   },
   '12. Emitting an event should support complex wildcards multiple times, a valid listener should accept values.': function (test) {
     
-    if(require) {
-       var EventEmitter2 = require('../EventEmitter2').EventEmitter2;
-     }
+    var EventEmitter2;
 
-     var emitter = new EventEmitter2();
+    if(typeof require !== 'undefined') {
+      EventEmitter2 = require('../EventEmitter2').EventEmitter2;
+    }
+    else {
+      EventEmitter2 = window.EventEmitter2;
+    }
 
-     emitter.on('test7/ns1/ns2', function (event, value1, value2, value3) {
-       test.ok(true, 'The event was raised');
-       test.ok(arguments.length === 4, 'The event was raised with the correct number of arguments');
-       test.ok(value1 === 1 || value1 === 4, 'The event was raised with the value `' + value1 + '`.');
-       test.ok(value2 === 2 || value2 === 5, 'The event was raised with the value `' + value1 + '`.');
-       test.ok(value3 === 3 || value3 === 6, 'The event was raised with the value `' + value1 + '`.');            
-     });
+    var emitter = new EventEmitter2();
 
-     emitter.emit('test7/*/ns2', 1, 2, 3);
-     emitter.emit('test7/*/ns2', 4, 5, 6);
+    emitter.on('test7/ns1/ns2', function (event, value1, value2, value3) {
+      test.ok(true, 'The event was raised');
+      test.ok(arguments.length === 4, 'The event was raised with the correct number of arguments');
+      test.ok(value1 === 1 || value1 === 4, 'The event was raised with the value `' + value1 + '`.');
+      test.ok(value2 === 2 || value2 === 5, 'The event was raised with the value `' + value1 + '`.');
+      test.ok(value3 === 3 || value3 === 6, 'The event was raised with the value `' + value1 + '`.');            
+    });
 
-     test.done();
+    emitter.emit('test7/*/ns2', 1, 2, 3);
+    emitter.emit('test7/*/ns2', 4, 5, 6);
+
+    test.done();
     
   }
 

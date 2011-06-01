@@ -33,7 +33,7 @@
 
        // if this is a wild card or the completed ns, add the event
        if(i === name.length - 1) {
-         if(ns._listeners.length === this.maxListeners) {
+         if(ns._listeners && ns._listeners.length === this.maxListeners) {
            this.emit('maxListeners', event);
            return;
          }

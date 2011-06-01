@@ -10,6 +10,7 @@ EventEmitter2 is a an implementation of the EventEmitter found in Node.js
  - Wildcards for namespaces
  - Times To Live (TTL), extends the `once` concept
  - Faster performance for emission and event registration
+ - Run in the browser environment
 
 ## Differences 
 
