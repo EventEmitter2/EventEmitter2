@@ -8,6 +8,7 @@
       }
     }
     this._delimiter = conf ? conf.delimiter : '/';
+    this._maxListeners = conf ? conf.maxListeners : 10;
     this._events = {};
   };
 
@@ -32,6 +33,10 @@
 
        // if this is a wild card or the completed ns, add the event
        if(i === name.length - 1) {
+         if(ns._listeners.length === this.maxListeners) {
+           this.emit('maxListeners', event);
+           return;
+         }
          ns._listeners ? ns._listeners.push(listener) : ns._listeners = [listener];
          ns._ttl = ttl;
        }
@@ -235,6 +240,10 @@
       this.listeners(event, null, true);
     }
   };
+  
+  EventEmitter2.prototype.setMaxListeners = function(n) {
+    this.maxListeners = n;
+  }
   
   EventEmitter2.prototype.listeners = function(event, listener, removeAllListeners) {
   

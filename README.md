@@ -1,27 +1,63 @@
 **WORK IN PROGRESS**
 
-## EventEmitter2
+# EventEmitter2
 
-EventEmitter2 is a an implementation of the EventEmitter 
+EventEmitter2 is a an implementation of the EventEmitter found in Node.js
+
+## Motivation
+
+ - Namespaced events
+ - Wildcards for namespaces
+ - Times To Live (TTL), extends the `once` concept
+ - Faster performance for emission and event registration
+
+## Differences 
+
+1. Because wildcard events are supported, the first parameter of a listener is the actual event name that the listener reacted to.
+
+```javascript
+    server.on('foo/*', function(event, value1, value2) {
+      console.log('a values were', value1, value2);
+    });
+```
+
+2. Times To Live, an extension of the `once` concept.
+
+```javascript
+    server.on('foo/*', function(event, value1, value2) {
+      console.log('a values were', value1, value2);
+    }, 15);
+```
+
+
+## API
 
 When an `EventEmitter` instance experiences an error, the typical action is
-to emit an `error` event.  Error events are treated as a special case in node.
+to emit an `error` event. Error events are treated as a special case.
 If there is no listener for it, then the default action is to print a stack
 trace and exit the program.
 
 All EventEmitters emit the event `newListener` when new listeners are
 added.
 
-#### emitter.addListener(event [, key], listener)
-#### emitter.on(event, listener)
+
+#### emitter.addListener(event, listener [, ttl])
+#### emitter.on(event, listener [, ttl])
 
 Adds a listener to the end of the listeners array for the specified event.
 
 ```javascript
-    server.on('get', function(value) {
-      console.log('a value was got!');
+    server.on('data', function(value) {
+      console.log('The event was raised!');
     });
 ```
+
+```javascript
+    server.on('data', function(value) {
+      console.log('This event will be listened to exactly four times.');
+    }, 4);
+```
+
 
 #### emitter.once(event, listener)
 
@@ -32,6 +68,7 @@ Adds a **one time** listener for the event. The listener is invoked only the fir
       console.log('Ah, we have our first value!');
     });
 ```
+
 
 #### emitter.removeListener(event, listener)
 
@@ -45,6 +82,7 @@ Remove a listener from the listener array for the specified event. **Caution**: 
     // ...
     server.removeListener('get', callback);
 ```
+
 
 #### emitter.removeAllListeners([event])
 
