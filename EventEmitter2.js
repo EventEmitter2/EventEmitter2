@@ -305,13 +305,8 @@
       // lets just kill any listeners associated with it.
       //
       var e = this._events[event];
-<<<<<<< HEAD
 
       if (!removeEvents) {
-=======
-  
-      if(!removeEvents) {
->>>>>>> e3fa163ef9c0e5a03f781b271e9f7c216ad12c00
         listeners.push(ns._listeners);
       }
       else {
