@@ -1,20 +1,28 @@
 <DOCTYPE html>
 <html>
   <head>
-    <title>EventVat unit tests.</title>
-    <script src="../lib/EventVat.js"></script>
+
+    <title>EventEmitter tests.</title>
+    
+    <script src="../lib/EventEmitter2.js"></script>
+    <script src="EventEmitter.js"></script>
+    
     <script src="vendor/nodeunit/nodeunit.js"></script>
     <script src="basicEvents.js"></script>
     <script src="namespacedEvents.js"></script>
     <script src="wildcardEvents.js"></script>
     <script src="timesToLive.js"></script>
+    <script src="benchmarks.js"></script>    
+    
     <style>
+
       html{height:100%;-webkit-font-smoothing:antialiased;margin:0;padding:0;border:0;overflow-y:scroll}
       body{height:100%;font-family:Arial,'Helvetica Neue',Helvetica,sans-serif;text-align:left;margin:0;padding:0;border:0;background:#414141 url('tests_bg.png') no-repeat fixed center; background-size: 100%; margin: 50px;}
       input,button,select,option{font-family:Arial,'Helvetica Neue',Helvetica,sans-serif}
       h2,h1{color:#fff;font-size:25px;font-weight:bold;text-shadow:0 1px 4px rgba(0,0,0,0.68);letter-spacing:-1px;margin:0}
       h1{font-size:35px;}
       .pass, .fail, h3 {color:#222;font-size:18px;line-height:24px;text-shadow:0 1px 1px rgba(255,255,255,0.33)}
+
     </style>
   </head>
   <body>
@@ -26,7 +34,8 @@
         'Basic Events': basicEvents,
         'Namespaced Events': namespacedEvents,
         'Wildcard Events': wildcardEvents,
-        'Times To Live': timesToLive
+        'Times To Live': timesToLive,
+        'Benchmarks': benchmarks
       });
 
     </script>

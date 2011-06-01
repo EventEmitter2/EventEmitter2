@@ -1,7 +1,7 @@
 
 ;(function(exports, undefined) {
 
-  exports.EventEmitter2 = function EventEmitter2(conf) {
+  var EventEmitter2 = exports.EventEmitter2 = function(conf) {
     if(conf) {
       if(conf.delimiter === '*') {
         throw new Error('The event can not be delimited by the "*" (wild-card) character.')
@@ -12,7 +12,7 @@
   };
 
   EventEmitter2.prototype.addListener = function(event, listener, ttl) {
-
+   
     var name, ns = this._events;
 
     // Signal that a new listener is being added.
@@ -21,46 +21,46 @@
     // the name has a delimiter
     if(~event.indexOf(this._delimiter)) {
 
-      //split the name into an array
-      name = event.split(this._delimiter);
-    
-      // continue to build out additional namespaces and attach the listener to them
-      for(var i = 0, l = name.length; i < l; i++) {
-      
-        // get the namespace
-        ns = ns[name[i]] || (ns[name[i]] = {});
-      
-        // if this is a wild card or the completed ns, add the event
-        if(i === name.length) {
-          ns._listeners ? ns._listeners.push(listener) : ns._listeners = [listener];
-          ns._ttl = ttl;
-        }
-      }
+     //split the name into an array
+     name = event.split(this._delimiter);
+
+     // continue to build out additional namespaces and attach the listener to them
+     for(var i = 0, l = name.length; i < l; i++) {
+
+       // get the namespace
+       ns = ns[name[i]] || (ns[name[i]] = {});
+
+       // if this is a wild card or the completed ns, add the event
+       if(i === name.length - 1) {
+         ns._listeners ? ns._listeners.push(listener) : ns._listeners = [listener];
+         ns._ttl = ttl;
+       }
+     }
     }
-  
+
     // if the name does not have a delimiter
     else {
 
-      // get a handle to the event
-      var e = ns[event] || (ns[event] = {});
+     // get a handle to the event
+     var e = ns[event] || (ns[event] = {});
 
-      e._listeners ? e._listeners.push(listener) : e._listeners = [listener];
-      e._ttl = ttl;
+     e._listeners ? e._listeners.push(listener) : e._listeners = [listener];
+     e._ttl = ttl;
     }
 
   };
 
   EventEmitter2.prototype.on = EventEmitter2.prototype.addListener;
-
+  
   EventEmitter2.prototype.once = function() {
     this.addListener(arguments, 1);
   };
-
+  
   EventEmitter2.prototype.emit = function(event) {
-
+  
     function invokeListeners(val, args) {
-      if (val && val._listeners) {
-        if(val._ttl) {
+      if (val && val._listeners) { // To-Do: this check should be hoisted upward.
+        if(val._ttl !== 0) {
           for (var k = 0, l = val._listeners.length; k < l; k++) {
             val._listeners[k].apply(this, args);
             val._ttl -= 1;
@@ -69,16 +69,16 @@
         }
       }
     }
-
+  
     // get all the args except the event, make it a real array
     var args = (arguments.length > 1) ? [].slice.call(arguments).slice(1) : arguments;
-
+  
     // if there is a delimiter in the event name
     if(~event.indexOf(this._delimiter)) {
-
+  
       //split the name into an array
       name = event.split(this._delimiter);
-
+  
       var explore = [this._events],
           invoked = false;
         
@@ -135,7 +135,7 @@
                 //
                 continue;
               }
-
+  
               if (ns[part]) {
                 //
                 // If it's not a wild card, but there is an exact
@@ -144,7 +144,7 @@
                 if (ns['*']) {
                   newSets.push(ns['*']);
                 }
-
+  
                 explore[j] = explore[j][part];
               }
               else if (ns['*']) {
@@ -172,7 +172,7 @@
                   newSets.push(ns[key]);
                 }
               }
-
+  
               if (invokeListeners(ns['*'], args)) {
                 invoked = true;
               }
@@ -200,7 +200,7 @@
     
       return invoked;
     }
-
+  
     // if the name does not have a delimiter
     else {
     
@@ -214,14 +214,14 @@
       if (!listeners) {
         return false;
       }
-
+  
       // fire off each of them
       for(var i = 0, l = listeners.length; i < l; i++) {
         listeners[i].apply(this, args);
       }
     }
   }
-
+  
   EventEmitter2.prototype.removeListener = function(event) {
     this.listeners(event, true);
   };
@@ -230,20 +230,20 @@
       this.listeners(event, null, true);
     }
   };
-
+  
   EventEmitter2.prototype.listeners = function(event, listener, removeAllListeners) {
-
+  
     var listeners = []; // the array of listeners to return.
-
+  
     // if there is a delimiter in the event name
     if(~event.indexOf(this._delimiter)) {
-
+  
       //split the name into an array
       name = event.split(this._delimiter);
-
+  
       // continue to build out additional namespaces and attach the listener to them
       for (var i = 0; i < name.length; i++) {
-
+  
         // get the namespace
         ns = ns[name[i]] || (ns[name[i]] = {});
         
@@ -280,13 +280,13 @@
       }
     }
     else {
-
+  
       //
       // this is a simple event, no need to deconstruct the name,
       // lets just kill any listeners associated with it.
       //
       var e = this._events[event];
-
+  
       if(!removeEvents) {     
         listeners.push(ns._listeners);
       }
@@ -303,7 +303,7 @@
         }
       }
     }
-
+  
     return listeners;
   };
 

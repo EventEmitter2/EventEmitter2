@@ -1,9 +1,9 @@
 
 this.basicEvents = {
-  '1. A listener should fire a callback for an event when the event name is emitted.': function (test) {
+  '1. A listener should react to an event when the event name is emitted.': function (test) {
 
     if(require) {
-      var EventEmitter2 = require('./../EventEmitter').EventEmitter2;
+      var EventEmitter2 = require('../EventEmitter2').EventEmitter2;
     }
 
     var emitter = new EventEmitter2();
@@ -11,19 +11,23 @@ this.basicEvents = {
     emitter.on('test1', function () {
       test.ok(true, 'The event was raised');
     });
-    
+
     emitter.emit('test1');
 
     test.done();
 
   },
-  '2. A listener should fire a callback with a parameter for an event when the event name is emitted.': function (test) {
+  '2. A listener should react with a parameter to an event when the event name is emitted.': function (test) {
+
+    if(require) {
+      var EventEmitter2 = require('../EventEmitter2').EventEmitter2;
+    }
 
     var emitter = new EventEmitter2();
 
     emitter.on('test2', function (value1) {
       test.ok(true, 'The event was raised');
-      test.ok(typeof value !== 'undefined', 'The event was raised with the value', value1);
+      test.ok(typeof value1 !== 'undefined', 'The event was raised with the value `' + value1 + '`.');
     });
     
     emitter.emit('test2');
@@ -31,22 +35,92 @@ this.basicEvents = {
     test.done();
 
   },  
-  '3. A listener should fire a callback with multiple parameters for an event when the event name is emitted.': function (test) {
+  '3. A listener should react with multiple parameters to an event when the event name is emitted.': function (test) {
+
+    if(require) {
+      var EventEmitter2 = require('../EventEmitter2').EventEmitter2;
+    }
 
     var emitter = new EventEmitter2();
 
     emitter.on('test3', function (value1, value2, value3) {
       test.ok(true, 'The event was raised');
       test.ok(arguments.length === 3, 'The event was raised with the correct number of arguments');
-      test.ok(typeof value !== 'undefined', 'The event was raised with the values', value1, value2, value3);
+      test.ok(typeof value1 !== 'undefined', 'The event was raised with the value `' + value1 + '`.');
+      test.ok(typeof value2 !== 'undefined', 'The event was raised with the value `' + value1 + '`.');
+      test.ok(typeof value3 !== 'undefined', 'The event was raised with the value `' + value1 + '`.');            
     });
-    
+
     emitter.emit('test3', 1, 2, 3);
 
     test.done();
 
   },
-  '4. ': function (test) {
+  '4. A listener should react with multiple parameters to an event when the event name multiple times.': function (test) {
+
+    if(require) {
+      var EventEmitter2 = require('../EventEmitter2').EventEmitter2;
+    }
+
+    var emitter = new EventEmitter2();
+
+    emitter.on('test4', function (value1, value2, value3) {
+      test.ok(true, 'The event was raised');
+      test.ok(arguments.length === 3, 'The event was raised with the correct number of arguments');
+      test.ok(value1 === 1 || value1 === 4, 'The event was raised with the value `' + value1 + '`.');
+      test.ok(value2 === 2 || value2 === 5, 'The event was raised with the value `' + value1 + '`.');
+      test.ok(value3 === 3 || value3 === 6, 'The event was raised with the value `' + value1 + '`.');            
+    });
+
+    emitter.emit('test4', 1, 2, 3);
+    emitter.emit('test4', 4, 5, 6);
+
+    test.done();
+
+    test.ok(true, 'everythings ok');
+    test.done();
+
+  },
+  
+  '5. Events can be namespaced.': function (test) {
+
+    if(require) {
+      var EventEmitter2 = require('../EventEmitter2').EventEmitter2;
+    }
+
+    var emitter = new EventEmitter2();
+
+    emitter.on('test5/ns1', function () {
+      test.ok(true, 'The event was raised');
+    });
+
+    emitter.emit('test5/ns1');
+    test.done();
+
+  },
+  '6. Events can be namespaced and accept values.': function (test) {
+
+    // if(require) {
+    //   var EventEmitter2 = require('../EventEmitter2').EventEmitter2;
+    // }
+
+    //var emitter = new EventEmitter2();
+
+    //emitter.on('test6/ns1', function (value1) {
+
+      //test.ok(true, 'The event was raised');
+      //test.ok(typeof value1 === 'undefined', 'The event was raised with the value `' + value1 + '`.');
+    //});
+
+    //emitter.emit('test2/ns1');
+    
+    test.ok(true, 'The event was raised');
+    test.done();
+
+  },
+  '7. ': function (test) {
+
+
 
     // var tests = {
     //  'foo:*': 4,
@@ -74,25 +148,6 @@ this.basicEvents = {
     //   assert.equal(count, tests[event]);
     // });
 
-
-    test.ok(true, 'everythings ok');
-    test.done();
-
-  },
-  
-  '5. ': function (test) {
-
-    test.ok(true, 'everythings ok');
-    test.done();
-
-  },
-  '6. ': function (test) {
-
-    test.ok(true, 'everythings ok');
-    test.done();
-
-  },
-  '7. ': function (test) {
 
     test.ok(true, 'everythings ok');
     test.done();
