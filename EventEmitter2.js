@@ -71,7 +71,7 @@
     }
   
     // get all the args except the event, make it a real array
-    var args = (arguments.length > 1) ? [].slice.call(arguments).slice(1) : arguments;
+    var args = arguments;
   
     // if there is a delimiter in the event name
     if(~event.indexOf(this._delimiter)) {
