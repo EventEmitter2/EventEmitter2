@@ -32,12 +32,12 @@ EventEmitter2 is a an implementation of the EventEmitter found in Node.js
     });
 ```
 
- - Times To Live, an extension of the `once` concept.
+ - A new method was added, an extension of the `once` concept.
 
 ```javascript
-    server.on('foo.*', function(event, value1, value2) {
+    server.many('foo', function(event, value1, value2) {
       console.log('a values were', value1, value2);
-    }, 15);
+    }, 4);
 ```
 
 
@@ -52,8 +52,8 @@ All EventEmitters emit the event `newListener` when new listeners are
 added.
 
 
-#### emitter.addListener(event, listener [, ttl])
-#### emitter.on(event, listener [, ttl])
+#### emitter.addListener(event, listener)
+#### emitter.on(event, listener)
 
 Adds a listener to the end of the listeners array for the specified event.
 
@@ -73,6 +73,16 @@ Adds a listener to the end of the listeners array for the specified event.
 #### emitter.once(event, listener)
 
 Adds a **one time** listener for the event. The listener is invoked only the first time the event is fired, after which it is removed.
+
+```javascript
+    server.once('get', function (value) {
+      console.log('Ah, we have our first value!');
+    });
+```
+
+#### emitter.many(event, listener)
+
+Adds a listener that will execute **n times** for the event before being removed. The listener is invoked only the first time the event is fired, after which it is removed.
 
 ```javascript
     server.once('get', function (value) {
