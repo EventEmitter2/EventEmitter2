@@ -24,7 +24,7 @@ this.timesToLive = {
     test.done();
 
   },
-  '1. A listener with a TTL of 4 should only listen 4 times.': function (test) {
+  '2. A listener with a TTL of 4 should only listen 4 times.': function (test) {
 
     var EventEmitter2;
 
@@ -38,8 +38,7 @@ this.timesToLive = {
     var emitter = new EventEmitter2, count = 0;
     
     emitter.on('test1', function (event, value1) {
-      console.log(value1)
-      test.ok(count <= 4, 'The event was raised ' + value1 + ' times.');
+      test.ok(count <= 4, 'The event was raised 4 times.');
       count++;
     }, 4);
 

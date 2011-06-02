@@ -265,7 +265,7 @@ this.basicEvents = {
 
     var emitter = new EventEmitter2();
 
-    emitter.on('test7/ns1/ns2', function (event, value1, value2, value3) {
+    emitter.on('test12/ns1/ns2', function (event, value1, value2, value3) {
       test.ok(true, 'The event was raised');
       test.ok(arguments.length === 4, 'The event was raised with the correct number of arguments');
       test.ok(value1 === 1 || value1 === 4, 'The event was raised with the value `' + value1 + '`.');
@@ -273,11 +273,38 @@ this.basicEvents = {
       test.ok(value3 === 3 || value3 === 6, 'The event was raised with the value `' + value1 + '`.');            
     });
 
-    emitter.emit('test7/*/ns2', 1, 2, 3);
-    emitter.emit('test7/*/ns2', 4, 5, 6);
+    emitter.emit('test12/*/ns2', 1, 2, 3);
+    emitter.emit('test12/*/ns2', 4, 5, 6);
 
     test.done();
     
+  },
+  '13. List all the listeners for a particular event.': function(test) {
+
+    var EventEmitter2;
+
+    if(typeof require !== 'undefined') {
+      EventEmitter2 = require('../EventEmitter2').EventEmitter2;
+    }
+    else {
+      EventEmitter2 = window.EventEmitter2;
+    }    
+
+    var emitter = new EventEmitter2();
+
+    emitter.on('test13', function (event) {
+      console.log('1');
+    });
+
+    emitter.on('test13', function (event) {
+      console.log('2');
+    });    
+
+    var listeners = emitter.listeners('test13');
+
+    test.ok(listeners.length === 2, 'The event `test13` should have 2 listeners');
+    test.done();
+
   }
 
 };

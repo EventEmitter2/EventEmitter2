@@ -1,6 +1,7 @@
 ;!function(exports, undefined) {
 
   exports.EventEmitter2 = EventEmitter2;
+
   function EventEmitter2(conf) {
     if (conf) {
       if (conf.delimiter === '*') {
@@ -12,7 +13,7 @@
     this._events = {};
   };
 
-  EventEmitter2.prototype.addListener = function(event, listener, ttl) {
+  EventEmitter2.prototype.addListener = function(event, listener) {
 
     var name, ns = this._events;
 
@@ -45,13 +46,24 @@
       return;
     }
     ns._listeners ? ns._listeners.push(listener) : ns._listeners = [listener];
-    ns._ttl = ttl;
   };
 
   EventEmitter2.prototype.on = EventEmitter2.prototype.addListener;
 
   EventEmitter2.prototype.once = function(event, listener) {
-    this.addListener(event, listener, 1);
+    this.many(event, listener, 1);
+  };
+
+  EventEmitter2.prototype.many = function(event, listener, ttl) {
+
+    this.addListener(event, function() {
+      if(ttl-- == 0) {
+        this.removeListener(event, listener);
+      }
+      else {
+        listener.apply(null, arguments);
+      }
+    }.bind(this))
   };
 
   EventEmitter2.prototype.emit = function(event) {
@@ -59,16 +71,10 @@
     var self = this;
 
     function invokeListeners(val) {
-      if (val._ttl-- > 0) {
-        for (var k = 0, l = val._listeners.length; k < l; k++) {
-          val._listeners[k].apply(this, args);
-        }
-        return true;
+      for (var k = 0, l = val._listeners.length; k < l; k++) {
+        val._listeners[k].apply(this, args);
       }
-      else if (val._ttl <= 0) {
-
-        self.listeners(event, null, true);
-      }
+      return true;
     }
 
     // get all the args except the event, make it a real array
@@ -112,7 +118,7 @@
             if (part === '*') {
               for (key in ns) {
                 //
-                // Remark: This could cause some collisions for `_listeners`, and `_ttl`.
+                // Remark: This could cause some collisions for `_listeners`.
                 //
                 if (ns[key] && ns[key]._listeners) {
                   invokeListeners(ns[key]);
@@ -223,110 +229,27 @@
       }
 
       // fire off each of them
-      if (this._events[event]._ttl <= 0) {
-        listeners = [];
-      }
-      else {
-        for(i = 0, l = listeners.length; i < l; i++) {
-          listeners[i].apply(this, args);
-        }
-        this._events[event]._ttl--;
+      for(i = 0, l = listeners.length; i < l; i++) {
+        listeners[i].apply(this, args);
       }
     }
     return true;
   };
 
-  EventEmitter2.prototype.removeListener = function(event) {
-    this.listeners(event, true);
-  };
-
-  EventEmitter2.prototype.removeAllListeners = function() {
-    for (var event in this._events) {
-      this.listeners(event, null, true);
-    }
-  };
+  EventEmitter2.prototype.removeListener = function(event) { this._events[event] = {} };
+  EventEmitter2.prototype.removeAllListeners = function(){ this._events = {}; };
 
   EventEmitter2.prototype.setMaxListeners = function(n) {
     this.maxListeners = n;
-  }
+  };
 
-  EventEmitter2.prototype.listeners = function(event, listener, removeAllListeners) {
-
-    var listeners = [], i = 0, j = 0; // the array of listeners to return.
-
-    // if there is a delimiter in the event name
-    if (~event.indexOf(this._delimiter)) {
-
-      //split the name into an array
-      name = event.split(this._delimiter);
-
-      // continue to build out additional namespaces and attach the listener to them
-      for (i = 0; i < name.length; i++) {
-
-        // get the namespace
-        ns = ns[name[i]] || (ns[name[i]] = {});
-
-        //
-        // if this is a wild card or the completed ns, remove the event,
-        // also reset the times to live and the time to die.
-        //
-        if (ns._listeners) {
-
-          //
-          // if there is only one argument to this method, we are just
-          // looking to see what listeners exist and then report on that.
-          //
-          if (arguments.length === 1) {
-            listeners.push(ns._listeners);
-          } else {
-
-            //
-            // if we have some arguments, we're considering deleteing some
-            // or possibly all of the listeners associated with an event.
-            //
-            if (removeAllListeners) {
-              ns = null;
-            }
-            else {
-              for (j = 0; j < ns._listeners.length; j++) {
-                if (ns._listeners[j] === listener) {
-                  ns = null;
-                }
-              }
-            }
-          }
-        }
-      }
+  EventEmitter2.prototype.listeners = function(event) {
+    if(this._events[event]) {
+      return this._events[event]._listeners;
     }
     else {
-
-      //
-      // this is a simple event, no need to deconstruct the name,
-      // lets just kill any listeners associated with it.
-      //
-      var e = this._events[event];
-
-      if (!removeEvents) {
-        // this is not a call to remove event listeners, so lets push to the listeners array.
-        listeners.push(ns._listeners);
-      }
-      else {
-        // determine if we should remove all the events.
-        if (removeAllListeners) {
-          e = null;
-        }
-        else {
-          // only remove the listener specified for this event.
-          for (i = 0; i < e._listeners.length; i++) {
-            if (e._listeners[i] === listener) {
-              e = null;
-            }
-          }
-        }
-      }
+      return false;
     }
-
-    return listeners;
   };
 
 }(typeof exports === 'undefined' ? window : exports);
