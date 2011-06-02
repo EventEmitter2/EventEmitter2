@@ -8,7 +8,7 @@ EventEmitter2 is a an implementation of the EventEmitter found in Node.js
 
  - Namespaced events
  - Wildcards for namespaces
- - Times To Live (TTL), extends the `once` concept
+ - Times To Listen (TTL), extends the `once` concept
  - Browser environment compatibility
  - As good or better performance for emission and listener registration as Node.js core EventEmitter
 
@@ -32,7 +32,7 @@ EventEmitter2 is a an implementation of the EventEmitter found in Node.js
     });
 ```
 
- - A new method was added, an extension of the `once` concept.
+ - A new method was adde. Times to listen, an extension of the `once` concept.
 
 ```javascript
     server.many('foo', function(event, value1, value2) {
@@ -80,14 +80,14 @@ Adds a **one time** listener for the event. The listener is invoked only the fir
     });
 ```
 
-#### emitter.many(event, listener)
+#### emitter.many(event, listener, timesToListen)
 
 Adds a listener that will execute **n times** for the event before being removed. The listener is invoked only the first time the event is fired, after which it is removed.
 
 ```javascript
-    server.once('get', function (value) {
+    server.many('get', function (value) {
       console.log('Ah, we have our first value!');
-    });
+    }, 4);
 ```
 
 
