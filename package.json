@@ -1,6 +1,6 @@
 {
   "name": "eventemitter2",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A Node.js event emitter implementation with namespaces, wildcards, TTL and browser support",
   "keywords": ["event", "events", "emitter", "eventemitter"],
   "author" : "hij1nx <hij1nx@me.com> http://twitter.com/hij1nx",
