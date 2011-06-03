@@ -5,7 +5,8 @@
   "keywords": ["event", "events", "emitter", "eventemitter"],
   "author" : "hij1nx <hij1nx@me.com> http://twitter.com/hij1nx",
   "contributers" : [
-    "Charlie Robbins <charlie@nodejitsu.com> http://twitter.com/indexzero"
+    "Charlie Robbins <charlie@nodejitsu.com> http://twitter.com/indexzero",
+    "Fedor Indutny <fedor.indutny@gmail.com> http://www.twitter.com/indutny"
   ],
   "licenses": [{"type": "MIT"}],
   "repositories": [{
