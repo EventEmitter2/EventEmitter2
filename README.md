@@ -11,7 +11,7 @@ EventEmitter2 is a an implementation of the EventEmitter found in Node.js
  - Times To Listen (TTL), extends the `once` concept
  - Browser environment compatibility
  - As good or better performance for emission and listener registration as Node.js core EventEmitter
-
+ - Small. EventEmitter2.min.js (2.2K) VS. EventEmitter.min.js (2.0K)
 
 ## Differences (Non breaking, compatible with existing EventEmitter)
 
