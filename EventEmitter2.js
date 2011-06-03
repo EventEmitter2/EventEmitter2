@@ -69,7 +69,8 @@
   };
 
   EventEmitter2.prototype.emit = function(event) {
-    var self = this;
+
+    var self = this, args = arguments, i = 0, j = 0;
 
     function invokeListeners(val) {
       for (var k = 0, l = val._listeners.length; k < l; k++) {
@@ -77,9 +78,6 @@
       }
       return true;
     }
-
-    // Get all the args except the event, make it a real array
-    var args = arguments, i = 0, j = 0;
 
     // If there is a delimiter in the event name
     if (~event.indexOf(this._delimiter)) {
@@ -117,11 +115,13 @@
             //
             if (part === '*') {
               for (key in ns) {
-                //
-                // Remark: This could cause some collisions for `_listeners`.
-                //
-                if (ns[key] && ns[key]._listeners) {
-                  invokeListeners(ns[key]);
+                if (ns.hasOwnProperty(key)) {
+                  //
+                  // Remark: This could cause some collisions for `_listeners`.
+                  //
+                  if (ns[key] && ns[key]._listeners) {
+                    invokeListeners(ns[key]);
+                  }
                 }
               }
               invoked = true;
@@ -130,14 +130,14 @@
               if (ns[part] && ns[part]._listeners && invokeListeners(ns[part])) {
                 invoked = true;
               }
-
-              if (ns['*'] && ns['*']._listeners && invokeListeners(ns['*'])) {
+              else if (ns['*'] && ns['*']._listeners && invokeListeners(ns['*'])) {
                 invoked = true;
               }
             }
           }
           else {
             if (part !== '*') {
+
               if (!ns[part] && !ns['*']) {
                 //
                 // If it's not a wild card and there isn't a wild
