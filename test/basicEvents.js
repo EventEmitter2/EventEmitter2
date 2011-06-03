@@ -112,11 +112,11 @@ this.basicEvents = {
 
     var emitter = new EventEmitter2();
 
-    emitter.on('test5/ns1', function () {
+    emitter.on('test5.ns1', function () {
       test.ok(true, 'The event was raised');
     });
 
-    emitter.emit('test5/ns1');
+    emitter.emit('test5.ns1');
     test.done();
 
   },
@@ -133,12 +133,12 @@ this.basicEvents = {
 
     var emitter = new EventEmitter2();
 
-    emitter.on('test6/ns1', function (event, value1) {
+    emitter.on('test6.ns1', function (event, value1) {
       test.ok(true, 'The event was raised');
       test.ok(typeof value1 !== 'undefined', 'The event was raised with the value `' + value1 + '`.');
     });
 
-    emitter.emit('test6/ns1', 1);
+    emitter.emit('test6.ns1', 1);
     test.done();    
 
   },
@@ -150,7 +150,7 @@ this.basicEvents = {
 
      var emitter = new EventEmitter2();
 
-     emitter.on('test7/ns1', function (event, value1, value2, value3) {
+     emitter.on('test7.ns1', function (event, value1, value2, value3) {
        test.ok(true, 'The event was raised');
        test.ok(arguments.length === 4, 'The event was raised with the correct number of arguments');
        test.ok(value1 === 1 || value1 === 4, 'The event was raised with the value `' + value1 + '`.');
@@ -158,8 +158,8 @@ this.basicEvents = {
        test.ok(value3 === 3 || value3 === 6, 'The event was raised with the value `' + value1 + '`.');            
      });
 
-     emitter.emit('test7/ns1', 1, 2, 3);
-     emitter.emit('test7/ns1', 4, 5, 6);
+     emitter.emit('test7.ns1', 1, 2, 3);
+     emitter.emit('test7.ns1', 4, 5, 6);
 
      test.done();
 
@@ -177,11 +177,11 @@ this.basicEvents = {
 
     var emitter = new EventEmitter2();
 
-    emitter.on('test8/*', function () {
+    emitter.on('test8.*', function () {
       test.ok(true, 'The event was raised');
     });
 
-    emitter.emit('test8/ns1');
+    emitter.emit('test8.ns1');
 
     test.done();
 
@@ -199,11 +199,11 @@ this.basicEvents = {
 
     var emitter = new EventEmitter2();
 
-    emitter.on('test9/ns1', function () {
+    emitter.on('test9.ns1', function () {
       test.ok(true, 'The event was raised');
     });
 
-    emitter.emit('test9/*');
+    emitter.emit('test9.*');
 
     test.done();
 
@@ -221,11 +221,11 @@ this.basicEvents = {
 
     var emitter = new EventEmitter2();
 
-    emitter.on('test10/*/foo', function () {
+    emitter.on('test10.*.foo', function () {
       test.ok(true, 'The event was raised');
     });
 
-    emitter.emit('test10/ns1/foo');
+    emitter.emit('test10.ns1.foo');
 
     test.done();    
 
@@ -243,11 +243,11 @@ this.basicEvents = {
 
     var emitter = new EventEmitter2();
 
-    emitter.on('test11/ns1/foo', function () {
+    emitter.on('test11.ns1.foo', function () {
       test.ok(true, 'The event was raised');
     });
 
-    emitter.emit('test11/*/foo');
+    emitter.emit('test11.*.foo');
 
     test.done();    
 
@@ -265,7 +265,7 @@ this.basicEvents = {
 
     var emitter = new EventEmitter2();
 
-    emitter.on('test12/ns1/ns2', function (event, value1, value2, value3) {
+    emitter.on('test12.ns1.ns2', function (event, value1, value2, value3) {
       test.ok(true, 'The event was raised');
       test.ok(arguments.length === 4, 'The event was raised with the correct number of arguments');
       test.ok(value1 === 1 || value1 === 4, 'The event was raised with the value `' + value1 + '`.');
@@ -273,8 +273,8 @@ this.basicEvents = {
       test.ok(value3 === 3 || value3 === 6, 'The event was raised with the value `' + value1 + '`.');            
     });
 
-    emitter.emit('test12/*/ns2', 1, 2, 3);
-    emitter.emit('test12/*/ns2', 4, 5, 6);
+    emitter.emit('test12.*.ns2', 1, 2, 3);
+    emitter.emit('test12.*.ns2', 4, 5, 6);
 
     test.done();
     

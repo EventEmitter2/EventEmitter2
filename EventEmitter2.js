@@ -69,7 +69,6 @@
   };
 
   EventEmitter2.prototype.emit = function(event) {
-
     var self = this;
 
     function invokeListeners(val) {
@@ -79,13 +78,13 @@
       return true;
     }
 
-    // get all the args except the event, make it a real array
+    // Get all the args except the event, make it a real array
     var args = arguments, i = 0, j = 0;
 
-    // if there is a delimiter in the event name
+    // If there is a delimiter in the event name
     if (~event.indexOf(this._delimiter)) {
 
-      //split the name into an array
+      // Split the name into an array
       name = event.split(this._delimiter);
 
       var explore = [this._events],
@@ -100,8 +99,7 @@
         //     emit('foo/*/bazz') ==> ['foo', '*', 'bazz']
         //
         var part = name[i],
-            newSets = [],
-            removeAt = [];
+            newSets = [];
 
         for (j = 0; j < explore.length; j++) {
           //
@@ -188,20 +186,12 @@
               }
 
               if (ns['*'] && ns['*']._listeners && invokeListeners(ns['*'])) {
-
                 invoked = true;
               }
 
-              removeAt.push(j);
+              explore.splice(j, 1);
             }
           }
-        }
-
-        for (j = 0; j < removeAt.length; j++) {
-          //
-          // Remove stale sets that are no longer of interest.
-          //
-          explore.splice(j, 1);
         }
 
         if (newSets.length) {
