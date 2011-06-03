@@ -51,10 +51,10 @@
   EventEmitter2.prototype.on = EventEmitter2.prototype.addListener;
 
   EventEmitter2.prototype.once = function(event, listener) {
-    this.many(event, listener, 1);
+    this.many(event, 1, listener);
   };
 
-  EventEmitter2.prototype.many = function(event, listener, ttl) {
+  EventEmitter2.prototype.many = function(event, ttl, listener) {
 
     var self = this;
 
