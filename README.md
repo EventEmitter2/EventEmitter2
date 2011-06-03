@@ -66,7 +66,7 @@ Adds a listener to the end of the listeners array for the specified event.
 ```javascript
     server.on('data', function(value) {
       console.log('This event will be listened to exactly four times.');
-    }, 4);
+    });
 ```
 
 
