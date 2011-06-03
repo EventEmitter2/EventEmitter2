@@ -50,5 +50,36 @@ this.timesToLive = {
 
     test.done();
 
-  }
+  },
+  '3. A listener with a TTL of 4 should only listen 4 times and pass parameters.': function (test) {
+
+    var EventEmitter2;
+
+    if(typeof require !== 'undefined') {
+      EventEmitter2 = require('../EventEmitter2').EventEmitter2;
+    }
+    else {
+      EventEmitter2 = window.EventEmitter2;
+    }
+
+    var emitter = new EventEmitter2, count = 0;
+
+    emitter.on('test1', function (event, value1, value2, value3) {
+      test.ok(typeof value1 !== 'undefined', 'got value 1');
+      test.ok(typeof value2 !== 'undefined', 'got value 2');
+      test.ok(typeof value3 !== 'undefined', 'got value 3');
+      test.ok(count <= 4, 'The event was raised 4 times.');
+      count++;
+    }, 4);
+
+    emitter.emit('test1', 1, 'A', false);
+    emitter.emit('test1', 2, 'A', false);
+    emitter.emit('test1', 3, 'A', false);
+    emitter.emit('test1', 4, 'A', false);
+    emitter.emit('test1', 5, 'A', false);
+
+    test.done();
+
+  }  
+  
 };

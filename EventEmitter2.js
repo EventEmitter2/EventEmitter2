@@ -56,14 +56,16 @@
 
   EventEmitter2.prototype.many = function(event, listener, ttl) {
 
+    var self = this;
+
     this.addListener(event, function() {
       if(ttl-- == 0) {
-        this.removeListener(event, listener);
+        self.removeListener(event, listener);
       }
       else {
         listener.apply(null, arguments);
       }
-    }.bind(this))
+    });
   };
 
   EventEmitter2.prototype.emit = function(event) {
@@ -215,19 +217,9 @@
     }
 
     // if the name does not have a delimiter
-    else {
+    else if (this._events[event] && this._events[event]._listeners) {
 
-      if (!this._events[event]) {
-        return false;
-      }
-
-      // get a handle to the listeners
-      var listeners = this._events[event]._listeners || null;
-
-      if (listeners === null) {
-        return false;
-      }
-
+      var listeners = this._events[event]._listeners;
       // fire off each of them
       for(i = 0, l = listeners.length; i < l; i++) {
         listeners[i].apply(this, args);
