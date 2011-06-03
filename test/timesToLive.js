@@ -80,6 +80,50 @@ this.timesToLive = {
 
     test.done();
 
+  },
+  '3. Remove an event listener by signature.': function (test) {
+
+    var EventEmitter2;
+
+    if(typeof require !== 'undefined') {
+      EventEmitter2 = require('../EventEmitter2').EventEmitter2;
+    }
+    else {
+      EventEmitter2 = window.EventEmitter2;
+    }
+
+    var emitter = new EventEmitter2, count = 0;
+
+    function f1(event) {
+      "event A";
+      test.ok(count < 3, 'The event was raised less than 3 times.');
+      count++;
+    }
+
+    emitter.on('test1', f1);
+    
+    function f2(event) {
+      "event B";
+      test.ok(count < 3, 'The event was raised less than 3 times.');
+      count++;      
+    }    
+    
+    emitter.on('test1', f2);
+
+    function f3(event) {
+      "event C";
+      test.ok(count < 3, 'The event was raised less than 3 times.');
+      count++;      
+    }
+
+    emitter.on('test1', f3);
+
+    emitter.removeListener('test1', f2);
+
+    emitter.emit('test1');
+
+    test.done();
+
   }  
   
 };

@@ -218,7 +218,23 @@
     return true;
   };
 
-  EventEmitter2.prototype.removeListener = function(event) { this._events[event] = {} };
+  EventEmitter2.prototype.removeListener = function(event, listener) {
+    if(listener && this._events[event] && this._events[event]._listeners) {
+      // Make a reference to all the listeners for the event.
+      var listeners = this._events[event]._listeners;
+      // Loop through and check the signatures to find the exact listener to remove.
+      for(var i = 0, l = listeners.length; i < l; i++) {
+        if(listener === listeners[i]) {
+          // Break out and return the removed listener.
+          return listeners.splice(i, 1);
+        }
+      }
+    }
+    else {
+      this._events[event] = {};
+    }
+  };
+
   EventEmitter2.prototype.removeAllListeners = function(){ this._events = {}; };
 
   EventEmitter2.prototype.setMaxListeners = function(n) {
