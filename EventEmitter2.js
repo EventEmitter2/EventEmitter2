@@ -215,6 +215,18 @@
         listeners[i].apply(this, args);
       }
     }
+    // if this is the special wildcard only delimiter
+    else if (event === '*') {
+      //fire every listener (this is terrible)
+      var listeners;
+      for ( var e = 0; e < this._events.length; e++) {
+        listeners = this._events[e];
+        // fire off each of them
+        for(i = 0, l = listeners.length; i < l; i++) {
+          listeners[i].apply(this, args);
+        }
+      }
+    }
     return true;
   };
 
