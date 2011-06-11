@@ -337,18 +337,15 @@ this.basicEvents = {
 
     var emitter = new EventEmitter2();
 
-    var emitted = 0;
-
     emitter.on('*', function () {
-      emitted++;
       test.ok(true, 'The event was raised');
     });
 
     emitter.emit('test14');
     emitter.emit('test14.ns1');
-    emitter.emit('test14.ns2.a');
+    emitter.emit('test14.ns1.ns2');
 
-    test.ok(emitted === 3, emitted + '/3 events raised');
+    emitter.emit('*');
 
     test.expect(4);
     test.done();
@@ -365,23 +362,17 @@ this.basicEvents = {
     }
 
     var emitter = new EventEmitter2();
-    var emitted = 0;
 
     emitter.on('test15', function () {
       test.ok(true, 'The event test15 was raised');
     });
     emitter.on('test15.ns1', function () {
-      test.ok(true, 'The event test15.ns1 was raised');
-    });
-    emitter.on('test15.ns2.a', function () {
-      test.ok(true, 'The event test15.ns2.a was raised');
+      test.ok(false, 'a dead event was raised!');
     });
 
     emitter.emit('*');
 
-    test.ok(emitted === 3, emitted + '/3 events raised');
-
-    test.expect(4);
+    test.expect(1);
     test.done();
   }
 

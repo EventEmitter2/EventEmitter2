@@ -80,7 +80,7 @@
     }
 
     // If there is a delimiter in the event name
-    if (~event.indexOf(this._delimiter)) {
+    if (~event.indexOf(this._delimiter) || event === '*') {
 
       // Split the name into an array
       name = event.split(this._delimiter);
@@ -215,18 +215,11 @@
         listeners[i].apply(this, args);
       }
     }
-    // if this is the special wildcard only delimiter
-    else if (event === '*') {
-      //fire every listener (this is terrible)
-      var listeners;
-      for ( var e = 0; e < this._events.length; e++) {
-        listeners = this._events[e];
-        // fire off each of them
-        for(i = 0, l = listeners.length; i < l; i++) {
-          listeners[i].apply(this, args);
-        }
-      }
+    // if this emitting event was never registerd, but a wildcard was
+    else if (this._events['*'] && this._events['*']._listeners){
+      invoked = invokeListeners(this._events['*']);
     }
+
     return true;
   };
 
