@@ -19,6 +19,7 @@ this.basicEvents = {
 
     emitter.emit('test1');
 
+    test.expect(1);
     test.done();
 
   },
@@ -42,6 +43,7 @@ this.basicEvents = {
     
     emitter.emit('test2', 1);
 
+    test.expect(2);
     test.done();
 
   },  
@@ -68,6 +70,7 @@ this.basicEvents = {
 
     emitter.emit('test3', 1, 2, 3);
 
+    test.expect(5);
     test.done();
 
   },
@@ -95,6 +98,7 @@ this.basicEvents = {
     emitter.emit('test4', 1, 2, 3);
     emitter.emit('test4', 4, 5, 6);
 
+    test.expect(10);
     test.done();
 
   },
@@ -117,6 +121,8 @@ this.basicEvents = {
     });
 
     emitter.emit('test5.ns1');
+
+    test.expect(1);
     test.done();
 
   },
@@ -139,6 +145,8 @@ this.basicEvents = {
     });
 
     emitter.emit('test6.ns1', 1);
+
+    test.expect(2);
     test.done();    
 
   },
@@ -166,6 +174,7 @@ this.basicEvents = {
      emitter.emit('test7.ns1', 1, 2, 3);
      emitter.emit('test7.ns1', 4, 5, 6);
 
+     test.expect(10);
      test.done();
   },    
   '8. A listener should support wild cards.': function (test) {
@@ -187,6 +196,7 @@ this.basicEvents = {
 
     emitter.emit('test8.ns1');
 
+    test.expect(1);
     test.done();
 
   },
@@ -209,6 +219,7 @@ this.basicEvents = {
 
     emitter.emit('test9.*');
 
+    test.expect(1);
     test.done();
 
   },
@@ -231,6 +242,7 @@ this.basicEvents = {
 
     emitter.emit('test10.ns1.foo');
 
+    test.expect(1);
     test.done();    
 
   },
@@ -253,6 +265,7 @@ this.basicEvents = {
 
     emitter.emit('test11.*.foo');
 
+    test.expect(1);
     test.done();    
 
   },
@@ -280,6 +293,7 @@ this.basicEvents = {
     emitter.emit('test12.*.ns2', 1, 2, 3);
     emitter.emit('test12.*.ns2', 4, 5, 6);
 
+    test.expect(10);
     test.done();
     
   },
@@ -323,13 +337,20 @@ this.basicEvents = {
 
     var emitter = new EventEmitter2();
 
+    var emitted = 0;
+
     emitter.on('*', function () {
+      emitted++;
       test.ok(true, 'The event was raised');
     });
 
     emitter.emit('test14');
     emitter.emit('test14.ns1');
     emitter.emit('test14.ns2.a');
+
+    test.ok(emitted === 3, emitted + '/3 events raised');
+
+    test.expect(4);
     test.done();
 
   },
@@ -344,6 +365,7 @@ this.basicEvents = {
     }
 
     var emitter = new EventEmitter2();
+    var emitted = 0;
 
     emitter.on('test15', function () {
       test.ok(true, 'The event test15 was raised');
@@ -357,6 +379,9 @@ this.basicEvents = {
 
     emitter.emit('*');
 
+    test.ok(emitted === 3, emitted + '/3 events raised');
+
+    test.expect(4);
     test.done();
   }
 
