@@ -324,7 +324,7 @@ this.basicEvents = {
     test.done();
 
   },
-  '14. A listener should support total wild card.': function (test) {
+   '14. A listener should support total wild card.': function (test) {
 
     var EventEmitter2;
 
@@ -345,13 +345,36 @@ this.basicEvents = {
     emitter.emit('test14.ns1');
     emitter.emit('test14.ns1.ns2');
 
-    emitter.emit('*');
-
-    test.expect(4);
+    test.expect(3);
     test.done();
 
   },
-  '15. Should be able to fire on every event.' : function (test) {
+  '15. A listener should support complex total wild card.': function (test) {
+
+    var EventEmitter2;
+
+    if(typeof require !== 'undefined') {
+      EventEmitter2 = require('../EventEmitter2').EventEmitter2;
+    }
+    else {
+      EventEmitter2 = window.EventEmitter2;
+    }
+
+    var emitter = new EventEmitter2();
+
+    emitter.on('*', function () {
+      test.ok(true, 'The event was raised');
+    });
+
+    emitter.emit('test14.*');
+    emitter.emit('test14.*.ns2')
+    emitter.emit('*');
+
+    test.expect(3);
+    test.done();
+
+  },
+  '15. Should be able to fire with wildcard start.' : function (test) {
     var EventEmitter2;
 
     if(typeof require !== 'undefined') {
@@ -371,8 +394,9 @@ this.basicEvents = {
     });
 
     emitter.emit('*');
+    emitter.emit('*.ns1');
 
-    test.expect(1);
+    test.expect(2);
     test.done();
   }
 
