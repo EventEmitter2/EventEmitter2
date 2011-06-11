@@ -32,7 +32,7 @@ EventEmitter2 is a an implementation of the EventEmitter found in Node.js
     });
 ```
 
- - A new method was adde. Times to listen, an extension of the `once` concept.
+ - A new method was added. Times to listen, an extension of the `once` concept.
 
 ```javascript
     server.many('foo', 4, function(event, value1, value2) {
