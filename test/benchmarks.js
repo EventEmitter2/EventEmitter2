@@ -1,5 +1,4 @@
-
-this.benchmarks = {
+this.benchmark1 = {
   '1. Set up a single listener and emit 10,000 times using EventEmitter2.': function (test) {
 
     var EventEmitter2, iterations;
@@ -17,19 +16,22 @@ this.benchmarks = {
       test.ok(true, 'The event was raised');
     });
 
-    console.time('test1');
+    //console.time('test1');
 
     while(iterations--) {
       emitter.emit('test1');
     }
 
     test.ok(true, 'finished tests');
-    console.timeEnd('test1');
+    //console.timeEnd('test1');
 
     test.done();
 
-  },
-  '2. Set up a single listener and emit 10,000 times using the Node.js EventEmitter.': function (test) {
+  }
+};
+
+this.benchmark2 = {
+ '2. Set up a single listener and emit 10,000 times using the Node.js EventEmitter.': function (test) {
 
     var EventEmitter, iterations;
 
@@ -47,18 +49,21 @@ this.benchmarks = {
       test.ok(true, 'The event was raised');
     });
 
-    console.time('test2');
+    //console.time('test2');
 
     while(iterations--) {
       emitter.emit('test2');
     }
 
     test.ok(true, 'finished tests');
-    console.timeEnd('test2');
+    //console.timeEnd('test2');
 
     test.done();
 
-  },
+  }
+};
+
+this.benchmark3 = {
   '3. A listener should fire a callback with multiple parameters for an event when the event name is emitted using EventEmitter2.': function (test) {
 
     var EventEmitter2, iterations;
@@ -80,18 +85,21 @@ this.benchmarks = {
       test.ok(typeof value3 !== 'undefined', 'The event was raised with the value `' + value1 + '`.');
     });
 
-    console.time('test3');
+    //console.time('test3');
 
     while(iterations--) {
       emitter.emit('test3', 1, 2, 3);
     }
 
     test.ok(true, 'finished tests');
-    console.timeEnd('test3');
+    //console.timeEnd('test3');
 
     test.done();
 
-  },
+  }
+};
+
+this.benchmark4 = {
   '4. A listener should fire a callback with multiple parameters for an event when the event name is emitted using Node.js EventEmitter.': function (test) {
 
     var EventEmitter, iterations;
@@ -113,18 +121,16 @@ this.benchmarks = {
       test.ok(typeof value3 !== 'undefined', 'The event was raised with the value `' + value1 + '`.');
     });
 
-    console.time('test4');
+    //console.time('test4');
 
     while(iterations--) {
       emitter.emit('test4', 1, 2, 3);
     }
 
     test.ok(true, 'finished tests');
-    console.timeEnd('test4');
+    //console.timeEnd('test4');
 
     test.done();
 
   }
-  
-
 };

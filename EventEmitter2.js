@@ -80,7 +80,7 @@
     }
 
     // If there is a delimiter in the event name
-    if (~event.indexOf(this._delimiter)) {
+    if (~event.indexOf(this._delimiter) || event === '*') {
 
       // Split the name into an array
       name = event.split(this._delimiter);
@@ -215,6 +215,11 @@
         listeners[i].apply(this, args);
       }
     }
+    // if this emitting event was never registerd, but a wildcard was
+    else if (this._events['*'] && this._events['*']._listeners){
+      invoked = invokeListeners(this._events['*']);
+    }
+
     return true;
   };
 
