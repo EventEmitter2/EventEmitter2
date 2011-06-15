@@ -9,7 +9,8 @@
     }
     this._caseSensitive = conf.caseSensitive;
     this._delimiter = conf.delimiter || '.';
-    this._maxListeners = conf.maxListeners || 10;
+    this._maxListeners = conf.maxListeners === 0 ? 0 : conf.maxListeners || 10;
+    console.log(this._caseSensitive, this._delimiter, this._maxListeners);
     this._events = {};
   };
 
