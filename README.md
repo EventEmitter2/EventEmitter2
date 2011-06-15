@@ -20,7 +20,8 @@ EventEmitter2 is a an implementation of the EventEmitter found in Node.js
 ```javascript
    var server = EventEmitter2({
      delimiter: '/', // the delimiter used to segment namespaces, defaults to `.`.
-     maxListeners: 20 // the max number of listeners that can be assigned to an event, defaults to 10.
+     maxListeners: 20, // the max number of listeners that can be assigned to an event, defaults to 10.
+     caseSensitive: true // this is a big red button, don't press it... or else... I'm just warning you.
    });
 ```
 
