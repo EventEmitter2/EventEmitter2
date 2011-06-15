@@ -8,6 +8,7 @@
         throw new Error('The event can not be delimited by the "*" (wild-card) character.');
       }
     }
+    this._caseSensitive = conf ? conf.caseSensitive : false;
     this._delimiter = conf ? conf.delimiter : '.';
     this._maxListeners = conf ? conf.maxListeners : 10;
     this._events = {};
@@ -16,6 +17,14 @@
   EventEmitter2.prototype.addListener = function(event, listener) {
 
     var name, ns = this._events;
+    
+    if(event[event.length-1] === this._delimiter || event[0] === this._delimiter) {
+      this.nameError();
+    }
+    
+    if(this._caseSensitive === true) {
+      event = event.toLowerCase();
+    }
 
     // Signal that a new listener is being added.
     this.emit('newListener', event, listener);
@@ -70,6 +79,10 @@
 
   EventEmitter2.prototype.emit = function(event) {
 
+    if(event[event.length-1] === this._delimiter || event[0] === this._delimiter) {
+      this.nameError();
+    }
+
     var self = this, args = arguments, i = 0, j = 0;
 
     function invokeListeners(val) {
@@ -96,8 +109,8 @@
         //
         //     emit('foo/*/bazz') ==> ['foo', '*', 'bazz']
         //
-        var part = name[i],
-            newSets = [];
+        var part = self._caseSensitive === true ? name[i].toLowerCase() : name[i];
+        var newSets = [];
 
         for (j = 0; j < explore.length; j++) {
           //
@@ -253,6 +266,10 @@
     else {
       return false;
     }
+  };
+  
+  EventEmitter2.prototype.nameError = function() {
+    throw new Error('Name can\'t end or begin with the "' + this._delimiter + '" character, it\'s the delimiter.');
   };
 
 }(typeof exports === 'undefined' ? window : exports);

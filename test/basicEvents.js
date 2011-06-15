@@ -390,7 +390,7 @@ this.basicEvents = {
       test.ok(true, 'The event test15 was raised');
     });
     emitter.on('test15.ns1', function () {
-      test.ok(false, 'a dead event was raised!');
+      test.ok(true, 'The event test15.ns1 was raised');
     });
 
     emitter.emit('*');
@@ -398,6 +398,97 @@ this.basicEvents = {
 
     test.expect(2);
     test.done();
-  }
+  },
+  '16. Should fail if delimiter is used to start or end event name.' : function (test) {
+    var EventEmitter2;
 
+    if(typeof require !== 'undefined') {
+      EventEmitter2 = require('../EventEmitter2').EventEmitter2;
+    }
+    else {
+      EventEmitter2 = window.EventEmitter2;
+    }
+
+    var emitter = new EventEmitter2();
+    
+    try {
+
+      emitter.on('.ns4', function () {
+        test.ok(false, 'The event .ns4 was raised');
+      });
+
+      emitter.emit('.ns4');
+    }
+    catch(ex) {
+      test.ok(true, 'The event .ns4 was not raised');
+    }
+    
+    try {
+
+      emitter.on('ns4.', function () {
+        test.ok(false, 'The event .ns4 was raised');
+      });
+
+      emitter.emit('ns4.');
+    }
+    catch(ex) {
+      test.ok(true, 'The event .ns4 was not raised');
+    }
+
+    try {
+
+      emitter.on('.ns4', function () {
+        test.ok(false, 'The event .ns4 was raised');
+      });
+
+      emitter.emit('ns4.');
+    }
+    catch(ex) {
+      test.ok(true, 'The event .ns4 was not raised');
+    }
+    
+    try {
+
+      emitter.on('.ns4', function () {
+        test.ok(false, 'The event .ns4 was raised');
+      });
+
+    }
+    catch(ex) {
+      test.ok(true, 'The event .ns4 was not raised');
+    }
+    
+    try {
+
+      emitter.emit('ns4.');
+
+    }
+    catch(ex) {
+      test.ok(true, 'The event .ns4 was not raised');
+    }
+
+    test.expect(5);
+    test.done();
+  },
+  '17. Should provide case sensitive option.' : function (test) {
+    var EventEmitter2;
+
+    if(typeof require !== 'undefined') {
+      EventEmitter2 = require('../EventEmitter2').EventEmitter2;
+    }
+    else {
+      EventEmitter2 = window.EventEmitter2;
+    }
+
+    var emitter = new EventEmitter2({ caseSensitive: true });
+
+    emitter.on('test15', function () {
+      test.ok(false, 'The event test15 was raised');
+    });
+
+    emitter.emit('Test15');
+
+    test.expect(0);
+    test.done();
+  }
 };
