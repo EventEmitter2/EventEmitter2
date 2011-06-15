@@ -3,14 +3,13 @@
   exports.EventEmitter2 = EventEmitter2;
 
   function EventEmitter2(conf) {
-    if (conf) {
-      if (conf.delimiter === '*') {
-        throw new Error('The event can not be delimited by the "*" (wild-card) character.');
-      }
+    conf = conf || {};
+    if (conf.delimiter === '*') {
+      throw new Error('The event can not be delimited by the "*" (wild-card) character.');
     }
-    this._caseSensitive = conf ? conf.caseSensitive : false;
-    this._delimiter = conf ? conf.delimiter : '.';
-    this._maxListeners = conf ? conf.maxListeners : 10;
+    this._caseSensitive = conf.caseSensitive;
+    this._delimiter = conf.delimiter || '.';
+    this._maxListeners = conf.maxListeners || 10;
     this._events = {};
   };
 
