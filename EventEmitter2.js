@@ -19,21 +19,23 @@
     
     if(event[event.length-1] === this._delimiter || event[0] === this._delimiter) {
       this.nameError();
+      return;
     }
     
     if(this._caseSensitive === true) {
       event = event.toLowerCase();
     }
 
-    // Signal that a new listener is being added.
-    this.emit('newListener', event, listener);
-
     // the name has a delimiter
     if (~event.indexOf(this._delimiter)) {
 
       //split the name into an array
       name = event.split(this._delimiter);
-
+      //if we have any blank namespaces events
+      if (name.some(function (event) { return event === ''; })) {
+        this.nameError();
+        return;
+      }
       // continue to build out additional namespaces and attach the listener to them
       for(var i = 0, l = name.length; i < l; i++) {
 
@@ -49,6 +51,10 @@
       ns = ns[event] || (ns[event] = {});
     }
 
+    // Signal that a new listener has been added.
+    this.emit('newListener', event, listener);
+
+    // Signal if we have reached max listerner for this event
     if (ns._listeners && ns._listeners.length === this.maxListeners) {
       this.emit('maxListeners', event);
       return;
@@ -80,6 +86,7 @@
 
     if(event[event.length-1] === this._delimiter || event[0] === this._delimiter) {
       this.nameError();
+      return;
     }
 
     var self = this, args = arguments, i = 0, j = 0;
@@ -96,6 +103,11 @@
 
       // Split the name into an array
       name = event.split(this._delimiter);
+      //if we have any blank namespaces events
+      if (name.some(function (event) { return event === ''; })) {
+        this.nameError();
+        return;
+      }
 
       var explore = [this._events],
           invoked = false,
