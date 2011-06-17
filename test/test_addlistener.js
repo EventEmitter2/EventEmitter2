@@ -19,52 +19,52 @@
     '1. Add a single namespace listener': function(test) {
       emitter.on('single', fn1);
 
-      var _events = {
+      var _listeners = {
         'single': {
           _name: 'single',
-          _listeners: [fn1],
+          _fn: [fn1],
           _ns: {}
         }
       }
 
-      test.deepEqual(emitter._events, _events);
+      test.deepEqual(emitter._listeners, _listeners);
       test.done();
     },
     '2. Add a double namespace listener': function(test) {
       emitter.on('single.double', fn2);
 
-      var _events = {
+      var _listeners = {
         'single': {
           _name: 'single',
-          _listeners: [fn1],
+          _fn: [fn1],
           _ns: {
             'double': {
               _name: 'double',
-              _listeners: [fn2],
+              _fn: [fn2],
               _ns: {}
             }
           }
         }
       }
 
-      test.deepEqual(emitter._events, _events);
+      test.deepEqual(emitter._listeners, _listeners);
       test.done();
     },
     '3. Add a triple namespace listener': function(test) {
       emitter.on('single.double.triple', fn3);
 
-      var _events = {
+      var _listeners = {
         'single': {
           _name: 'single',
-          _listeners: [fn1],
+          _fn: [fn1],
           _ns: {
             'double': {
               _name: 'double',
-              _listeners: [fn2],
+              _fn: [fn2],
               _ns: {
                 'triple': {
                   _name: 'triple',
-                  _listeners: [fn3],
+                  _fn: [fn3],
                   _ns: {}
                 }
               }
@@ -73,28 +73,28 @@
         }
       }
 
-      test.deepEqual(emitter._events, _events);
+      test.deepEqual(emitter._listeners, _listeners);
       test.done();
     },
     '4. Add a quadruple namespace listener': function(test) {
       emitter.on('single.double.triple.quadruple', fn4);
 
-      var _events = {
+      var _listeners = {
         'single': {
           _name: 'single',
-          _listeners: [fn1],
+          _fn: [fn1],
           _ns: {
             'double': {
               _name: 'double',
-              _listeners: [fn2],
+              _fn: [fn2],
               _ns: {
                 'triple': {
                   _name: 'triple',
-                  _listeners: [fn3],
+                  _fn: [fn3],
                   _ns: {
                     'quadruple': {
                       _name: 'quadruple',
-                      _listeners: [fn4],
+                      _fn: [fn4],
                       _ns: {}
                     }
                   }
@@ -105,7 +105,7 @@
         }
       }
 
-      test.deepEqual(emitter._events, _events);
+      test.deepEqual(emitter._listeners, _listeners);
       test.done();
     }
   };
