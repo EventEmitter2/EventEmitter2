@@ -154,7 +154,7 @@
               if (ns[part] && ns[part]._listeners && invokeListeners(ns[part])) {
                 invoked = true;
               }
-              else if (ns['*'] && ns['*']._listeners && invokeListeners(ns['*'])) {
+              if (ns['*'] && ns['*']._listeners && invokeListeners(ns['*'])) {
                 invoked = true;
               }
             }

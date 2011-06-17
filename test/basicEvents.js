@@ -316,7 +316,7 @@ this.basicEvents = {
 
     emitter.on('test13', function (event) {
       console.log('2');
-    });    
+    });
 
     var listeners = emitter.listeners('test13');
 
@@ -505,15 +505,39 @@ this.basicEvents = {
     var emitter  = new EventEmitter2({ caseSensitive: true });
 
     emitter.on('test18', function () {
-      test.ok(false, 'The event test17 was raised');
+      test.ok(false, 'The event test18 was raised');
     });
     emitter.on('test18.ns1', function () {
-      test.ok(false, 'The event test17.ns1 was raised');
+      test.ok(false, 'The event test18.ns1 was raised');
     });
 
     emitter.emit('Test18');
 
     test.expect(0);
     test.done();
-  }
+  },
+
+  '19. one emit should be able to fire on multiple namespaces.' : function (test) {
+    var EventEmitter2;
+
+    if(typeof require !== 'undefined') {
+      EventEmitter2 = require('../EventEmitter2').EventEmitter2;
+    }
+    else {
+      EventEmitter2 = window.EventEmitter2;
+    }
+
+    var emitter  = new EventEmitter2();
+
+    emitter.on('test19.*', function () {
+        test.ok(true, 'test19.* was raised');
+    });
+    emitter.on('test19.foo', function () {
+        test.ok(true, 'test19.foo was raised');
+    });
+
+    emitter.emit('test19.foo');
+    test.expect(2);
+    test.done();
+  },
 };
