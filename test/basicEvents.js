@@ -366,15 +366,15 @@ this.basicEvents = {
       test.ok(true, 'The event was raised');
     });
 
-    emitter.emit('test14.*');
-    emitter.emit('test14.*.ns2')
+    emitter.emit('test15.*');
+    emitter.emit('test15.*.ns2')
     emitter.emit('*');
 
     test.expect(3);
     test.done();
 
   },
-  '15. Should be able to fire with wildcard start.' : function (test) {
+  '16. Should be able to fire with wildcard start.' : function (test) {
     var EventEmitter2;
 
     if(typeof require !== 'undefined') {
@@ -386,10 +386,10 @@ this.basicEvents = {
 
     var emitter = new EventEmitter2();
 
-    emitter.on('test15', function () {
+    emitter.on('test16', function () {
       test.ok(true, 'The event test15 was raised');
     });
-    emitter.on('test15.ns1', function () {
+    emitter.on('test16.ns1', function () {
       test.ok(true, 'The event test15.ns1 was raised');
     });
 
@@ -399,7 +399,7 @@ this.basicEvents = {
     test.expect(2);
     test.done();
   },
-  '16. Should fail if delimiter is used to start or end event name.' : function (test) {
+  '17. Should fail if delimiter is used to start or end event name.' : function (test) {
     var EventEmitter2;
 
     if(typeof require !== 'undefined') {
@@ -410,9 +410,14 @@ this.basicEvents = {
     }
 
     var emitter = new EventEmitter2();
+
+    //nothing should emit, so here is a all-listener
+    emitter.on('*', function () {
+      test.ok(false, 'an event was raised!');
+    });
+
     
     try {
-
       emitter.on('.ns4', function () {
         test.ok(false, 'The event .ns4 was raised');
       });
@@ -467,10 +472,27 @@ this.basicEvents = {
       test.ok(true, 'The event .ns4 was not raised');
     }
 
-    test.expect(5);
+    try {
+      emitter.emit('some..bad');
+    }
+    catch (ex) {
+      test.ok(true, 'error was raised');
+    }
+
+    try {
+      emitter.on('some..bad', function () {
+        test.ok(false, 'a bad event was raised');
+      });
+    }
+    catch (ex){
+      test.ok(true,'error was raised');
+    }
+
+    test.expect(7);
     test.done();
   },
-  '17. Should provide case sensitive option.' : function (test) {
+
+  '18. Should provide case sensitive option.' : function (test) {
     var EventEmitter2;
 
     if(typeof require !== 'undefined') {
@@ -480,13 +502,16 @@ this.basicEvents = {
       EventEmitter2 = window.EventEmitter2;
     }
 
-    var emitter = new EventEmitter2({ caseSensitive: true });
+    var emitter  = new EventEmitter2({ caseSensitive: true });
 
-    emitter.on('test15', function () {
-      test.ok(false, 'The event test15 was raised');
+    emitter.on('test18', function () {
+      test.ok(false, 'The event test17 was raised');
+    });
+    emitter.on('test18.ns1', function () {
+      test.ok(false, 'The event test17.ns1 was raised');
     });
 
-    emitter.emit('Test15');
+    emitter.emit('Test18');
 
     test.expect(0);
     test.done();
