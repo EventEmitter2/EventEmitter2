@@ -16,16 +16,14 @@
       // });
 
       var emitter = new EventEmitter2();
-
       emitter.on('foo', function() {console.log('foo')});
       emitter.on('foo.*', function() {console.log('foo star')});
       emitter.on('foo.*.oof', function() {console.log('foo * oof')});
       emitter.on('foo.bar', function() {console.log('foo bar')});
       emitter.on('foo.bar.oof', function() {console.log('foo bar oof')});
       emitter.on('foo.bar.oof.rab', function() {console.log('foo bar oof rab')});
-      emitter.on('foo.bar.oof.rab', function() {console.log('foo bar oof rab')});      
-
-      emitter.emit('foo.bar.oof');
+      emitter.on('foo.bar.oof.rab', function() {console.log('foo bar oof rab')});
+      // emitter.emit('foo.bar.oof');
       // emitter.emit('foo.bar');
       // emitter.emit('foo.bar.oof');
       // emitter.emit('foo.bar.oof.rab');
