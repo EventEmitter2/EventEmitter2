@@ -345,7 +345,7 @@ this.basicEvents = {
     emitter.emit('test14.ns1');
     emitter.emit('test14.ns1.ns2');
 
-    test.expect(3);
+    test.expect(4);
     test.done();
 
   },
@@ -370,7 +370,7 @@ this.basicEvents = {
     emitter.emit('test14.*.ns2')
     emitter.emit('*');
 
-    test.expect(3);
+    test.expect(4);
     test.done();
 
   },
@@ -396,7 +396,7 @@ this.basicEvents = {
     emitter.emit('*');
     emitter.emit('*.ns1');
 
-    test.expect(2);
+    test.expect(3);
     test.done();
   },
   '16. Should fail if delimiter is used to start or end event name.' : function (test) {
