@@ -236,9 +236,19 @@
   };
 
   EventEmitter2.prototype.removeListener = function(event, listener) {
-    if(listener && this._events[event] && this._events[event]._listeners) {
+    var name = event.split(this._delimiter),
+        _events = this._events;
+
+    event = name.pop();
+
+    for (var i = 0, len = name.length; i < len; i++) {
+      _events = _events[name[i]];
+      if (!_events) return;
+    }
+
+    if(listener && _events[event] && _events[event]._listeners) {
       // Make a reference to all the listeners for the event.
-      var listeners = this._events[event]._listeners;
+      var listeners = _events[event]._listeners;
       // Loop through and check the signatures to find the exact listener to remove.
       for(var i = 0, l = listeners.length; i < l; i++) {
         if(listener === listeners[i]) {
@@ -248,7 +258,7 @@
       }
     }
     else {
-      this._events[event] = {};
+      _events[event] = {};
     }
   };
 
