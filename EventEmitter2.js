@@ -74,6 +74,12 @@
       key = e.split(d); // split the name.
 
       for(var i = 0, l = event.length; i < l; i++) {
+
+        if(key[i] && !this._caseSensitive) { // not case sensitive.
+          event[i].toLowerCase();
+          key[i].toLowerCase();
+        }
+
         if(!key[i] || event[i] !== key[i] && event[i] !== '*' && key[i] !== '*') {
           match = false;
           break;
@@ -81,7 +87,7 @@
       }
 
       // if this is a pure wild card or match, lets capture the listeners.
-      if(e==='*' || match) { listeners = listeners.concat(listenerList); }
+      if(e === '*' || match) { listeners = listeners.concat(listenerList); }
     }
 
     for(var i = 0, l = listeners.length; i < l; i++) {
@@ -117,7 +123,6 @@
       _events[event] = {};
     }
   };
-
 
   EventEmitter2.prototype.removeAllListeners = function(){ this._events = {}; };
 
