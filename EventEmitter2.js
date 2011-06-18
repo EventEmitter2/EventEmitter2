@@ -74,8 +74,8 @@
       key = e.split(d); // split the name.
 
       for(var i = 0, l = event.length; i < l; i++) {
-        if(!key[i] || event[i] !== key[i] && event[i] !== '*' && key[i] !== '*') { 
-          match = false; 
+        if(!key[i] || event[i] !== key[i] && event[i] !== '*' && key[i] !== '*') {
+          match = false;
           break;
         }
       }
@@ -91,31 +91,33 @@
   };
 
   EventEmitter2.prototype.removeListener = function(event, listener) {
-     var name = event.split(this._delimiter),
-         _events = this._events;
 
-     event = name.pop();
+    var name = event.split(this._delimiter),
+       _events = this._events;
 
-     for (var i = 0, len = name.length; i < len; i++) {
-       _events = _events[name[i]];
-       if (!_events) return;
-     }
+    event = name.pop();
 
-     if(listener && _events[event] && _events[event]._listeners) {
-       // Make a reference to all the listeners for the event.
-       var listeners = _events[event]._listeners;
-       // Loop through and check the signatures to find the exact listener to remove.
-       for(var i = 0, l = listeners.length; i < l; i++) {
-         if(listener === listeners[i]) {
-           // Break out and return the removed listener.
-           return listeners.splice(i, 1);
-         }
-       }
-     }
-     else {
-       _events[event] = {};
-     }
-   };
+    for (var i = 0, len = name.length; i < len; i++) {
+      _events = _events[name[i]];
+      if (!_events) return;
+    }
+
+    if(listener && _events[event] && _events[event]._listeners) {
+      // Make a reference to all the listeners for the event.
+      var listeners = _events[event]._listeners;
+      // Loop through and check the signatures to find the exact listener to remove.
+      for(var i = 0, l = listeners.length; i < l; i++) {
+        if(listener === listeners[i]) {
+          // Break out and return the removed listener.
+          return listeners.splice(i, 1);
+        }
+      }
+    }
+    else {
+      _events[event] = {};
+    }
+  };
+
 
   EventEmitter2.prototype.removeAllListeners = function(){ this._events = {}; };
 
