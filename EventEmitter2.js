@@ -54,18 +54,22 @@
     });
   };
 
-  EventEmitter2.prototype.emit = function(event) {
+  EventEmitter2.prototype.emit = function() {
+
+    var event = arguments[0];
 
     var self = this;
     var key;
     var d = this._delimiter;
     var listeners = [];
 
+    //arguments[0] = arguments[0].join ? arguments[0].join(d) : arguments[0];
+
     if(event[event.length-1] === d || event[0] === d) {
       this.nameError();
     }
 
-    event = event.split(d); // split event if ambigious, make array.
+    event = ~event.indexOf(d) ? event.split(d) : [event]; // split event if ambigious. make array.
 
     for(var e in self._events) {
 
