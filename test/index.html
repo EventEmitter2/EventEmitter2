@@ -2,11 +2,11 @@
   <head>
     <meta charset="utf-8">
     <title>Nodeunit tests</title>
-    <script src="../lib/eventemitter2.js"></script>
-    <script src="../lib/eventemitter2___old.js"></script>
-    <script src="nodeunit.js"></script>
-    <script src="test_addlistener.js"></script>
-    <script src="benchmark_addlistener.js"></script>
+    <script src="../lib/eventemitter2___new.js"></script>
+    <!-- // <script src="../lib/eventemitter2___old.js"></script> -->
+    <!-- // <script src="nodeunit.js"></script> -->
+    <!-- // <script src="test_addlistener.js"></script> -->
+    <!-- // <script src="benchmark_addlistener.js"></script> -->
   </head>
   <body>
     <h1>EventEmitter2 tests &amp; benchmarks</h1>
@@ -15,15 +15,15 @@
       //   'testAddListener': testAddListener
       // });
 
-      // var emitter = new EventEmitter2();
-      // emitter.on('foo', function() {console.log('foo')});
-      // emitter.on('foo.*', function() {console.log('foo star')});
-      // emitter.on('foo.*.oof', function() {console.log('foo * oof')});
-      // emitter.on('foo.bar', function() {console.log('foo bar')});
-      // emitter.on('foo.bar.oof', function() {console.log('foo bar oof')});
-      // emitter.on('foo.bar.oof.rab', function() {console.log('foo bar oof rab')});
-      // emitter.on('foo.bar.oof.rab', function() {console.log('foo bar oof rab')});
-      // emitter.emit('foo.bar.oof');
+      var emitter = new EventEmitter2();
+      emitter.on('foo', function() {console.log('foo')});
+      emitter.on('foo.*', function() {console.log('foo star')});
+      emitter.on('foo.*.oof', function() {console.log('foo * oof')});
+      emitter.on('foo.bar', function() {console.log('foo bar')});
+      emitter.on('foo.bar.oof', function() {console.log('foo bar oof')});
+      emitter.on('foo.bar.oof.rab', function() {console.log('foo bar oof rab')});
+      emitter.on('foo.bar.oof.rab', function() {console.log('foo bar oof rab')});
+      emitter.emit('foo.bar');
       // emitter.emit('foo.bar');
       // emitter.emit('foo.bar.oof');
       // emitter.emit('foo.bar.oof.rab');

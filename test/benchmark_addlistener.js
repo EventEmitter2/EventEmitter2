@@ -10,7 +10,7 @@
 
   // Require *EventEmitter2___old* if it's not already present.
   var EventEmitter2___old = root.EventEmitter2___old;
-  if (!EventEmitter2___old && req) EventEmitter2___old = require('../lib/eventemitter2___old').EventEmitter2___old;
+  if (!EventEmitter2___old && req) EventEmitter2___old = require('../lib/eventemitter2___new').EventEmitter2;
   if (!EventEmitter2___old) throw new Error('Dependency missing: EventEmitter2___old');
 
   var emitter = new EventEmitter2(),
