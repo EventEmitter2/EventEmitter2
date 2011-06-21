@@ -63,8 +63,6 @@
     var d = this._delimiter;
     var listeners = [];
 
-    //arguments[0] = arguments[0].join ? arguments[0].join(d) : arguments[0];
-
     if(event[event.length-1] === d || event[0] === d) {
       this.nameError();
     }
@@ -89,7 +87,6 @@
           break;
         }
       }
-
       // if this is a pure wild card or match, lets capture the listeners.
       if(e === '*' || match) { listeners = listeners.concat(listenerList); }
     }
