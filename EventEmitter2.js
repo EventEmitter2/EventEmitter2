@@ -69,7 +69,7 @@
       this.nameError();
     }
 
-    event = ~event.indexOf(d) ? event.split(d) : [event]; // split event if ambigious. make array.
+    event = event.split(d); // split event if ambigious.
 
     for(var e in self._events) {
 
@@ -80,8 +80,8 @@
       for(var i = 0, l = event.length; i < l; i++) {
 
         if(key[i] && !this._caseSensitive) { // not case sensitive.
-          event[i].toLowerCase();
-          key[i].toLowerCase();
+          event[i] = event[i].toLowerCase();
+          key[i] = key[i].toLowerCase();
         }
 
         if(!key[i] || event[i] !== key[i] && event[i] !== '*' && key[i] !== '*') {
