@@ -488,9 +488,10 @@ module.exports = basicEvents({
     test.ok(listeners.length === 1, 'there should be at a listener'); //1
 
     emitter.removeAllListeners();
+
     for (var i = 0; i < addedEvents.length; i++) {
       listeners = emitter.listeners(addedEvents[i]);
-      test.ok(!listeners, 'there shouldn\'t be at a listener');
+      test.ok(listeners.length === 0, 'there shouldn\'t be at a listener');
     }
 
     test.expect(addedEvents.length + 2);
@@ -579,14 +580,17 @@ module.exports = basicEvents({
     test.equals(listeners.length, 1, 'should be one any listeners');
 
     emitter.unAny(fn);
-    test.ok(!listeners, 'should be no any listeners');
+    listeners = emitter.listenersAny();
+    test.ok(listeners.length === 0, 'should be no any listeners');
 
     emitter.onAny(fn);
     emitter.onAny(fn);
+    listeners = emitter.listenersAny();
     test.equals(listeners.length, 2, 'should be two any listeners');
 
     emitter.unAny();
-    test.ok(!listeners, 'should be no any listeners');
+    listeners = emitter.listenersAny();
+    test.ok(listeners.length === 0, 'should be no any listeners');
 
     test.expect(6);
     test.done();
