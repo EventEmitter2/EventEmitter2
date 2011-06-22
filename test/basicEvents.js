@@ -430,11 +430,17 @@ module.exports = basicEvents({
     emitter.on('test20.ns1', function () {
       test.ok(true, 'The event test18.ns1 was raised');
     });
+    emitter.on('*.ns1', function () {
+      test.ok(true, 'The event *.ns1 was raised');
+    });
+   emitter.on('*.ns2', function () {
+      test.ok(false, 'The event *.ns2 was raised');
+    });
 
     emitter.emit('Test20');
     emitter.emit('TeSt20.nS1');
 
-    test.expect(2);
+    test.expect(3);
     test.done();
   },
 });
