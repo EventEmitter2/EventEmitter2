@@ -5,7 +5,7 @@ this.timesToLive = {
     var EventEmitter2;
 
     if(typeof require !== 'undefined') {
-      EventEmitter2 = require('../EventEmitter2').EventEmitter2;
+      EventEmitter2 = require('../lib/eventemitter2').EventEmitter2;
     }
     else {
       EventEmitter2 = window.EventEmitter2;
@@ -29,7 +29,7 @@ this.timesToLive = {
     var EventEmitter2;
 
     if(typeof require !== 'undefined') {
-      EventEmitter2 = require('../EventEmitter2').EventEmitter2;
+      EventEmitter2 = require('../lib/eventemitter2').EventEmitter2;
     }
     else {
       EventEmitter2 = window.EventEmitter2;
@@ -56,7 +56,7 @@ this.timesToLive = {
     var EventEmitter2;
 
     if(typeof require !== 'undefined') {
-      EventEmitter2 = require('../EventEmitter2').EventEmitter2;
+      EventEmitter2 = require('../lib/eventemitter2').EventEmitter2;
     }
     else {
       EventEmitter2 = window.EventEmitter2;
@@ -86,7 +86,7 @@ this.timesToLive = {
     var EventEmitter2;
 
     if(typeof require !== 'undefined') {
-      EventEmitter2 = require('../EventEmitter2').EventEmitter2;
+      EventEmitter2 = require('../lib/eventemitter2').EventEmitter2;
     }
     else {
       EventEmitter2 = window.EventEmitter2;
