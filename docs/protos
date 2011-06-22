@@ -30,6 +30,7 @@
 
   //get all listeners with this 'event'
   listeners = function(event)
+  listenersAny = function ()
 
 //Emit related
   emit = function(event)
