@@ -1,4 +1,24 @@
 var basicEvents = require('nodeunit').testCase;
+
+/////helper///////
+function setHelper (emitter, test, testName){
+  var eventNames = [
+    testName, 
+    testName + '*', 
+    testName + '.ns1', 
+    testName + '.ns1.ns2', 
+    testName + '.ns2.*'
+  ];
+
+  for (var i = 0; i < eventNames.length; i++) {
+    emitter.on(eventNames[i], function () { 
+        test.ok(true, eventNames[i] + 'has fired');
+    });
+  }
+
+  return eventNames;
+};
+
 module.exports = basicEvents({
 
   setUp: function (callback) {
@@ -209,16 +229,7 @@ module.exports = basicEvents({
   },
   '13. List all the listeners for a particular event.': function(test) {
 
-    var EventEmitter2;
-
-    if(typeof require !== 'undefined') {
-      EventEmitter2 = require('../lib/eventemitter2').EventEmitter2;
-    }
-    else {
-      EventEmitter2 = window.EventEmitter2;
-    }    
-
-    var emitter = new EventEmitter2();
+    var emitter = this.emitter;
 
     emitter.on('test13', function (event) {
       test.ok(true,'raised one');
@@ -391,16 +402,7 @@ module.exports = basicEvents({
   },
 
   '19. one emit should be able to fire on multiple namespaces.' : function (test) {
-    var EventEmitter2;
-
-    if(typeof require !== 'undefined') {
-      EventEmitter2 = require('../lib/eventemitter2').EventEmitter2;
-    }
-    else {
-      EventEmitter2 = window.EventEmitter2;
-    }
-
-    var emitter  = new EventEmitter2();
+    var emitter  = this.emitter;
 
     emitter.on('test19.*', function () {
         test.ok(true, 'test19.* was raised');
@@ -443,4 +445,151 @@ module.exports = basicEvents({
     test.expect(3);
     test.done();
   },
+
+  '21. should be able to removeListeners' : function (test) {
+    var emitter = this.emitter;
+
+    emitter.on('test21', function () {
+      test.ok(true, 'test21 raised');
+    });
+    emitter.on('test21.*', function () {
+      test.ok(true, 'test21.* was raised');
+    });
+    emitter.on('test21.ns1', function () {
+      test.ok(true, 'test21.ns1 was raised');
+    });
+    emitter.on('test21.ns1.ns2', function () {
+      test.ok(true, 'test21.ns1 was raised');
+    });
+
+    emitter.emit('test21'); //1
+    emitter.emit('test21.ns2'); //1
+    emitter.emit('test21.ns1'); //2
+
+    var listeners = emitter.listeners('test21');
+    test.ok(listeners.length === 1, 'there should be 1 listener');
+
+    emitter.removeListener('test21');
+    listeners = emitter.listeners('test21');
+    test.ok(!listeners, 'there should be 0 listener (empty array)');
+
+    test.expect(6);
+    test.done();
+  },
+
+  '22. should be able to remove all listeners' : function (test) {
+
+    var emitter = this.emitter,
+        addedEvents = setHelper(emitter, test, 'test22');
+
+    emitter.emit('test22'); //1
+
+    var listeners = emitter.listeners('test22');
+    test.ok(listeners.length === 1, 'there should be at a listener'); //1
+
+    emitter.removeAllListeners();
+    for (var i = 0; i < addedEvents.length; i++) {
+      listeners = emitter.listeners(addedEvents[i]);
+      test.ok(!listeners, 'there shouldn\'t be at a listener');
+    }
+
+    test.expect(addedEvents.length + 2);
+    test.done();
+  },
+
+  '23. should be able to listen on any event' : function (test) {
+
+    var emitter = this.emitter,
+        addedEvents = setHelper(emitter, test, 'test23'),
+        someData = {
+          key : 'hello',
+          bar : 'foo',
+          'baz' : 5
+        };
+        fn = function (tag, data) {
+          if (tag !== 'addListener') {
+            test.equals(tag, 'test23.ns5.ns5', 'emitted tag, and raised tag should match');
+            test.equals(someData,data, 'data should be passed up');
+            test.ok(true, 'something happened somewhere');
+          }
+        };
+
+    emitter.onAny(fn);
+    emitter.emit('test23.ns5.ns5', someData); //3
+    emitter.unAny(fn);
+    emitter.emit('test21'); //0
+    emitter.onAny(fn);
+    emitter.onAny(fn);
+    emitter.emit('test23.ns5.ns5', someData); //6
+    emitter.unAny();
+
+    test.expect(9);
+    test.done();
+
+  },
+
+  '24. should be able to fire once and done' : function (test) {
+    var emitter = this.emitter,
+        addedEvents = setHelper(emitter,test,'test24');
+    
+    emitter.once('test24once', function () {
+        test.ok(true, 'fired once');
+    });
+
+    emitter.emit('test24');
+    emitter.emit('test24once');
+    emitter.emit('test24once');
+
+    test.expect(2);
+    test.done();
+  },
+
+  '25. should be able to fire many and done' : function (test) {
+
+    var emitter = this.emitter,
+        addedEvents = setHelper(emitter,test,'test25');
+    
+    emitter.many('test25many', 5, function () {
+        test.ok(true, 'test25many pewpew');
+    });
+
+    emitter.emit('test25'); //1
+    for (var i= 0; i < 5; i++) {
+      emitter.emit('test25many'); //1
+    }
+    emitter.emit('test25many'); //0
+
+    test.expect(6);
+    test.done();
+  },
+
+  '26. should be able to list all onAny listeners' : function (test) {
+    var emitter = this.emitter,
+        addedEvents = setHelper(emitter, test, 'test26'),
+        fn = function (tag) {
+          if (tag !== 'addListener') {
+            test.equals(tag, 'test26.ns5.ns5', 'emitted tag, and raised tag should match');
+            test.ok(true, 'something happened somewhere');
+          }
+        };
+
+    emitter.onAny(fn);
+    emitter.emit('test26.ns5.ns5'); //2
+    var listeners = emitter.listenersAny();
+    test.equals(listeners.length, 1, 'should be one any listeners');
+
+    emitter.unAny(fn);
+    test.ok(!listeners, 'should be no any listeners');
+
+    emitter.onAny(fn);
+    emitter.onAny(fn);
+    test.equals(listeners.length, 2, 'should be two any listeners');
+
+    emitter.unAny();
+    test.ok(!listeners, 'should be no any listeners');
+
+    test.expect(6);
+    test.done();
+  },
+
 });
