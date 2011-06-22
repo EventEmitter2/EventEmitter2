@@ -1,9 +1,8 @@
-<!doctype html>
+<!DOCTYPE html>
   <head>
     <meta charset="utf-8">
     <title>Nodeunit tests</title>
     <script src="../lib/eventemitter2.js"></script>
-    <!-- // <script src="../lib/eventemitter2___old.js"></script> -->
     <!-- // <script src="nodeunit.js"></script> -->
     <!-- // <script src="test_addlistener.js"></script> -->
     <!-- // <script src="benchmark_addlistener.js"></script> -->
@@ -11,9 +10,10 @@
   <body>
     <h1>EventEmitter2 tests &amp; benchmarks</h1>
     <script>
-      // nodeunit.run({
-      //   'testAddListener': testAddListener
-      // });
+
+      nodeunit.run({
+        'testAddListener': testAddListener
+      });
 
       var e = new EventEmitter2();
       e.on('foo', function() {console.log('foo')});

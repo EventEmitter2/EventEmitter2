@@ -247,11 +247,7 @@ module.exports = basicEvents({
     emitter.emit('test14.ns1');
     emitter.emit('test14.ns1.ns2');
 
-<<<<<<< HEAD
-    test.expect(4);
-=======
     test.expect(1);
->>>>>>> rewrite
     test.done();
 
   },
@@ -268,11 +264,7 @@ module.exports = basicEvents({
     emitter.emit('test15.*.ns2')
     emitter.emit('*');
 
-<<<<<<< HEAD
-    test.expect(4);
-=======
     test.expect(1);
->>>>>>> rewrite
     test.done();
 
   },
@@ -289,7 +281,7 @@ module.exports = basicEvents({
     emitter.emit('*');
     emitter.emit('*.ns1');
 
-    test.expect(3);
+    test.expect(2);
     test.done();
   },
   '17. Should fail if delimiter is used to start or end event name.' : function (test) {
