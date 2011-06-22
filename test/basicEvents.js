@@ -288,18 +288,17 @@ module.exports = basicEvents({
     var emitter = this.emitter;
 
     //nothing should emit, so here is a all-listener
-    emitter.on('*', function () {
-      console.log(arguments);
+    emitter.on('*.*.*', function () {
       test.ok(false, 'an event was raised!');
     });
     emitter.on('*.*', function () {
       test.ok(false, 'an event was raised!');
     });
-    emitter.on('*.*.*', function () {
+    emitter.on('*', function () {
+      console.log(arguments);
       test.ok(false, 'an event was raised!');
     });
 
-    
     try {
       emitter.on('.ns4', function () {
         test.ok(false, 'The event .ns4 was raised');
