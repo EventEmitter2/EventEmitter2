@@ -4,7 +4,7 @@ var basicEvents = require('nodeunit').testCase;
 function setHelper (emitter, test, testName){
   var eventNames = [
     testName, 
-    testName + '*', 
+    testName + '.*', 
     testName + '.ns1', 
     testName + '.ns1.ns2', 
     testName + '.ns2.*'
@@ -636,4 +636,153 @@ module.exports = basicEvents({
     test.done();
   },
 
+  '29. should be able to quick-swap event delimiter' : function (test) {
+    var emitter = this.emitter;
+        addedEvents = setHelper(emitter,test,'test29');
+
+    emitter.emit('test29'); //1
+    emitter.emit('test29.ns1'); //2
+
+    emitter.setEventDelimiter('/');
+
+    emitter.emit('test29/ns1/ns2'); //1
+
+    emitter.setEventDelimiter(':');
+    emitter.emit('test29:ns2:ns1'); //1
+
+    test.expect(5);
+    test.done();
+  },
+
+  '30. should support old config for EE2' : function (test) {
+    if(typeof require !== 'undefined') {
+      EventEmitter2 = require('../lib/eventemitter2').EventEmitter2;
+    }
+    else {
+      EventEmitter2 = window.EventEmitter2;
+    }
+    var emitter = new EventEmitter2({ 
+      eventCaseSensitive : true,
+      delimiter          : '?'
+    });
+
+    emitter.on('test30?a?b', function () {
+      test.ok(true, 'test30?a?b did emit');
+    });
+
+    emitter.emit('test30?a?b');
+
+    test.expect(1);
+    test.done();
+  },
+
+  '31. should reject bad wildcard inputs' : function (test) {
+    var emitter = this.emitter;
+        addedEvents = setHelper(emitter,test,'test31');
+
+    emitter.onAny(function () {
+      test.ok(false, 'no event should be emitted, ever');
+    });
+
+    // try listening on a bad
+    try {
+      emitter.on('test31*', function () {
+        test.ok(false, 'should never registered');
+      });
+    }
+    catch (ex) {
+      test.ok(ex instanceof Error, 'expected an error');
+    }
+    // bad wildcard at the front
+    try {
+      emitter.on('*test31', function () {
+        test.ok(false, 'should never registered');
+      });
+    }
+    catch (ex) {
+      test.ok(ex instanceof Error, 'expected an error');
+    }
+    // bad wildcard at the front
+    try {
+      emitter.on('test*31', function () {
+        test.ok(false, 'should never registered');
+      });
+    }
+    catch (ex) {
+      test.ok(ex instanceof Error, 'expected an error');
+    }
+    // bad wildcard at the front
+    try {
+      emitter.on('test31.*a', function () {
+        test.ok(false, 'should never registered');
+      });
+    }
+    catch (ex) {
+      test.ok(ex instanceof Error, 'expected an error');
+    }
+    // bad wildcard at the front
+    try {
+      emitter.on('*test31.a*', function () {
+        test.ok(false, 'should never registered');
+      });
+    }
+    catch (ex) {
+      test.ok(ex instanceof Error, 'expected an error');
+    }
+    // bad wildcard at the front
+    try {
+      emitter.on('*test31.a*a', function () {
+        test.ok(false, 'should never registered');
+      });
+    }
+    catch (ex) {
+      test.ok(ex instanceof Error, 'expected an error');
+    }
+
+    //now try emittering with a bad wildcard
+    try {
+      emitter.emit('test31*')
+    }
+    catch (ex) {
+      test.ok(ex instanceof Error, 'expected an error');
+    }
+    // bad wildcard at the front
+    try {
+      emitter.on('*test31');
+    }
+    catch (ex) {
+      test.ok(ex instanceof Error, 'expected an error');
+    }
+    // bad wildcard at the front
+    try {
+      emitter.on('test*31');
+    }
+    catch (ex) {
+      test.ok(ex instanceof Error, 'expected an error');
+    }
+    // bad wildcard at the front
+    try {
+      emitter.on('test31.*a');
+    }
+    catch (ex) {
+      test.ok(ex instanceof Error, 'expected an error');
+    }
+    // bad wildcard at the front
+    try {
+      emitter.on('*test31.a*');
+    }
+    catch (ex) {
+      test.ok(ex instanceof Error, 'expected an error');
+    }
+    // bad wildcard at the front
+    try {
+      emitter.on('*test31.a*a');
+    }
+    catch (ex) {
+      test.ok(ex instanceof Error, 'expected an error');
+    }
+
+    test.expect(12);
+    test.done();
+  },
 });
