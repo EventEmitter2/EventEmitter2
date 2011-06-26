@@ -596,4 +596,44 @@ module.exports = basicEvents({
     test.done();
   },
 
+  '27. should not expand beyond the namespace' : function (test) {
+    var emitter = this.emitter,
+        addedEvents = setHelper(emitter,test,'test27');
+
+    emitter.emit('test27.ns2.ns3'); //1
+    emitter.emit('test27.ns2.ns3.ns4'); //0
+
+    test.expect(1);
+    test.done();
+  },
+
+  '28. should raise errors, if error is emitted and not caught' : function (test) {
+    var emitter = this.emitter,
+        error   = new Error('Something Funny Happened');
+
+    try {
+      emitter.emit('error');
+    }
+    catch (ex) {
+      test.ok(ex instanceof Error, 'should be an Error');
+    }
+
+    try {
+      emitter.emit('error', error);
+    }
+    catch (ex) {
+      test.equal(error,ex, 'should have passed up the argument');
+    }
+
+    emitter.on('error', function (event, err) {
+      test.ok(true, 'error event was raised');
+      test.equal(err,error, 'of the error');
+    });
+
+    emitter.emit('error',error);
+
+    test.expect(4);
+    test.done();
+  },
+
 });
