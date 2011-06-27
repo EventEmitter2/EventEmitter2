@@ -80,6 +80,16 @@ Adds a listener that will be fired when any event is emitted.
     });
 ```
 
+#### emitter.unAny(listener)
+
+Removes the listener that will be fired when any event is emitted.
+
+```javascript
+    server.unAny(function(event, value) {
+      console.log('This event will be listened to exactly four times.');
+    });
+```
+
 #### emitter.once(event, listener)
 
 Adds a **one time** listener for the event. The listener is invoked only the first time the event is fired, after which it is removed.
@@ -102,6 +112,7 @@ Adds a listener that will execute **n times** for the event before being removed
 
 
 #### emitter.removeListener(event, listener)
+#### emitter.un(event, listener)
 
 Remove a listener from the listener array for the specified event. **Caution**: changes array indices in the listener array behind the listener.
 
@@ -136,9 +147,25 @@ Returns an array of listeners for the specified event. This array can be manipul
     console.log(console.log(server.listeners('get')); // [ [Function] ]
 ```
 
+#### emitter.listenersAny(event)
+
+Returns an array of listeners that are listening for any event that is specified. This array can be manipulated, e.g. to remove listeners.
+
+```javascript
+    server.onAny(function(event, value) {
+      console.log('someone connected!');
+    });
+    console.log(console.log(server.listenersAny()[0]); // [ [Function] ] // someone connected!
+```
+
 #### emitter.emit(event, [arg1], [arg2], [...])
 
-Execute each of the listeners in order with the list of arguments.
+Execute each of the listeners that may be listening for the specified event name in order with the list of arguments.
+
+#### emitter.emitAll(event, [arg1], [arg2], [...])
+
+Execute each of the listeners that may be listening for the specified event name in order with the list of arguments.
+
 
 ## Test coverage
 
