@@ -8,7 +8,7 @@ module.exports = testCase({
      var EE = require('events').EventEmitter;
      var emitter = new EE();
 
-     console.time('t7');
+     console.time('EE_2');
      for (var i = 0; i < len; i++) {
        for (var j = 0; j < len; j++){
          for (var k = 0; k < len; k++){
@@ -20,12 +20,12 @@ module.exports = testCase({
      }
 
      while (iterations--) {
-      //  emitter.emit('1.8.6.3');
-      // emitter.emit('5.2.9.1');
-      // emitter.emit('9.5.3.8');
+       emitter.emit('1.8.6.3');
+       emitter.emit('5.2.9.1');
+       emitter.emit('9.5.3.8');
      }
 
-     console.timeEnd('t7');
+     console.timeEnd('EE_2');
      test.expect(30000);
      test.done();
    }

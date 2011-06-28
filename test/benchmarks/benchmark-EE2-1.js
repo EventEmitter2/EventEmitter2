@@ -10,7 +10,7 @@ module.exports = testCase({
     var iterations = 100;
     var len = 10;
 
-    console.time('t4');
+    console.time('EE2_1');
     for (var i = 0; i < len; i++) {
       for (var j = 0; j < len; j++){
         for (var k = 0; k < len; k++){
@@ -29,7 +29,7 @@ module.exports = testCase({
     //  emitter.emit('7.3.*');
     }
 
-    console.timeEnd('t4');
+    console.timeEnd('EE2_1');
     test.expect(300);
     test.done();
   }

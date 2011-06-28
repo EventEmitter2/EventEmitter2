@@ -11,7 +11,7 @@ module.exports = testCase({
     var len = 10;
     var event = '';
 
-    console.time('t8');
+    console.time('EE2_2');
     for (var i = 0; i < len; i++) {
       for (var j = 0; j < len; j++){
         for (var k = 0; k < len; k++){
@@ -29,7 +29,7 @@ module.exports = testCase({
       emitter.emit('93729372');
     }
 
-    console.timeEnd('t8');
+    console.timeEnd('EE2_2');
     test.expect(30000);
     test.done();
   }
