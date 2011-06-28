@@ -662,7 +662,7 @@ module.exports = basicEvents({
       EventEmitter2 = window.EventEmitter2;
     }
     var emitter = new EventEmitter2({ 
-      eventCaseSensitive : true,
+      caseSensitive : true,
       delimiter          : '?'
     });
 
@@ -783,6 +783,51 @@ module.exports = basicEvents({
     }
 
     test.expect(12);
+    test.done();
+  },
+
+  '32. Should be able to start with 0 max listeners' : function (test) {
+
+    if(typeof require !== 'undefined') {
+      EventEmitter2 = require('../lib/eventemitter2').EventEmitter2;
+    }
+    else {
+      EventEmitter2 = window.EventEmitter2;
+    }
+    try {
+      var emitter = new EventEmitter2({ 
+        maxListeners : 0
+      });
+      emitter.on('no listeners', function () {
+        test.ok(false, 'no listener was raised');
+      });
+      test.ok(true, 'was able to make something');
+    }
+    catch (ex) {
+      test.ok(false, 'Error was raised');
+    }
+
+    test.expect(1);
+    test.done();
+  },
+
+  '33. should raise maxListeners when too many are registerd' : function (test) {
+    var emitter = this.emitter;
+
+    emitter.on('maxListeners', function () {
+      test.ok(true, 'maxListeners fired');
+    });
+
+    for (var i = 0; i < 11 ; i++){
+      emitter.on('test33', function () {
+        test.ok(false, 'event was raised');
+      });
+    }
+
+    var listeners = emitter.listeners('test33');
+    test.equal(listeners.length, 10, '10 listeners in total');
+
+    test.expect(2);
     test.done();
   },
 });
