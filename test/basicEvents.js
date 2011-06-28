@@ -424,7 +424,7 @@ module.exports = basicEvents({
       EventEmitter2 = window.EventEmitter2;
     }
 
-    var emitter = new EventEmitter2({ eventCaseSensitive : false});
+    var emitter = new EventEmitter2({ caseSensitive : false});
 
     emitter.on('test20', function () {
       test.ok(true, 'The event test18 was raised');
@@ -636,25 +636,7 @@ module.exports = basicEvents({
     test.done();
   },
 
-  '29. should be able to quick-swap event delimiter' : function (test) {
-    var emitter = this.emitter;
-        addedEvents = setHelper(emitter,test,'test29');
-
-    emitter.emit('test29'); //1
-    emitter.emit('test29.ns1'); //2
-
-    emitter.setEventDelimiter('/');
-
-    emitter.emit('test29/ns1/ns2'); //1
-
-    emitter.setEventDelimiter(':');
-    emitter.emit('test29:ns2:ns1'); //1
-
-    test.expect(5);
-    test.done();
-  },
-
-  '30. should support old config for EE2' : function (test) {
+  '29. should support old config for EE2' : function (test) {
     if(typeof require !== 'undefined') {
       EventEmitter2 = require('../lib/eventemitter2').EventEmitter2;
     }
@@ -676,7 +658,7 @@ module.exports = basicEvents({
     test.done();
   },
 
-  '31. should reject bad wildcard inputs' : function (test) {
+  '30. should reject bad wildcard inputs' : function (test) {
     var emitter = this.emitter;
         addedEvents = setHelper(emitter,test,'test31');
 

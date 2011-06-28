@@ -59,24 +59,43 @@ added.
 Adds a listener to the end of the listeners array for the specified event.
 
 ```javascript
-    server.on('data', function(value) {
+    server.on('data', function(event, value) {
       console.log('The event was raised!');
     });
 ```
 
 ```javascript
-    server.on('data', function(value) {
+    server.on('data', function(event, value) {
       console.log('This event will be listened to exactly four times.');
     });
 ```
 
+#### emitter.onAny(listener)
+
+Adds a listener that will be fired when any event is emitted.
+
+```javascript
+    server.onAny(function(event, value) {
+      console.log('This event will be listened to exactly four times.');
+    });
+```
+
+#### emitter.unAny(listener)
+
+Removes the listener that will be fired when any event is emitted.
+
+```javascript
+    server.unAny(function(event, value) {
+      console.log('This event will be listened to exactly four times.');
+    });
+```
 
 #### emitter.once(event, listener)
 
 Adds a **one time** listener for the event. The listener is invoked only the first time the event is fired, after which it is removed.
 
 ```javascript
-    server.once('get', function (value) {
+    server.once('get', function (event, value) {
       console.log('Ah, we have our first value!');
     });
 ```
@@ -86,18 +105,19 @@ Adds a **one time** listener for the event. The listener is invoked only the fir
 Adds a listener that will execute **n times** for the event before being removed. The listener is invoked only the first time the event is fired, after which it is removed.
 
 ```javascript
-    server.many('get', 4, function (value) {
+    server.many('get', 4, function (event, value) {
       console.log('Ah, we have our first value!');
     });
 ```
 
 
 #### emitter.removeListener(event, listener)
+#### emitter.un(event, listener)
 
 Remove a listener from the listener array for the specified event. **Caution**: changes array indices in the listener array behind the listener.
 
 ```javascript
-    var callback = function(value) {
+    var callback = function(event, value) {
       console.log('someone connected!');
     };
     server.on('get', callback);
@@ -121,15 +141,31 @@ By default EventEmitters will print a warning if more than 10 listeners are adde
 Returns an array of listeners for the specified event. This array can be manipulated, e.g. to remove listeners.
 
 ```javascript
-    server.on('get', function (value) {
+    server.on('get', function(event, value) {
       console.log('someone connected!');
     });
     console.log(console.log(server.listeners('get')); // [ [Function] ]
 ```
 
+#### emitter.listenersAny(event)
+
+Returns an array of listeners that are listening for any event that is specified. This array can be manipulated, e.g. to remove listeners.
+
+```javascript
+    server.onAny(function(event, value) {
+      console.log('someone connected!');
+    });
+    console.log(console.log(server.listenersAny()[0]); // [ [Function] ] // someone connected!
+```
+
 #### emitter.emit(event, [arg1], [arg2], [...])
 
-Execute each of the listeners in order with the list of arguments.
+Execute each of the listeners that may be listening for the specified event name in order with the list of arguments.
+
+#### emitter.emitAll(event, [arg1], [arg2], [...])
+
+Execute each of the listeners that may be listening for the specified event name in order with the list of arguments.
+
 
 ## Test coverage
 
