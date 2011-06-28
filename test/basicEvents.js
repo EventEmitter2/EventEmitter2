@@ -617,17 +617,48 @@ module.exports = basicEvents({
     catch (ex) {
       test.ok(ex instanceof Error, 'should be an Error');
     }
-
+  
     try {
       emitter.emit('error', error);
     }
     catch (ex) {
-      test.equal(error,ex, 'should have passed up the argument');
+      test.equal(error, ex, 'should have passed up the argument');
+    }
+  
+    emitter.on('error', function (event, err) {
+      test.ok(true, 'error event was raised');
+      test.equal(err, error, 'of the error');
+    });
+  
+    emitter.emit('error',error);
+  
+    test.expect(4);
+    test.done();
+  },
+
+  '29. should raise errors on namespaces, if error is emitted and not caught' : function (test) {
+    var emitter = this.emitter,
+        error   = new Error('Something Funny Happened');
+
+    emitter.on('foo.bar', function(){});
+
+    try {
+      emitter.emit('foo.error');
+    }
+    catch (ex) {
+      test.ok(ex instanceof Error, 'should be an Error');
+    }
+
+    try {
+      emitter.emit('foo.error', error);
+    }
+    catch (ex) {
+      test.equal(error, ex, 'should have passed up the argument');
     }
 
     emitter.on('error', function (event, err) {
       test.ok(true, 'error event was raised');
-      test.equal(err,error, 'of the error');
+      test.equal(err, error, 'of the error');
     });
 
     emitter.emit('error',error);
@@ -636,7 +667,7 @@ module.exports = basicEvents({
     test.done();
   },
 
-  '29. should support old config for EE2' : function (test) {
+  '30. should support old config for EE2' : function (test) {
     if(typeof require !== 'undefined') {
       EventEmitter2 = require('../lib/eventemitter2').EventEmitter2;
     }
@@ -658,7 +689,7 @@ module.exports = basicEvents({
     test.done();
   },
 
-  '30. should reject bad wildcard inputs' : function (test) {
+  '31. should reject bad wildcard inputs' : function (test) {
     var emitter = this.emitter;
         addedEvents = setHelper(emitter,test,'test31');
 
