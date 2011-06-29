@@ -449,18 +449,14 @@ module.exports = basicEvents({
   '21. should be able to removeListeners' : function (test) {
     var emitter = this.emitter;
 
-    emitter.on('test21', function () {
-      test.ok(true, 'test21 raised');
-    });
-    emitter.on('test21.*', function () {
-      test.ok(true, 'test21.* was raised');
-    });
-    emitter.on('test21.ns1', function () {
-      test.ok(true, 'test21.ns1 was raised');
-    });
-    emitter.on('test21.ns1.ns2', function () {
-      test.ok(true, 'test21.ns1 was raised');
-    });
+    var someFun = function () {
+      test.ok(true, 'someFunc was raised');
+    }
+
+    emitter.on('test21', someFun);
+    emitter.on('test21.*', someFun);
+    emitter.on('test21.ns1', someFun);
+    emitter.on('test21.ns1.ns2', someFun);
 
     emitter.emit('test21'); //1
     emitter.emit('test21.ns2'); //1
@@ -469,11 +465,40 @@ module.exports = basicEvents({
     var listeners = emitter.listeners('test21');
     test.ok(listeners.length === 1, 'there should be 1 listener');
 
-    emitter.removeListener('test21');
+    emitter.removeListener('test21', someFun);
     listeners = emitter.listeners('test21');
-    test.ok(!listeners, 'there should be 0 listener (empty array)');
+    test.ok(listeners.length === 0, 'there should be 0 listener (empty array)');
 
-    test.expect(6);
+    // should be able to add more listeners after removing
+    emitter.on('test21', someFun);
+    emitter.on('test21', someFun);
+    listeners = emitter.listeners('test21');
+    test.ok(listeners.length === 2, 'there should be 2 listeners'); //1
+
+    emitter.emit('test21'); //2
+
+    emitter.removeListener('test21', someFun);  //this removes all listeners
+    listeners = emitter.listeners('test21');
+    test.ok(listeners.length === 1, 'there should be 1 listeners'); //1
+    emitter.removeListener('test21', someFun);  //this removes all listeners
+    listeners = emitter.listeners('test21');
+    test.ok(listeners.length === 0, 'there should be 0 listeners'); //1
+    
+    emitter.emit('test21'); //0
+
+    listeners = emitter.listeners('test21.ns1');
+    test.ok(listeners.length === 1, 'there should be 1 listeners'); //1
+    emitter.removeListener('test21.ns1', someFun); // remove one
+    listeners = emitter.listeners('test21.ns1');
+    test.ok(listeners.length === 0, 'there should be 0 listeners'); //1
+
+    listeners = emitter.listeners('test21.*');
+    test.ok(listeners.length === 1, 'there should be 1 listeners'); //1
+    emitter.removeListener('test21.*', someFun); // remove one
+    listeners = emitter.listeners('test21.*');
+    test.ok(listeners.length === 0, 'there should be 0 listeners'); //1
+
+    test.expect(15);
     test.done();
   },
 
