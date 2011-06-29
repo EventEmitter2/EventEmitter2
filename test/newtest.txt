@@ -1,0 +1,9 @@
+benchmark-EE2C.js
+EE2_1: 459ms
+✔ Add 10000 listener, emit 300 times
+benchmark-EE2D.js
+EE2_3: 442ms
+✔ Add 10000 listener, emit 300 times
+benchmark-EE2B.js
+EE2_1: 401ms
+✔ Add 10000 listener, emit 300 times
