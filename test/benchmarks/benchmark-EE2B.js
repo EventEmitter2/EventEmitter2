@@ -2,9 +2,9 @@ var testCase = require('nodeunit').testCase;
 
 module.exports = testCase({
 
-  'Add 10000 listener, emit 300 times' : function (test) {
+  'Add 50000 listener, emit 15k times' : function (test) {
 
-    var EventEmitter2 = require('../../test/ee3').EventEmitter2;
+    var EventEmitter2 = require('../../lib/ee2').EventEmitter2;
     var emitter = new EventEmitter2;
 
     var iterations = 10000;
