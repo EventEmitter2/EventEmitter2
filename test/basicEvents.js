@@ -699,7 +699,7 @@ module.exports = basicEvents({
     test.done();
   },
 
-  '30. should support old config for EE2' : function (test) {
+  '30. should be able to support custom configs for EE2' : function (test) {
     if(typeof require !== 'undefined') {
       EventEmitter2 = require('../lib/eventemitter2').EventEmitter2;
     }
@@ -708,16 +708,19 @@ module.exports = basicEvents({
     }
     var emitter = new EventEmitter2({ 
       caseSensitive : true,
-      delimiter          : '?'
+      delimiter          : '???'
     });
 
-    emitter.on('test30?a?b', function () {
-      test.ok(true, 'test30?a?b did emit');
+    emitter.on('test30???a???b', function () {
+      test.ok(true, 'test30???a???b did emit');
     });
 
-    emitter.emit('test30?a?b');
+    emitter.emit('test30???a???b');
+    emitter._delimiter = '::';
 
-    test.expect(1);
+    emitter.emit('test30::a::b');
+
+    test.expect(2);
     test.done();
   },
 
