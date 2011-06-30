@@ -306,7 +306,6 @@ module.exports = basicEvents({
       test.ok(false, 'an event was raised!');
     });
     emitter.on('*', function () {
-      console.log(arguments);
       test.ok(false, 'an event was raised!');
     });
 
@@ -427,15 +426,15 @@ module.exports = basicEvents({
     var emitter = new EventEmitter2({ caseSensitive : false});
 
     emitter.on('test20', function () {
-      test.ok(true, 'The event test18 was raised');
+      test.ok(true, 'The event test20 was raised');
     });
     emitter.on('test20.ns1', function () {
-      test.ok(true, 'The event test18.ns1 was raised');
+      test.ok(true, 'The event test20.ns1 was raised');
     });
     emitter.on('*.ns1', function () {
       test.ok(true, 'The event *.ns1 was raised');
     });
-   emitter.on('*.ns2', function () {
+    emitter.on('*.ns2', function () {
       test.ok(false, 'The event *.ns2 was raised');
     });
 
@@ -488,6 +487,7 @@ module.exports = basicEvents({
 
     listeners = emitter.listeners('test21.ns1');
     test.ok(listeners.length === 1, 'there should be 1 listeners'); //1
+
     emitter.removeListener('test21.ns1', someFun); // remove one
     listeners = emitter.listeners('test21.ns1');
     test.ok(listeners.length === 0, 'there should be 0 listeners'); //1
@@ -510,16 +510,23 @@ module.exports = basicEvents({
     emitter.emit('test22'); //1
 
     var listeners = emitter.listeners('test22');
-    test.ok(listeners.length === 1, 'there should be at a listener'); //1
+    test.ok(listeners.length === 1, 'there should be 1 listener'); //1
 
-    emitter.removeAllListeners();
+    emitter.removeAllListeners('test22');
+    listeners = emitter.listeners('test22'); 
+    test.ok(listeners.length === 0, 'there should be 0 listener'); //1
 
+    emitter.removeAllListeners('test22.ns1');
+    listeners = emitter.listeners('test22.ns1'); 
+    test.ok(listeners.length === 0, 'there should be 0 listener'); //1
+
+    emitter.removeAllListeners(); //removing all possible
     for (var i = 0; i < addedEvents.length; i++) {
       listeners = emitter.listeners(addedEvents[i]);
       test.ok(listeners.length === 0, 'there shouldn\'t be at a listener');
     }
 
-    test.expect(addedEvents.length + 2);
+    test.expect(addedEvents.length + 4 );
     test.done();
   },
 
