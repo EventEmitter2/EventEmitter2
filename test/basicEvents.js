@@ -875,4 +875,34 @@ module.exports = basicEvents({
     test.expect(2);
     test.done();
   },
+  '34. should able to permit unlimited listeners for the maxListeners values less equal then \'0\'' : function (test) {
+
+    if(typeof require !== 'undefined') {
+      EventEmitter2 = require('../lib/eventemitter2').EventEmitter2;
+    }
+    else {
+      EventEmitter2 = window.EventEmitter2;
+    }
+    try {
+      var emitter = new EventEmitter2({ 
+        maxListeners : 0
+      });
+      emitter.on('test34', function () {
+        test.ok(true, 'listener was raised');
+      });
+    }
+    catch (ex) {
+      test.ok(false, 'Error was raised');
+    }
+    
+    // some value greater that the default one
+    var listenerCount = 11
+    
+    for (var i = 0; i < listenerCount ; i++){
+      emitter.emit('test34');
+    }
+    
+    test.expect(listenerCount);
+    test.done();
+  }
 });
