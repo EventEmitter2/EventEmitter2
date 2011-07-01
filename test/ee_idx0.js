@@ -1,6 +1,6 @@
 ;!function(exports, undefined) {
 
-  exports.EventEmitter2_OldStable = EventEmitter2;
+  exports.EventEmitter2 = EventEmitter2;
 
   function EventEmitter2(conf) {
     conf = conf || {};
