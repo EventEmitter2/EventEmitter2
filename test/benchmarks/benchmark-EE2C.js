@@ -11,7 +11,7 @@ module.exports = testCase({
     var iterations = 10000;
     var len = 10;
 
-    console.time('EE2_1');
+    console.time('EEcore');
     for (var i = 0; i < len; i++) {
       for (var j = 0; j < len; j++){
         for (var k = 0; k < len; k++){
@@ -32,7 +32,7 @@ module.exports = testCase({
       EventsManager.emit('9.5.3.8');
     }
 
-    console.timeEnd('EE2_1');
+    console.timeEnd('EEcore');
     test.expect(150000);
     test.done();
   }
