@@ -124,6 +124,30 @@ this.timesToLive = {
 
     test.done();
 
-  }  
+  },
+  '4. `removeListener` and `once`': function(test) {
+    var EventEmitter2;
+
+    if (typeof require !== 'undefined') {
+      EventEmitter2 = require('../lib/eventemitter2').EventEmitter2;
+    }
+    else {
+      EventEmitter2 = window.EventEmitter2;
+    }
+
+    var emitter = new EventEmitter2,
+        count = 0,
+        b;
+
+    emitter.once('a', b = function() {
+      count++;
+    });
+
+    emitter.removeListener('a', b);
+    emitter.emit('a');
+
+    test.ok(count == 0, 'Removed listener should not be fired');
+    test.done();
+  }
   
 };
