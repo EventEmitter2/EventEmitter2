@@ -9,6 +9,14 @@
     }
     this._caseSensitive = conf.caseSensitive;
     this._delimiter = conf.delimiter || '.';
+
+    this._dd = this._delimiter + this._delimiter;
+    this._ld = this._delimiter + '*';
+    this._rd = '*' + this._delimiter;
+
+    this._addListeners = [];
+    this._addAnyListeners = [];
+
     this._maxListeners = conf.maxListeners === 0 ? 0 : conf.maxListeners || 10;
     this._events = {};
   };
@@ -31,16 +39,18 @@
 
       //split the name into an array
       name = event.split(this._delimiter);
-      //if we have any blank namespaces events
-      if (name.some(function (event) { return event === ''; })) {
-        this.nameError();
-        return;
-      }
       // continue to build out additional namespaces and attach the listener to them
       for(var i = 0, l = name.length; i < l; i++) {
-
+        if (name[i] === '') {
+          this.nameError();
+          return;
+        } else if ( ~name[i].indexOf('*') && name[i].length != 1 ){
+          this.nameError();
+          return;
+        } else {
         // get the namespace
-        ns = ns[name[i]] || (ns[name[i]] = {});
+          ns = ns[name[i]] || (ns[name[i]] = {});
+        }
       }
     }
 
@@ -55,11 +65,17 @@
     this.emit('newListener', event, listener);
 
     // Signal if we have reached max listerner for this event
-    if (ns._listeners && ns._listeners.length === this.maxListeners) {
-      this.emit('maxListeners', event);
+    if (ns._listeners && this.maxListeners > 0 && ns._listeners.length === this.maxListeners) {
+      throw new Error('maxListeners');
       return;
     }
-    ns._listeners ? ns._listeners.push(listener) : ns._listeners = [listener];
+    if (!ns._listeners) {
+      ns._listeners = listener;
+    } else if ( Array.isArray(ns._listeners) {
+      ns._listeners.push(listener);
+    } else {
+      ns._listeners = [ ns._listeners, listener];
+    }
   };
 
   EventEmitter2.prototype.on = EventEmitter2.prototype.addListener;

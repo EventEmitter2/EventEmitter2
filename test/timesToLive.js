@@ -137,16 +137,16 @@ this.timesToLive = {
 
     var emitter = new EventEmitter2,
         count = 0,
-        b;
+        b = function() {
+          count++;
+        };
 
-    emitter.once('a', b = function() {
-      count++;
-    });
-
+    emitter.once('a', b);
     emitter.removeListener('a', b);
+
     emitter.emit('a');
 
-    test.ok(count == 0, 'Removed listener should not be fired');
+    test.ok(count === 0, 'Removed listener should not be fired');
     test.done();
   }
   

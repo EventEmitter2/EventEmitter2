@@ -583,16 +583,40 @@ module.exports = basicEvents({
         addedEvents = setHelper(emitter,test,'test25');
     
     emitter.many('test25many', 5, function () {
-        test.ok(true, 'test25many pewpew');
+      test.ok(true, 'test25many');
+    });
+    emitter.once('test25once', function () {
+      test.ok(true, 'test25once');
     });
 
     emitter.emit('test25'); //1
-    for (var i= 0; i < 5; i++) {
-      emitter.emit('test25many'); //1
+    for (var i= 0; i < 6; i++) {
+      emitter.emit('test25many'); //5
+      emitter.emit('test25once'); //1
     }
+
+    // these should never fire
+    emitter.emit('test25many'); //0
+    emitter.emit('test25once'); //0
+
+    // re-register the many
+    emitter.once('test25many', function () {
+      test.ok(true, 'test25many-once pewpew');
+    });
+
+    // should only fire once
+    emitter.emit('test25many'); //1
+    emitter.emit('test25many'); //0
     emitter.emit('test25many'); //0
 
-    test.expect(6);
+    emitter.many('test25once', 3, function () {
+      test.ok(true, 'test25once pewpew');
+    });
+
+    emitter.emit('test25once'); //1
+
+
+    test.expect(9);
     test.done();
   },
 
