@@ -1,3 +1,4 @@
+
 var Manager = (function(undefined) {
       // Cache of all topics
       var topics = {};
@@ -45,9 +46,12 @@ var Manager = (function(undefined) {
       };
   }
   }());
-  var EventsManager = {}
-  Manager(EventsManager);
+
+  var b = {};
+  Manager(b);
+  exports.Manager = b;
   
+  /* 
   var EventsManager2 = {};
   (function(man) {
     // Cache of all topics
@@ -159,3 +163,4 @@ var Manager = (function(undefined) {
   
   
 
+*/
