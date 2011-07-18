@@ -21,7 +21,7 @@ function setHelper (emitter, test, testName){
   return eventNames;
 };
 
-module.exports = simpleEvents({
+module.exports = simpleEvents1({
 
   setUp: function (callback) {
     var EventEmitter2;
