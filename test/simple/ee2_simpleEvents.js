@@ -33,7 +33,7 @@ module.exports = simpleEvents1({
       EventEmitter2 = window.EventEmitter2;
     }
 
-    this.emitter = new EventEmitter2({ verbose: true });
+    this.emitter = new EventEmitter2();
     callback();
   },
 
