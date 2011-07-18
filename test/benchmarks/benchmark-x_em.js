@@ -1,38 +1,27 @@
-var testCase = require('nodeunit').testCase;
 
-module.exports = testCase({
+var EventEmitter2 = require('../../lib/em').EventEmitter2;
+var emitter = new EventEmitter2;
 
-  'Add 10000 listener, emit 300 times' : function (test) {
+var totalIterations = 100000;
+var iterations = totalIterations;
+var names = [];
 
-    var EventEmitter2 = require('../em').EventEmitter2;
-    var emitter = new EventEmitter2;
+while(iterations--) {
+  names[iterations] = Math.pow(2*10, Math.random()).toString().replace('.', '');
+}
 
-    var totalIterations = 100000;
-    var iterations = totalIterations;
-    var names = [];
+iterations = totalIterations;
 
-    while(iterations--) {
-      names[iterations] = Math.pow(2*10, Math.random()).toString().replace('.', '');
-    }
+console.time('EE2_New');
 
-    iterations = totalIterations;
+while (iterations--) {
+  emitter.on(names[iterations], function () { 1==1; });
+}
 
-    console.time('EE2_New');
+iterations = totalIterations;
 
-    while (iterations--) {
-      emitter.on(names[iterations], function () { test.ok(true,'emit') });
-    }
+while (iterations--) {
+  emitter.emit(names[iterations]);
+}
 
-    iterations = totalIterations;
-
-    while (iterations--) {
-      emitter.emit(names[iterations]);
-    }
-    
-    console.timeEnd('EE2_New');
-
-    //test.expect(totalIterations);
-    test.done();
-  }
-
-});
+console.timeEnd('EE2_New');

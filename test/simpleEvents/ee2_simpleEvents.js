@@ -1,6 +1,6 @@
 var simpleEvents= require('nodeunit').testCase;
 
-var file = '../../lib/ee2';
+var file = '../../lib/em';
 
 /////helper///////
 function setHelper (emitter, test, testName){
@@ -33,7 +33,7 @@ module.exports = simpleEvents({
       EventEmitter2 = window.EventEmitter2;
     }
 
-    this.emitter = new EventEmitter2();
+    this.emitter = new EventEmitter2({ verbose: true });
     callback();
   },
 
@@ -57,8 +57,8 @@ module.exports = simpleEvents({
   },
   '2. A listener should react with a parameter to an event when the event is emitted.': function (test) {
     var emitter = this.emitter;
-
     emitter.on('test2', function (event, value1) {
+
       test.ok(true, 'The event was raised');
       test.ok(typeof value1 !== 'undefined', 'The event was raised with the value `' + value1 + '`.');
     });
@@ -110,16 +110,16 @@ module.exports = simpleEvents({
   '5. should be able to emit on multiple copies of an event listeners': function (test) {
     var emitter = this.emitter;
 
-    emitter.on('test5', function () {
+    emitter.on('test5', function a() {
       test.ok(true,'emitted test5');
     });
-    emitter.on('test5', function () {
+    emitter.on('test5', function b() {
       test.ok(true,'emitted test5');
     });
-    emitter.on('test5', function () {
+    emitter.on('test5', function c() {
       test.ok(true,'emitted test5');
     });
-    emitter.on('test5', function () {
+    emitter.on('test5', function d() {
       test.ok(true,'emitted test5');
     });
 
@@ -151,13 +151,9 @@ module.exports = simpleEvents({
   '7. Should fail if delimiter is used to start or end event name.' : function (test) {
     var emitter = this.emitter;
 
-    //nothing should emit, so here is a all-listener
-    emitter.onAny(function () {
-      test.ok(false, 'an event was raised!');
-    });
-
     try {
       emitter.on('.ns4', function () {
+
         test.ok(false, 'The event .ns4 was raised');
       });
 
@@ -168,7 +164,6 @@ module.exports = simpleEvents({
     }
     
     try {
-
       emitter.on('ns4.', function () {
         test.ok(false, 'The event .ns4 was raised');
       });
@@ -219,7 +214,7 @@ module.exports = simpleEvents({
       test.ok(true,'error was raised');
     }
 
-    test.expect(6);
+    test.expect(5);
     test.done();
   },
 
@@ -240,43 +235,33 @@ module.exports = simpleEvents({
   },
 
   '9. should be able to removeListeners' : function (test) {
+
     var emitter = this.emitter;
-
-    var someFun = function () {
-      test.ok(true, 'someFunc was raised');
-    }
-
-    emitter.on('test21', someFun);
-
+    var functionA = function a() { test.ok(true, 'someFunc was raised') };
+    var functionB = function b() { test.ok(true, 'someFunc was raised') };
+    
+    emitter.on('test21', functionA);
 
     emitter.emit('test21'); //1
-
-    var listeners = emitter.listeners('test21');
-    console.log(listeners);
-    test.equal(typeof listeners, 'function', 'there should be 1 listener'); //1
-
-    emitter.removeListener('test21', someFun);
-    listeners = emitter.listeners('test21');
-    test.ok(listeners.length === 0, 'there should be 0 listener (empty array)'); //1
-
-    // should be able to add more listeners after removing
-    emitter.on('test21', someFun);
-    emitter.on('test21', someFun);
-    listeners = emitter.listeners('test21');
-    test.ok(listeners.length === 2, 'there should be 2 listeners'); //1
-
-    emitter.emit('test21'); //2
-
-    emitter.removeListener('test21', someFun);  //this removes all listeners
-    listeners = emitter.listeners('test21');
-    test.ok(listeners.length === 1, 'there should be 1 listeners'); //1
-    emitter.removeListener('test21', someFun);  //this removes all listeners
-    listeners = emitter.listeners('test21');
-    test.ok(listeners.length === 0, 'there should be 0 listeners'); //1
     
-    emitter.emit('test21'); //0
+    test.equal(emitter.listeners('test21').length, 1, 'there should be 1 listener');
 
-    test.expect(8);
+    emitter.removeListener('test21', functionA);
+
+    listeners = emitter.listeners('test21');
+    
+    test.equal(emitter.listeners('test21').length, 0, 'there should be 0 listener (empty array)'); //1
+    
+    // should be able to add more listeners after removing
+
+    emitter.on('test21', functionA);
+    emitter.on('test21', functionB);
+
+    test.equal(emitter.listeners('test21').length, 2, 'there should be 2 listeners'); //1
+    
+    emitter.emit('test21'); //2
+    
+    test.expect(6);
     test.done();
   },
 
@@ -288,11 +273,13 @@ module.exports = simpleEvents({
     emitter.emit('test22'); //1
 
     var listeners = emitter.listeners('test22');
-    test.equal(typeof listeners ,'function', 'there should be 1 listener'); //1
+    test.equal(listeners.length, 1, 'there should be 1 listener'); //1
 
     emitter.removeAllListeners('test22');
-    listeners = emitter.listeners('test22'); 
-    test.ok(listeners.length === 0, 'there should be 0 listener'); //1
+    
+    listeners = emitter.listeners('test22');
+    
+    test.equal(listeners.length, 0, 'there should be 0 listener'); //1
 
     test.expect(3);
     test.done();

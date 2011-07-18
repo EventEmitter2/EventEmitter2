@@ -12,7 +12,7 @@ while(iterations--) {
 
 iterations = totalIterations;
 
-console.time('EE_Core');
+console.time('test');
 
 while (iterations--) {
   emitter.on(names[iterations], function () { 1==1; });
@@ -24,4 +24,4 @@ while (iterations--) {
   emitter.emit(names[iterations]);
 }
 
-return console.timeEnd('EE_Core');
+console.timeEnd('test');
