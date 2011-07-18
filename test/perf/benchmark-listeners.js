@@ -12,7 +12,6 @@ var emitter = new EventEmitter;
 var EventEmitter2 = require('../../lib/em').EventEmitter2;
 var emitter2 = new EventEmitter2;
 
-
 var EventEmitter3 = require('events').EventEmitter;
 var emitter3 = new EventEmitter3;
 
