@@ -1,30 +1,131 @@
-/*
- * setMax.js
- * Tests setMaxListener functionality of EventEmitter2
- *
- * (C) 2011, Nodejitsu Inc.
- *
- */
+var simpleEvents= require('nodeunit').testCase;
 
-var fs = require('fs'),
-    path = require('path'),
-    assert = require('assert'),
-    spawn = require('child_process').spawn,
-    vows = require('vows'),
-    eyes = require('eyes'),
-    EventEmitter = require('../../lib/em2').EventEmitter2;
+var file = '../../lib/em';
 
-//var .onAny(function () {return;console.error(eyes.inspect(arguments))});
-//    .onAny(function () {return;console.error(eyes.inspect(arguments))});
+/////helper///////
+function setHelper (emitter, test, testName){
+  var eventNames = [
+    testName, 
+    testName + '.*', 
+    testName + '.ns1', 
+    testName + '.ns1.ns2', 
+    testName + '.ns2.*'
+  ];
 
-vows.describe('EventEmitter2/setMaxListeners').addBatch({
-
-  "When using an instance of cerebrum.Instrument": {
-    topic: function () {
-      var that = this;
-    },
-    "adding more than 10 should do a print-trace" :  function () {
-    }
+  for (var i = 0; i < eventNames.length; i++) {
+    emitter.on(eventNames[i], function () { 
+        test.ok(true, eventNames[i] + 'has fired');
+    });
   }
-}).export(module);
 
+  return eventNames;
+};
+
+module.exports = simpleEvents({
+
+  setUp: function (callback) {
+    var EventEmitter2;
+
+    if(typeof require !== 'undefined') {
+      EventEmitter2 = require(file).EventEmitter2;
+    }
+    else {
+      EventEmitter2 = window.EventEmitter2;
+    }
+
+    this.emitter = new EventEmitter2;
+    callback();
+  },
+
+  tearDown: function (callback) {
+    //clean up?
+    callback();
+  },
+
+  'setMaxListener1. default behavior of 10 listeners.' : function (test) {
+    var emitter = this.emitter;
+
+    for (var i = 0; i < 10; i++) {
+      emitter.on('foobar', function () {
+        test.ok(true, 'event was raised');
+      });
+    }
+
+    var listeners = emitter.listeners('foobar');
+    test.equal(listeners.length, 10, 'should only have 10');
+
+    test.expect(1);
+    test.done();
+  },
+
+  'setMaxListener2. If we added more than 10, should not see them' : function (test) {
+    var emitter = this.emitter;
+
+    for (var i = 0; i < 10 ; i++) {
+      emitter.on('foobar2', function () {
+        test.ok(true, 'event was raised');
+      });
+    }
+    console.log('should see EE2 complaining:');
+    emitter.on('foobar2', function () {
+      test.ok(true, 'event was raised');
+    });
+    console.log('move on');
+
+    var listeners = emitter.listeners('foobar2');
+    test.equal(listeners.length, 11, 'should have 11');
+    test.ok(emitter._events['foobar2'].warned, 'should have been warned');
+
+    test.expect(2);
+    test.done();
+  },
+
+  'setMaxListener3. if we set maxListener to be greater before adding' : function (test) {
+    var emitter = this.emitter;
+    var type = 'foobar3';
+
+    // set to 20
+    emitter.setMaxListeners(20);
+
+    for (var i = 0; i < 15 ; i++) {
+      emitter.on(type, function () {
+        test.ok(true, 'event was raised');
+      });
+    }
+
+//    require('eyes').inspect(emitter._events);
+
+    var listeners = emitter.listeners(type);
+    test.equal(listeners.length, 15, 'should have 15');
+    test.ok(!(emitter._events[type].warned), 'should not have been set');
+
+    test.expect(2);
+    test.done();
+  },
+
+  'setMaxListener4. should be able to change it right at 10' : function (test) {
+    var emitter = this.emitter;
+    var type = 'foobar4';
+
+    for (var i = 0; i < 10 ; i++) {
+      emitter.on(type, function () {
+        test.ok(true, 'event was raised');
+      });
+    }
+
+    emitter.setMaxListeners(9001);
+    emitter.on(type, function () {
+      test.ok(true, 'event was raised');
+    });
+
+//    require('eyes').inspect(emitter._events);
+
+    var listeners = emitter.listeners(type);
+    test.equal(listeners.length, 11, 'should have 11');
+    test.ok(!(emitter._events[type].warned), 'should not have been set');
+
+    test.expect(2);
+    test.done();
+  },
+
+});
