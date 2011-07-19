@@ -46,52 +46,52 @@ module.exports = basicEvents({
 
   '1. An event can be namespaced.': function (test) {
 
-    // var emitter = this.emitter;
-    // 
-    // emitter.on('test5.ns1', function () {
-    //   test.ok(true, 'The event was raised');
-    // });
-    // 
-    // emitter.emit('test5.ns1');
-    // 
-    // test.expect(1);
+    var emitter = this.emitter;
+    
+    emitter.on('test1.ns1', function () {
+      test.ok(true, 'The event was raised');
+    });
+    
+    emitter.emit('test1.ns1');
+    
+    test.expect(1);
     test.done();
 
   },
   '2. An event can be namespaced and accept values.': function (test) {
 
-    // var emitter = this.emitter;
-    // 
-    // emitter.on('test6.ns1', function(event, value1) {
-    //   test.ok(true, 'The event was raised');
-    //   test.ok(typeof value1 !== 'undefined', 'The event was raised with the value `' + value1 + '`.');
-    // });
-    // 
-    // emitter.emit('test6.ns1', 1);
-    // 
-    // test.expect(2);
+    var emitter = this.emitter;
+    
+    emitter.on('test6.ns1', function(value1) {
+      test.ok(true, 'The event was raised');
+      test.ok(typeof value1 !== 'undefined', 'The event was raised with the value `' + value1 + '`.');
+    });
+    
+    emitter.emit('test6.ns1', 1);
+    
+    test.expect(2);
     test.done();    
 
   },
-  '7. A namespaced event can be raised multiple times and accept values.': function (test) {
+  '3. A namespaced event can be raised multiple times and accept values.': function (test) {
 
-    // var emitter = this.emitter;
-    // 
-    //  emitter.on('test7.ns1', function (event, value1, value2, value3) {
-    //    test.ok(true, 'The event was raised');
-    //    test.ok(arguments.length === 4, 'The event was raised with the correct number of arguments');
-    //    test.ok(value1 === 1 || value1 === 4, 'The event was raised with the value `' + value1 + '`.');
-    //    test.ok(value2 === 2 || value2 === 5, 'The event was raised with the value `' + value2 + '`.');
-    //    test.ok(value3 === 3 || value3 === 6, 'The event was raised with the value `' + value3 + '`.');            
-    //  });
-    // 
-    //  emitter.emit('test7.ns1', 1, 2, 3);
-    //  emitter.emit('test7.ns1', 4, 5, 6);
-    // 
-    //  test.expect(10);
+    var emitter = this.emitter;
+    
+     emitter.on('test7.ns1', function (value1, value2, value3) {
+       test.ok(true, 'The event was raised');
+       test.ok(arguments.length === 3, 'The event was raised with the correct number of arguments');
+       test.ok(value1 === 1 || value1 === 4, 'The event was raised with the value `' + value1 + '`.');
+       test.ok(value2 === 2 || value2 === 5, 'The event was raised with the value `' + value2 + '`.');
+       test.ok(value3 === 3 || value3 === 6, 'The event was raised with the value `' + value3 + '`.');            
+     });
+    
+     emitter.emit('test7.ns1', 1, 2, 3);
+     emitter.emit('test7.ns1', 4, 5, 6);
+    
+     test.expect(10);
     test.done();
   },    
-  '8. A listener should support wild cards.': function (test) {
+  '4. A listener should support wild cards.': function (test) {
 
     var emitter = this.emitter;
 
@@ -99,15 +99,13 @@ module.exports = basicEvents({
       test.ok(true, 'The event was raised');
     });
 
-    //emitter.emit('test8.ns1');
-
-    console.log(emitter.listenerTree);
+    emitter.emit('test8.ns1');
 
     test.expect(1);
     test.done();
 
-  } /*,
-  '9. Emitting an event should support wildcards.': function (test) {
+  },
+  '5. Emitting an event should support wildcards.': function (test) {
 
     var emitter = this.emitter;
 
@@ -120,8 +118,8 @@ module.exports = basicEvents({
     test.expect(1);
     test.done();
 
-  },
-  '10. A listener should support complex wild cards.': function (test) {
+  }/*,
+  '6. A listener should support complex wild cards.': function (test) {
     
     var emitter = this.emitter;
 
@@ -135,7 +133,7 @@ module.exports = basicEvents({
     test.done();    
 
   },
-  '11. Emitting an event should support complex wildcards.': function (test) {
+  '7. Emitting an event should support complex wildcards.': function (test) {
 
     var emitter = this.emitter;
 
