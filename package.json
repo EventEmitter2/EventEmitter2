@@ -16,8 +16,13 @@
       "url": "git://github.com/hij1nx/EventEmitter2.git" 
   }],
   "devDependencies": {
-    "nodeunit": "*"
+    "nodeunit": "*",
+    "benchmark" : ">= 0.2.2"
   },
   "engines": ["node"],
-  "main": "./lib/eventemitter2.js"
+  "main": "./lib/eventemitter2.js",
+  "scripts" : {
+    "test" : "nodeunit test/simple/* && nodeunit test/wildcardEvents/*",
+    "benchmark" : "node test/perf/benchmark-listener.js"
+  }
 }
