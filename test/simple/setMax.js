@@ -109,4 +109,25 @@ module.exports = simpleEvents({
     test.done();
   },
 
+  'setMaxListener5. if we set maxListener to be 0 should add endlessly' : function (test) {
+    var emitter = this.emitter;
+    var type = 'foobar';
+
+    // set to 0
+    emitter.setMaxListeners(0);
+
+    for (var i = 0; i < 25 ; i++) {
+      emitter.on(type, function () {
+        test.ok(true, 'event was raised');
+      });
+    }
+
+    var listeners = emitter.listeners(type);
+    test.equal(listeners.length, 25, 'should have 25');
+    test.ok(!(emitter._events[type].warned), 'should not have been set');
+
+    test.expect(2);
+    test.done();
+  },
+
 });
