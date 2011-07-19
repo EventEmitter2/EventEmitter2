@@ -2,25 +2,6 @@ var simpleEvents = require('nodeunit').testCase;
 
 var file = '../../lib/em';
 
-/////helper///////
-function setHelper (emitter, test, testName){
-  var eventNames = [
-    testName, 
-    testName + '.*', 
-    testName + '.ns1', 
-    testName + '.ns1.ns2', 
-    testName + '.ns2.*'
-  ];
-
-  for (var i = 0; i < eventNames.length; i++) {
-    emitter.on(eventNames[i], function () { 
-        test.ok(true, eventNames[i] + 'has fired');
-    });
-  }
-
-  return eventNames;
-};
-
 module.exports = simpleEvents({
 
   setUp: function (callback) {
@@ -50,7 +31,9 @@ module.exports = simpleEvents({
       test.ok(true, 'The event was raised');
     });
 
-    test.expect(0);
+    test.equal(emitter.listeners('test1').length, 1, 'There are three emitters');
+
+    test.expect(1);
     test.done();
 
   },
@@ -62,13 +45,77 @@ module.exports = simpleEvents({
       test.ok(true, 'The event was raised');
     });
 
+    emitter.on('test1', function () {
+      test.ok(true, 'The event was raised');
+    });
+
+    test.equal(emitter.listeners('test1').length, 2, 'There are three emitters');
+
+    test.expect(1);
+    test.done();
+
+  },
+  '3. Add three listeners on a single event.': function (test) {
+    
+    var emitter = this.emitter;
+
+    emitter.on('test1', function () {
+      test.ok(true, 'The event was raised');
+    });
+
+    emitter.on('test1', function () {
+      test.ok(true, 'The event was raised');
+    });
+    
+    emitter.on('test1', function () {
+      test.ok(true, 'The event was raised');
+    });
+    
+    test.equal(emitter.listeners('test1').length, 3, 'There are three emitters');
+
+    test.expect(1);
+    test.done();
+
+  },
+  '4. Add two listeners to two different events.': function (test) {
+
+    var emitter = this.emitter;
+
+    emitter.on('test1', function () {
+      test.ok(true, 'The event was raised');
+    });
+
+    emitter.on('test1', function () {
+      test.ok(true, 'The event was raised');
+    });
+    
     emitter.on('test2', function () {
       test.ok(true, 'The event was raised');
     });
 
-    test.expect(0);
+    emitter.on('test2', function () {
+      test.ok(true, 'The event was raised');
+    });
+
+    test.equal(emitter.listeners('test1').length, 2, 'There are two emitters');
+    test.equal(emitter.listeners('test2').length, 2, 'There are two emitters');
+
+    test.expect(2);
     test.done();
 
+  },
+  '5. Never adding any listeners should yield a listeners array with the length of 0.': function (test) {
+
+    var emitter = this.emitter;
+
+    emitter.on('test1', function () {
+      test.ok(true, 'The event was raised');
+    });
+
+    test.equal(emitter.listeners('test2').length, 0, 'There are no emitters');
+
+    test.expect(1);
+    test.done();
   }
 
 });

@@ -2,25 +2,6 @@ var simpleEvents= require('nodeunit').testCase;
 
 var file = '../../lib/em';
 
-/////helper///////
-function setHelper (emitter, test, testName){
-  var eventNames = [
-    testName, 
-    testName + '.*', 
-    testName + '.ns1', 
-    testName + '.ns1.ns2', 
-    testName + '.ns2.*'
-  ];
-
-  for (var i = 0; i < eventNames.length; i++) {
-    emitter.on(eventNames[i], function () { 
-        test.ok(true, eventNames[i] + 'has fired');
-    });
-  }
-
-  return eventNames;
-};
-
 module.exports = simpleEvents({
 
   setUp: function (callback) {
