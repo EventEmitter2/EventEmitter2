@@ -14,7 +14,10 @@ module.exports = simpleEvents({
       EventEmitter2 = window.EventEmitter2;
     }
 
-    this.emitter = new EventEmitter2({ verbose: true });
+    this.emitter = new EventEmitter2({ 
+      wildcard : true,
+      verbose: true 
+    });
     callback();
   },
 
@@ -26,30 +29,33 @@ module.exports = simpleEvents({
   '1. Add a single listener on a single event.': function (test) {
     
     var emitter = this.emitter;
+    var type = 'some.listener.bar';
 
-    emitter.on('test1', function () {
+    emitter.on(type, function () {
       test.ok(true, 'The event was raised');
     });
 
-    test.equal(emitter.listeners('test1').length, 1, 'There are three emitters');
+    test.equal(emitter.listeners(type).length, 1, 'There are three emitters');
 
     test.expect(1);
     test.done();
 
   },
+
   '2. Add two listeners on a single event.': function (test) {
     
     var emitter = this.emitter;
+    var type = 'some.listener.bar';
 
-    emitter.on('test1', function () {
+    emitter.on(type, function () {
       test.ok(true, 'The event was raised');
     });
 
-    emitter.on('test1', function () {
+    emitter.on(type, function () {
       test.ok(true, 'The event was raised');
     });
 
-    test.equal(emitter.listeners('test1').length, 2, 'There are three emitters');
+    test.equal(emitter.listeners(type).length, 2, 'There are three emitters');
 
     test.expect(1);
     test.done();
@@ -58,20 +64,21 @@ module.exports = simpleEvents({
   '3. Add three listeners on a single event.': function (test) {
     
     var emitter = this.emitter;
+    var type = 'some.listener.bar';
 
-    emitter.on('test1', function () {
+    emitter.on(type, function () {
       test.ok(true, 'The event was raised');
     });
 
-    emitter.on('test1', function () {
+    emitter.on(type, function () {
       test.ok(true, 'The event was raised');
     });
     
-    emitter.on('test1', function () {
+    emitter.on(type, function () {
       test.ok(true, 'The event was raised');
     });
     
-    test.equal(emitter.listeners('test1').length, 3, 'There are three emitters');
+    test.equal(emitter.listeners(type).length, 3, 'There are three emitters');
 
     test.expect(1);
     test.done();
@@ -80,12 +87,13 @@ module.exports = simpleEvents({
   '4. Add two listeners to two different events.': function (test) {
 
     var emitter = this.emitter;
+    var type = 'some.listener.bar';
 
-    emitter.on('test1', function () {
+    emitter.on(type, function () {
       test.ok(true, 'The event was raised');
     });
 
-    emitter.on('test1', function () {
+    emitter.on(type, function () {
       test.ok(true, 'The event was raised');
     });
     
@@ -97,18 +105,18 @@ module.exports = simpleEvents({
       test.ok(true, 'The event was raised');
     });
 
-    test.equal(emitter.listeners('test1').length, 2, 'There are two emitters');
+    test.equal(emitter.listeners(type).length, 2, 'There are two emitters');
     test.equal(emitter.listeners('test2').length, 2, 'There are two emitters');
 
     test.expect(2);
     test.done();
-
   },
+
   '5. Never adding any listeners should yield a listeners array with the length of 0.': function (test) {
-
     var emitter = this.emitter;
+    var type = 'some.listener.bar';
 
-    emitter.on('test1', function () {
+    emitter.on(type, function () {
       test.ok(true, 'The event was raised');
     });
 
@@ -120,7 +128,7 @@ module.exports = simpleEvents({
 
   '6. the listener added should be the right listener.': function (test) {
     var emitter = this.emitter;
-    var type = 'somelistenerbar';
+    var type = 'some.listener.bar';
     var f = function () {};
 
     emitter.on(type, f);
@@ -131,6 +139,5 @@ module.exports = simpleEvents({
     test.done();
 
   },
-
 
 });
