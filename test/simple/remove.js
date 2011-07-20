@@ -28,7 +28,7 @@ module.exports = simpleEvents({
         type = 'remove',
         listeners;
 
-    var f = function () {
+    var f = function f() {
       test.ok(true, 'event was raised');
     };
 
@@ -50,7 +50,7 @@ module.exports = simpleEvents({
         type = 'remove',
         listeners;
 
-    var f = function () {
+    var f = function f() {
       test.ok(true, 'event was raised');
     };
 
@@ -73,7 +73,7 @@ module.exports = simpleEvents({
         type = 'remove',
         listeners;
 
-    var f = function () {
+    var f = function f() {
       test.ok(true, 'event was raised');
     };
 
@@ -97,7 +97,7 @@ module.exports = simpleEvents({
         type = 'remove',
         listeners;
 
-    var f = function () {
+    var f = function f() {
       test.ok(true, 'event was raised');
     };
 
@@ -119,10 +119,10 @@ module.exports = simpleEvents({
         type = 'remove',
         listeners;
 
-    var f = function () {
+    var f = function f() {
       test.ok(true, 'event was raised');
     };
-    var g = function () {
+    var g = function g() {
       test.ok(true, 'event was raised');
     };
 
@@ -144,7 +144,7 @@ module.exports = simpleEvents({
         type = 'remove',
         listeners;
 
-    var f = function () {
+    var f = function f() {
       test.ok(true, 'event was raised');
     };
     for (var i = 0; i < 10; i++) {
@@ -169,7 +169,7 @@ module.exports = simpleEvents({
         type = 'remove',
         listeners;
 
-    var f = function () {
+    var f = function f() {
       test.ok(true, 'event was raised');
     };
 

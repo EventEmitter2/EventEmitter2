@@ -25,18 +25,20 @@ suite
       emitter3.removeAllListeners('test3');
 
   })
-  .add('EventEmitter2', function() {
-
-      emitter2.on('test2', function () { 1==1; });
-      emitter2.emit('test2');
-      emitter2.removeAllListeners('test2');
-
-  })
   .add('EventEmitter', function() {
 
-      emitter.on('test1', function () { 1==1; });
-      emitter.emit('test1');
-      emitter.removeAllListeners('test1');
+
+    emitter.on('test1', function () { 1==1; });
+    emitter.emit('test1');
+    emitter.removeAllListeners('test1');
+
+  })
+  .add('EventEmitter2', function() {
+
+    emitter2.on('test2', function () { 1==1; });
+    emitter2.emit('test2');
+    emitter2.removeAllListeners('test2');
+
   })
 
 // add listeners
