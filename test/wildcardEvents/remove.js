@@ -14,7 +14,10 @@ module.exports = simpleEvents({
       EventEmitter2 = window.EventEmitter2;
     }
 
-    this.emitter = new EventEmitter2;
+    this.emitter = new EventEmitter2({
+      wildcard : true,
+      verbose : true
+    });
     callback();
   },
 

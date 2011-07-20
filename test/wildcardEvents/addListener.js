@@ -14,7 +14,10 @@ module.exports = simpleEvents({
       EventEmitter2 = window.EventEmitter2;
     }
 
-    this.emitter = new EventEmitter2({ verbose: true });
+    this.emitter = new EventEmitter2({ 
+      wildcard : true,
+      verbose: true 
+    });
     callback();
   },
 
@@ -38,6 +41,7 @@ module.exports = simpleEvents({
     test.done();
 
   },
+
   '2. Add two listeners on a single event.': function (test) {
     
     var emitter = this.emitter;
