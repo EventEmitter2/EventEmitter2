@@ -1,6 +1,6 @@
 var simpleEvents= require('nodeunit').testCase;
 
-var file = '../../lib/em';
+var file = '../../lib/eventemitter2';
 
 module.exports = simpleEvents({
 
@@ -14,7 +14,10 @@ module.exports = simpleEvents({
       EventEmitter2 = window.EventEmitter2;
     }
 
-    this.emitter = new EventEmitter2;
+    this.emitter = new EventEmitter2({
+      wildcard : true,
+      verbose : true
+    });
     callback();
   },
 
@@ -23,12 +26,12 @@ module.exports = simpleEvents({
     callback();
   },
 
-  'removeListener1. adding 1, removing 1' : function (test) {
+  '1. add a single event and then remove the event.' : function (test) {
     var emitter = this.emitter,
-        type = 'remove',
+        type = 'remove.foo.bar',
         listeners;
 
-    var f = function f() {
+    var f = function () {
       test.ok(true, 'event was raised');
     };
 
@@ -45,9 +48,9 @@ module.exports = simpleEvents({
     test.done();
   },
 
-  'removeListener2. adding 2, removing 1' : function (test) {
+  '2. Add two events and then remove only one of those events.' : function (test) {
     var emitter = this.emitter,
-        type = 'remove',
+        type = 'remove.foo.bar',
         listeners;
 
     var f = function f() {
@@ -56,11 +59,12 @@ module.exports = simpleEvents({
 
     emitter.on(type, f);
     emitter.on(type, f);
+    
     listeners = emitter.listeners(type);
     test.equal(listeners.length, 2, 'should only have 2');
 
-    //remove
     emitter.removeListener(type, f);
+
     listeners = emitter.listeners(type);
     test.equal(listeners.length, 1, 'should be 1');
 
@@ -68,12 +72,12 @@ module.exports = simpleEvents({
     test.done();
   },
 
-  'removeListener3. adding 3, removing 1' : function (test) {
+  '3. Add three events and remove only one of the events that was added.' : function (test) {
     var emitter = this.emitter,
-        type = 'remove',
+        type = 'remove.foo.bar',
         listeners;
 
-    var f = function f() {
+    var f = function () {
       test.ok(true, 'event was raised');
     };
 
@@ -92,12 +96,12 @@ module.exports = simpleEvents({
     test.done();
   },
 
-  'removeListener4. should error if we don\'t pass in a function' : function (test) {
+  '4. Should error if we don\'t pass a function to the emit method.' : function (test) {
     var emitter = this.emitter,
-        type = 'remove',
+        type = 'remove.foo.bar',
         listeners;
 
-    var f = function f() {
+    var f = function () {
       test.ok(true, 'event was raised');
     };
 
@@ -114,15 +118,15 @@ module.exports = simpleEvents({
     test.done();
   },
 
-  'removeListener5. removing a different function, should not remove' : function (test) {
+  '5. Removing one listener should not affect another listener.' : function (test) {
     var emitter = this.emitter,
-        type = 'remove',
+        type = 'remove.foo.bar',
         listeners;
 
-    var f = function f() {
+    var f = function () {
       test.ok(true, 'event was raised');
     };
-    var g = function g() {
+    var g = function () {
       test.ok(true, 'event was raised');
     };
 
@@ -139,17 +143,19 @@ module.exports = simpleEvents({
     test.done();
   },
 
-  'removeListener6. removing all functions' : function (test) {
+  '6. Remove all listener functions.' : function (test) {
+
     var emitter = this.emitter,
-        type = 'remove',
+        type = 'remove.foo.bar',
         listeners;
 
-    var f = function f() {
+    var f = function () {
       test.ok(true, 'event was raised');
     };
     for (var i = 0; i < 10; i++) {
       emitter.on(type, f);
     }
+
     listeners = emitter.listeners(type);
     test.equal(listeners.length, 10, 'should only have 10');
 
@@ -164,26 +170,35 @@ module.exports = simpleEvents({
     test.done();
   },
 
-  'removeListener7. removing different event, should not remove' : function (test) {
-    var emitter = this.emitter,
-        type = 'remove',
-        listeners;
+  '7. Removing listeners for one event should not affect another event\'s listeners.' : function (test) {
 
-    var f = function f() {
+    var emitter = this.emitter;
+    
+    var type = 'remove.foo.bar';
+    
+    var listeners;
+    
+    var f = function () {
       test.ok(true, 'event was raised');
     };
 
     for (var i = 0; i < 10; i++) {
       emitter.on(type, f);
     }
+
     listeners = emitter.listeners(type);
     test.equal(listeners.length, 10, 'should only have 10');
 
     emitter.removeListener(type+type, f);
+
     listeners = emitter.listeners(type);
     test.equal(listeners.length, 10, 'should be 10');
 
     emitter.removeAllListeners(type+type);
+    listeners = emitter.listeners(type);
+    test.equal(listeners.length, 10, 'should be 10');
+    
+    emitter.removeAllListeners(type+'.'+type);
     listeners = emitter.listeners(type);
     test.equal(listeners.length, 10, 'should be 10');
 
@@ -191,9 +206,8 @@ module.exports = simpleEvents({
     listeners = emitter.listeners(type);
     test.equal(listeners.length, 0, 'should be 0');
 
-    test.expect(4);
+    test.expect(5);
     test.done();
-  },
-
+  }
 
 });

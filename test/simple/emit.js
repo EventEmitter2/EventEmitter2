@@ -1,6 +1,6 @@
 var simpleEvents = require('nodeunit').testCase;
 
-var file = '../../lib/em';
+var file = '../../lib/eventemitter2';
 
 module.exports = simpleEvents({
 

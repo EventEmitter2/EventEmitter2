@@ -1,5 +1,5 @@
 var basicEvents = require('nodeunit').testCase;
-var lib = '../../lib/em';
+var lib = '../../lib/eventemitter2';
 
 /////helper///////
 function setHelper (emitter, test, testName){

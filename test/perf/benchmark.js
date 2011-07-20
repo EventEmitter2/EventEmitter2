@@ -1,15 +1,11 @@
 
 var Benchmark = require('benchmark');
-var suite = new Benchmark.Suite({
-  options: {
-    minSamples: 1000
-  }
-});
+var suite = new Benchmark.Suite();
 
 var EventEmitter = require('events').EventEmitter;
 var emitter = new EventEmitter;
 
-var EventEmitter2 = require('../../lib/em').EventEmitter2;
+var EventEmitter2 = require('../../lib/eventemitter2').EventEmitter2;
 var emitter2 = new EventEmitter2;
 
 var EventEmitter3 = require('events').EventEmitter;
@@ -41,13 +37,14 @@ suite
 
   })
 
-// add listeners
-.on('cycle', function(event, bench) {
-  console.log(String(bench));
-})
-.on('complete', function() {
-  console.log('Fastest is ' + this.filter('fastest').pluck('name'));
-})
-// run async
-.run(true);
+  // add listeners
+  .on('cycle', function(event, bench) {
+    console.log(String(bench));
+  })
+  .on('complete', function() {
+    console.log('Fastest is ' + this.filter('fastest').pluck('name'));
+  })
+  
+  // run async
+  .run(true);
 
