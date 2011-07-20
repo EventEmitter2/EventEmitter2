@@ -144,6 +144,9 @@ module.exports = basicEvents({
     emitter.on('foo.*.bar*', function () {});
     emitter.on('*foo.*.bar', function () {});
 
+    emitter.on('fo*o', function () {});
+    emitter.on('foo.ba*.*', function () {});
+
     emitter.on('**', function () {});
 
     test.expect(8);
@@ -166,6 +169,9 @@ module.exports = basicEvents({
     emitter.emit('foo.**.bar');
     emitter.emit('foo.*.bar*');
     emitter.emit('*foo.*.bar');
+
+    emitter.emit('fo*o');
+    emitter.emit('foo.ba*.*');
 
     emitter.emit('**');
 
