@@ -702,15 +702,17 @@ module.exports = basicEvents({
       emitter.emit('foo.error');
     }
     catch (ex) {
-      test.ok(ex instanceof Error, 'should be an Error');
+      test.ok(false, 'should not be an Error');
     }
+    test.ok(true, 'should not have thrown any Error');
 
     try {
       emitter.emit('foo.error', error);
     }
     catch (ex) {
-      test.equal(error, ex, 'should have passed up the argument');
+      test.ok(error !== ex, 'should not have passed up the argument');
     }
+    test.ok(true, 'should not have thrown any Error');
 
     emitter.on('error', function (event, err) {
       test.ok(true, 'error event was raised');
