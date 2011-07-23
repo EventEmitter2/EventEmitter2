@@ -11,7 +11,6 @@ var emitter2 = new EventEmitter2;
 var EventEmitter3 = require('events').EventEmitter;
 var emitter3 = new EventEmitter3;
 
-// add tests
 suite
 
   .add('EventEmitterHeatUp', function() {
@@ -22,7 +21,6 @@ suite
 
   })
   .add('EventEmitter', function() {
-
 
     emitter.on('test1', function () { 1==1; });
     emitter.emit('test1');
@@ -37,14 +35,19 @@ suite
 
   })
 
-  // add listeners
+  .add('EventEmitter2 (wild)', function() {
+
+    emitter2.on('test2.foo', function () { 1==1; });
+    emitter2.emit('test2.foo');
+    emitter2.removeAllListeners('test2.foo');
+
+  })
+
   .on('cycle', function(event, bench) {
     console.log(String(bench));
   })
   .on('complete', function() {
     console.log('Fastest is ' + this.filter('fastest').pluck('name'));
   })
-  
-  // run async
-  .run(true);
 
+  .run(true);
