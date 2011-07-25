@@ -49,11 +49,11 @@ Right
     });
 ```
 
- - A new method was added. Times to listen, an extension of the `once` concept.
+ - Fire an event N times and then remove it, an extension of the `once` concept.
 
 ```javascript
-    server.many('foo', 4, function(value1, value2) {
-      console.log('a values were', value1, value2);
+    server.many('foo', 4, function() {
+      console.log('hello');
     });
 ```
 
