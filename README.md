@@ -3,40 +3,46 @@
 
 EventEmitter2 is a an implementation of the EventEmitter found in Node.js
 
+# ATTENTION!! BREAKING CHANGES
+
+```javascript
+    server.on('foo.*', function(event, value1, value2) { // DOES NOT PASS EVENT AS FIRST ARGUMENT.
+      console.log(event, value1, value2); // WILL NOT WORK, NOW USES `this.event`
+    });
+```
 
 ## Features
 
- - Namespaced events
- - Wildcards for namespaces
+ - Namespaces/Wildcards
  - Times To Listen (TTL), extends the `once` concept
  - Browser environment compatibility
- - As good or better performance for emission and listener registration as Node.js core EventEmitter
- - Smaller. EventEmitter2.js (2.2K Minified) VS. events.js (2.7K Minified)
+ - 2x faster than Node.js event emitter for non-namespaced events.
 
 ## Differences (Non breaking, compatible with existing EventEmitter)
 
  - The constructor takes a configuration object.
  
 ```javascript
-   var server = EventEmitter2({
-     delimiter: '/', // the delimiter used to segment namespaces, defaults to `.`.
-     maxListeners: 20, // the max number of listeners that can be assigned to an event, defaults to 10.
-     caseSensitive: true // this is a big red button, don't press it... or else... I'm just warning you.
-   });
+    var server = EventEmitter2({
+      wildcard: true, // should the event emitter use wildcards (**caution, this has a performance impact**).
+      delimiter: '/', // the delimiter used to segment namespaces, defaults to `.`.
+      maxListeners: 20, // the max number of listeners that can be assigned to an event, defaults to 10.
+      caseSensitive: true // this is a big red button, don't press it... or else... I'm just warning you.
+    });
 ```
 
- - The first parameter of a listener is the actual event name that the listener reacted to (because of wildcards).
+ - Getting the actual event that fired.
 
 ```javascript
-    server.on('foo.*', function(event, value1, value2) {
-      console.log('a values were', value1, value2);
+    server.on('foo.*', function(value1, value2) {
+      console.log(this.event, value1, value2);
     });
 ```
 
  - A new method was added. Times to listen, an extension of the `once` concept.
 
 ```javascript
-    server.many('foo', 4, function(event, value1, value2) {
+    server.many('foo', 4, function(value1, value2) {
       console.log('a values were', value1, value2);
     });
 ```
@@ -59,13 +65,13 @@ added.
 Adds a listener to the end of the listeners array for the specified event.
 
 ```javascript
-    server.on('data', function(event, value) {
+    server.on('data', function(value1, value2, value3 /* accepts any number of expected values... */) {
       console.log('The event was raised!');
     });
 ```
 
 ```javascript
-    server.on('data', function(event, value) {
+    server.on('data', function(value) {
       console.log('This event will be listened to exactly four times.');
     });
 ```
@@ -75,7 +81,7 @@ Adds a listener to the end of the listeners array for the specified event.
 Adds a listener that will be fired when any event is emitted.
 
 ```javascript
-    server.onAny(function(event, value) {
+    server.onAny(function(value) {
       console.log('This event will be listened to exactly four times.');
     });
 ```
@@ -85,7 +91,7 @@ Adds a listener that will be fired when any event is emitted.
 Removes the listener that will be fired when any event is emitted.
 
 ```javascript
-    server.unAny(function(event, value) {
+    server.unAny(function(value) {
       console.log('This event will be listened to exactly four times.');
     });
 ```
@@ -95,7 +101,7 @@ Removes the listener that will be fired when any event is emitted.
 Adds a **one time** listener for the event. The listener is invoked only the first time the event is fired, after which it is removed.
 
 ```javascript
-    server.once('get', function (event, value) {
+    server.once('get', function (value) {
       console.log('Ah, we have our first value!');
     });
 ```
@@ -105,7 +111,7 @@ Adds a **one time** listener for the event. The listener is invoked only the fir
 Adds a listener that will execute **n times** for the event before being removed. The listener is invoked only the first time the event is fired, after which it is removed.
 
 ```javascript
-    server.many('get', 4, function (event, value) {
+    server.many('get', 4, function (value) {
       console.log('Ah, we have our first value!');
     });
 ```
@@ -117,7 +123,7 @@ Adds a listener that will execute **n times** for the event before being removed
 Remove a listener from the listener array for the specified event. **Caution**: changes array indices in the listener array behind the listener.
 
 ```javascript
-    var callback = function(event, value) {
+    var callback = function(value) {
       console.log('someone connected!');
     };
     server.on('get', callback);
@@ -141,7 +147,7 @@ By default EventEmitters will print a warning if more than 10 listeners are adde
 Returns an array of listeners for the specified event. This array can be manipulated, e.g. to remove listeners.
 
 ```javascript
-    server.on('get', function(event, value) {
+    server.on('get', function(value) {
       console.log('someone connected!');
     });
     console.log(console.log(server.listeners('get')); // [ [Function] ]
@@ -152,7 +158,7 @@ Returns an array of listeners for the specified event. This array can be manipul
 Returns an array of listeners that are listening for any event that is specified. This array can be manipulated, e.g. to remove listeners.
 
 ```javascript
-    server.onAny(function(event, value) {
+    server.onAny(function(value) {
       console.log('someone connected!');
     });
     console.log(console.log(server.listenersAny()[0]); // [ [Function] ] // someone connected!
