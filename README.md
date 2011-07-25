@@ -3,13 +3,13 @@
 
 EventEmitter2 is a an implementation of the EventEmitter found in Node.js
 
-# ATTENTION!! BREAKING CHANGES
+# ATTENTION! BREAKING CHANGES TO BE COMPATIBLE WITH NODE.JS EVENT EMITTER.
 
 Wrong
 
 ```javascript
-    server.on('foo.*', function(event, value1, value2) { // DOES NOT PASS EVENT AS FIRST ARGUMENT.
-      console.log(event, value1, value2); // WILL NOT WORK
+    server.on('foo.*', function(event, value1, value2) { // DOES NOT PASS THE EVENT AS FIRST ARGUMENT.
+      console.log(event, value1, value2);
     });
 ```
 
