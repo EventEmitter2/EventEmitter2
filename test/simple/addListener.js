@@ -119,6 +119,7 @@ module.exports = simpleEvents({
   },
 
   '6. the listener added should be the right listener.': function (test) {
+
     var emitter = this.emitter;
     var type = 'somelistenerbar';
     var f = function () {};
@@ -132,5 +133,24 @@ module.exports = simpleEvents({
 
   },
 
+  '7. should be able to listen on any event' : function (test) {
+
+    var emitter = this.emitter;
+    var type = 'somelistenerbar';
+    var f = function () {};
+
+    emitter.onAny(f);
+    emitter.emit('test23.ns5.ns5', someData); //3
+    emitter.unAny(f);
+    emitter.emit('test21'); //0
+    emitter.onAny(f);
+    emitter.onAny(f);
+    emitter.emit('test23.ns5.ns5', someData); //6
+    emitter.unAny();
+
+    test.expect(9);
+    test.done();
+
+  }
 
 });
