@@ -144,14 +144,13 @@ module.exports = simpleEvents({
     var emitter = this.emitter;
     var type = '*.*';
     var f = function () {
-      text.ok(true, 'the event was fired')
+      test.ok(true, 'the event was fired')
     };
 
     emitter.on(type, f);
-    console.log(emitter._events)
     emitter.emit('foo.foo');
 
-    test.expect(2);
+    test.expect(1);
     test.done();
   }
 
