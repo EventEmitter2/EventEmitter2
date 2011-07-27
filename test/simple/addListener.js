@@ -137,20 +137,22 @@ module.exports = simpleEvents({
 
     var emitter = this.emitter;
     var type = 'somelistenerbar';
-    var f = function () {};
+    var f = function () {
+      test.ok(true, 'the event was fired')
+    };
 
     emitter.onAny(f);
-    emitter.emit('test23.ns5.ns5', someData); //3
+    emitter.emit('test23.ns5.ns5', 'someData'); //1
     emitter.unAny(f);
     emitter.emit('test21'); //0
     emitter.onAny(f);
     emitter.onAny(f);
-    emitter.emit('test23.ns5.ns5', someData); //6
-    emitter.unAny();
+    emitter.emit('test23.ns5.ns5', 'someData'); //3
 
-    test.expect(9);
+    test.expect(3);
     test.done();
 
   }
+
 
 });

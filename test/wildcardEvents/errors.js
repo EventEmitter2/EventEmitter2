@@ -21,7 +21,7 @@ function setHelper (emitter, test, testName){
 
 module.exports = basicEvents({
 
-  setUp: function (callback) {
+  /*setUp: function (callback) {
     var EventEmitter2;
 
     if(typeof require !== 'undefined') {
@@ -199,6 +199,6 @@ module.exports = basicEvents({
 
     test.expect(9);
     test.done();
-  },
+  },*/
 
 });

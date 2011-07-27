@@ -53,11 +53,9 @@ module.exports = basicEvents({
         emitterDefault = this.emitterDefault;
 
     test.ok(!emitterDefault.wildcard, 'default .wildcard should be false');
-    test.ok(!emitterDefault.verbose, 'default .verbose should be false');
     test.ok(emitter.wildcard, '.wildcard should be true when set');
-    test.ok(emitter.verbose, '.verbose should be true when set');
     
-    test.expect(4);
+    test.expect(2);
     test.done();
 
   },
