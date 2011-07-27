@@ -15,8 +15,8 @@ module.exports = simpleEvents({
     }
 
     this.emitter = new EventEmitter2({ 
-      wildcard: true,
-      verbose: true 
+      wildcard: true
+      //,delimiter: ':'
     });
     callback();
   },
@@ -142,12 +142,11 @@ module.exports = simpleEvents({
   
   '7. A listener should respond to two wildcards seperated by a delimiter.': function (test) {
     var emitter = this.emitter;
-    var type = '*.*';
     var f = function () {
       test.ok(true, 'the event was fired')
     };
 
-    emitter.on(type, f);
+    emitter.on('*.*', f);
     emitter.emit('foo.foo');
 
     test.expect(1);
