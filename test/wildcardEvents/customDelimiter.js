@@ -15,7 +15,8 @@ module.exports = simpleEvents({
     }
 
     this.emitter = new EventEmitter2({ 
-      wildcard: true
+      wildcard: true,
+      delimiter: '::'
     });
     callback();
   },
@@ -28,7 +29,7 @@ module.exports = simpleEvents({
   '1. Add a single listener on a single event.': function (test) {
     
     var emitter = this.emitter;
-    var type = 'some.listener.bar';
+    var type = 'some::listener::bar';
     
     emitter.on(type, function () {
       test.ok(true, 'The event was raised');
@@ -44,7 +45,7 @@ module.exports = simpleEvents({
   '2. Add two listeners on a single event.': function (test) {
     
     var emitter = this.emitter;
-    var type = 'some.listener.bar';
+    var type = 'some::listener::bar';
     
     emitter.on(type, function () {
       test.ok(true, 'The event was raised');
@@ -63,7 +64,7 @@ module.exports = simpleEvents({
   '3. Add three listeners on a single event.': function (test) {
     
     var emitter = this.emitter;
-    var type = 'some.listener.bar';
+    var type = 'some::listener::bar';
     
     emitter.on(type, function () {
       test.ok(true, 'The event was raised');
@@ -86,7 +87,7 @@ module.exports = simpleEvents({
   '4. Add two listeners to two different events.': function (test) {
 
     var emitter = this.emitter;
-    var type = 'some.listener.bar';
+    var type = 'some::listener::bar';
     
     emitter.on(type, function () {
       test.ok(true, 'The event was raised');
@@ -113,7 +114,7 @@ module.exports = simpleEvents({
 
   '5. Never adding any listeners should yield a listeners array with the length of 0.': function (test) {
     var emitter = this.emitter;
-    var type = 'some.listener.bar';
+    var type = 'some::listener::bar';
     
     emitter.on(type, function () {
       test.ok(true, 'The event was raised');
@@ -127,7 +128,7 @@ module.exports = simpleEvents({
 
   '6. the listener added should be the right listener.': function (test) {
     var emitter = this.emitter;
-    var type = 'some.listener.bar';
+    var type = 'some::listener::bar';
     var f = function () {};
     
     emitter.on(type, f);
@@ -139,35 +140,35 @@ module.exports = simpleEvents({
 
   },
   
-  '7. Listeners on *, *.*, *.test with emissions from foo.test and other.emit': function (test) {
+  '7. Listeners on *, *::*, *::test with emissions from foo::test and other::emit': function (test) {
     var emitter = this.emitter;
     var f = function () {
       test.ok(true, 'the event was fired')
     };
 
-    emitter.on('*.test', f);
-    emitter.on('*.*', f);
+    emitter.on('*::test', f);
+    emitter.on('*::*', f);
     emitter.on('*', f);
 
-    emitter.emit('other.emit');    
-    emitter.emit('foo.test');
+    emitter.emit('other::emit');    
+    emitter.emit('foo::test');
     
     test.expect(3);
     test.done();
   },
   
-  '8. Listeners on *, *.*, foo.test with emissions from *, *.* and foo.test': function (test) {
+  '8. Listeners on *, *::*, foo.test with emissions from *, *::* and foo.test': function (test) {
     var emitter = this.emitter;
     var f = function () {
       test.ok(true, 'the event was fired')
     };
 
-    emitter.on('foo.test', f);
-    emitter.on('*.*', f);
+    emitter.on('foo::test', f);
+    emitter.on('*::*', f);
     emitter.on('*', f);
 
-    emitter.emit('*.*');    
-    emitter.emit('foo.test');
+    emitter.emit('*::*');    
+    emitter.emit('foo::test');
     emitter.emit('*')
     
     test.expect(5);
