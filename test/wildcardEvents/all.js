@@ -45,124 +45,124 @@ module.exports = basicEvents({
   },
 
   '1. An event can be namespaced.': function (test) {
-    // 
-    // var emitter = this.emitter;
-    // 
-    // emitter.on('test1.ns1', function () {
-    //   test.ok(true, 'The event was raised');
-    // });
-    // 
-    // emitter.emit('test1.ns1');
-    // 
-    // test.expect(1);
+    
+    var emitter = this.emitter;
+    
+    emitter.on('test1.ns1', function () {
+      test.ok(true, 'The event was raised');
+    });
+    
+    emitter.emit('test1.ns1');
+    
+    test.expect(1);
     test.done();
 
   },
   '2. An event can be namespaced and accept values.': function (test) {
 
-    // var emitter = this.emitter;
-    // 
-    // emitter.on('test2.ns1', function(value1) {
-    //   test.ok(true, 'The event was raised');
-    //   test.ok(typeof value1 !== 'undefined', 'The event was raised with the value `' + value1 + '`.');
-    // });
-    // 
-    // emitter.emit('test2.ns1', 1);
-    // 
-    // test.expect(2);
+    var emitter = this.emitter;
+    
+    emitter.on('test2.ns1', function(value1) {
+      test.ok(true, 'The event was raised');
+      test.ok(typeof value1 !== 'undefined', 'The event was raised with the value `' + value1 + '`.');
+    });
+    
+    emitter.emit('test2.ns1', 1);
+    
+    test.expect(2);
     test.done();    
 
   },
   '3. A namespaced event can be raised multiple times and accept values.': function (test) {
 
-    // var emitter = this.emitter;
-    // 
-    //  emitter.on('test3.ns1', function (value1, value2, value3) {
-    //    test.ok(true, 'The event was raised');
-    //    test.ok(arguments.length === 3, 'The event was raised with the correct number of arguments');
-    //    test.ok(value1 === 1 || value1 === 4, 'The event was raised with the value `' + value1 + '`.');
-    //    test.ok(value2 === 2 || value2 === 5, 'The event was raised with the value `' + value2 + '`.');
-    //    test.ok(value3 === 3 || value3 === 6, 'The event was raised with the value `' + value3 + '`.');            
-    //  });
-    // 
-    //  emitter.emit('test3.ns1', 1, 2, 3);
-    //  emitter.emit('test3.ns1', 4, 5, 6);
-    // 
-    //  test.expect(10);
+    var emitter = this.emitter;
+    
+     emitter.on('test3.ns1', function (value1, value2, value3) {
+       test.ok(true, 'The event was raised');
+       test.ok(arguments.length === 3, 'The event was raised with the correct number of arguments');
+       test.ok(value1 === 1 || value1 === 4, 'The event was raised with the value `' + value1 + '`.');
+       test.ok(value2 === 2 || value2 === 5, 'The event was raised with the value `' + value2 + '`.');
+       test.ok(value3 === 3 || value3 === 6, 'The event was raised with the value `' + value3 + '`.');            
+     });
+    
+     emitter.emit('test3.ns1', 1, 2, 3);
+     emitter.emit('test3.ns1', 4, 5, 6);
+    
+     test.expect(10);
     test.done();
   },    
   '4. A listener should support wild cards.': function (test) {
 
-    // var emitter = this.emitter;
-    // 
-    // emitter.on('test4.*', function () {
-    //   test.ok(true, 'The event was raised');
-    // });
-    // 
-    // emitter.emit('test4.ns1');
-    // 
-    // test.expect(1);
+    var emitter = this.emitter;
+    
+    emitter.on('test4.*', function () {
+      test.ok(true, 'The event was raised');
+    });
+    
+    emitter.emit('test4.ns1');
+    
+    test.expect(1);
     test.done();
 
   },
   '5. Emitting an event should support wildcards.': function (test) {
 
-    // var emitter = this.emitter;
-    // 
-    //  emitter.on('test5A.test5B', function () {
-    //    test.ok(true, 'The event was raised');
-    //  });
-    // 
-    //  emitter.emit('test5A.*');
-    // 
-    //  test.expect(1);
+    var emitter = this.emitter;
+    
+     emitter.on('test5A.test5B', function () {
+       test.ok(true, 'The event was raised');
+     });
+    
+     emitter.emit('test5A.*');
+    
+     test.expect(1);
     test.done();
 
   },
   '6. A listener should support complex wild cards.': function (test) {
     
-    // var emitter = this.emitter;
-    // 
-    // emitter.on('test10.*.foo', function () {
-    //   test.ok(true, 'The event was raised');
-    // });
-    // 
-    // emitter.emit('test10.ns1.foo');
-    // 
-    // test.expect(1);
+    var emitter = this.emitter;
+    
+    emitter.on('test10.*.foo', function () {
+      test.ok(true, 'The event was raised');
+    });
+    
+    emitter.emit('test10.ns1.foo');
+    
+    test.expect(1);
     test.done();    
 
   },
   '7. Emitting an event should support complex wildcards.': function (test) {
 
-    // var emitter = this.emitter;
-    // 
-    // emitter.on('test11.ns1.foo', function () {
-    //   test.ok(true, 'The event was raised');
-    // });
-    // 
-    // emitter.emit('test11.*.foo');
-    // 
-    // test.expect(1);
+    var emitter = this.emitter;
+    
+    emitter.on('test11.ns1.foo', function () {
+      test.ok(true, 'The event was raised');
+    });
+    
+    emitter.emit('test11.*.foo');
+    
+    test.expect(1);
     test.done();    
 
   },
   '8. Emitting an event should support complex wildcards multiple times, a valid listener should accept values.': function (test) {
     
-    // var emitter = this.emitter;
-    // 
-    // emitter.on('test12.ns1.ns2', function (value1, value2, value3) {
-    //   test.ok(true, 'The event was raised');
-    //   test.ok(arguments.length === 3, 'The event was raised with the correct number of arguments');
-    //   test.ok(value1 === 1 || value1 === 4, 'The event was raised with the value `' + value1 + '`.');
-    //   test.ok(value2 === 2 || value2 === 5, 'The event was raised with the value `' + value1 + '`.');
-    //   test.ok(value3 === 3 || value3 === 6, 'The event was raised with the value `' + value1 + '`.');            
-    // });
-    // 
-    // emitter.emit('test12.*.ns2', 1, 2, 3);
-    // emitter.emit('test12.*.ns2', 4, 5, 6);
-    // 
-    // test.expect(10);
+    var emitter = this.emitter;
+    
+    emitter.on('test12.ns1.ns2', function (value1, value2, value3) {
+      test.ok(true, 'The event was raised');
+      test.ok(arguments.length === 3, 'The event was raised with the correct number of arguments');
+      test.ok(value1 === 1 || value1 === 4, 'The event was raised with the value `' + value1 + '`.');
+      test.ok(value2 === 2 || value2 === 5, 'The event was raised with the value `' + value1 + '`.');
+      test.ok(value3 === 3 || value3 === 6, 'The event was raised with the value `' + value1 + '`.');            
+    });
+    
+    emitter.emit('test12.*.ns2', 1, 2, 3);
+    emitter.emit('test12.*.ns2', 4, 5, 6);
+    
+    test.expect(10);
     test.done();
     
   },
@@ -184,8 +184,26 @@ module.exports = basicEvents({
     test.expect(1);
     test.done();
 
-  }/*,
-   '10. A listener should support total wild card.': function (test) {
+  },
+  '10. should be able to listen on any event' : function (test) {
+
+    var emitter = this.emitter;
+    
+    var fn = function (foo, bar) {
+      test.equal(this.event, 'test23.ns5.ns5')
+      test.equal(foo, 'foo');
+      test.equal(bar, 1);
+      test.ok(true, 'raised test23.ns5.ns5');
+    }
+    
+    emitter.onAny(fn);
+    emitter.emit('test23.ns5.ns5', 'foo', 1);
+    test.expect(4);
+    test.done();
+
+  },
+  /*,
+   '11. A listener should support total wild card.': function (test) {
 
     var emitter = this.emitter;
 
@@ -202,7 +220,7 @@ module.exports = basicEvents({
 
   },
 
-  '11. A listener should support complex total wild card.': function (test) {
+  '12. A listener should support complex total wild card.': function (test) {
 
     var emitter = this.emitter;
 
@@ -218,7 +236,7 @@ module.exports = basicEvents({
     test.done();
 
   },
-  '12. Should be able to fire with wildcard start.' : function (test) {
+  '13. Should be able to fire with wildcard start.' : function (test) {
     var emitter = this.emitter;
 
     emitter.on('test16', function () {
@@ -234,7 +252,7 @@ module.exports = basicEvents({
     test.expect(2);
     test.done();
   },
-  '13. Should fail if delimiter is used to start or end event name.' : function (test) {
+  '14. Should fail if delimiter is used to start or end event name.' : function (test) {
     var emitter = this.emitter;
 
     //nothing should emit, so here is a all-listener
@@ -323,7 +341,7 @@ module.exports = basicEvents({
     test.done();
   },
 
-  '14. Should provide case sensitive option.' : function (test) {
+  '15. Should provide case sensitive option.' : function (test) {
     var emitter  = this.emitter;
 
     emitter.on('test18', function () {
@@ -339,7 +357,7 @@ module.exports = basicEvents({
     test.done();
   },
 
-  '15. one emit should be able to fire on multiple namespaces.' : function (test) {
+  '16. one emit should be able to fire on multiple namespaces.' : function (test) {
     var emitter  = this.emitter;
 
     emitter.on('test19.*', function () {
@@ -354,7 +372,7 @@ module.exports = basicEvents({
     test.done();
   },
 
-  '16. should support case insensitivty (complex).' : function (test) {
+  '17. should support case insensitivty (complex).' : function (test) {
     if(typeof require !== 'undefined') {
       EventEmitter2 = require('../lib/ee2').EventEmitter2;
     }
@@ -384,7 +402,7 @@ module.exports = basicEvents({
     test.done();
   },
 
-  '17. should be able to removeListeners' : function (test) {
+  '18. should be able to removeListeners' : function (test) {
     var emitter = this.emitter;
 
     var someFun = function () {
@@ -441,7 +459,7 @@ module.exports = basicEvents({
     test.done();
   },
 
-  '18. should be able to remove all listeners' : function (test) {
+  '19. should be able to remove all listeners' : function (test) {
 
     var emitter = this.emitter,
         addedEvents = setHelper(emitter, test, 'test22');
@@ -469,38 +487,7 @@ module.exports = basicEvents({
     test.done();
   },
 
-  '19. should be able to listen on any event' : function (test) {
-
-    var emitter = this.emitter,
-        addedEvents = setHelper(emitter, test, 'test23'),
-        someData = {
-          key : 'hello',
-          bar : 'foo',
-          'baz' : 5
-        };
-        fn = function (tag, data) {
-          if (tag !== 'addListener') {
-            test.equals(tag, 'test23.ns5.ns5', 'emitted tag, and raised tag should match');
-            test.equals(someData,data, 'data should be passed up');
-            test.ok(true, 'something happened somewhere');
-          }
-        };
-
-    emitter.onAny(fn);
-    emitter.emit('test23.ns5.ns5', someData); //3
-    emitter.unAny(fn);
-    emitter.emit('test21'); //0
-    emitter.onAny(fn);
-    emitter.onAny(fn);
-    emitter.emit('test23.ns5.ns5', someData); //6
-    emitter.unAny();
-
-    test.expect(9);
-    test.done();
-
-  },
-
-  '20. should be able to fire once and done' : function (test) {
+  '19. should be able to fire once and done' : function (test) {
     var emitter = this.emitter,
         addedEvents = setHelper(emitter,test,'test24');
     
@@ -516,7 +503,7 @@ module.exports = basicEvents({
     test.done();
   },
 
-  '21. should be able to fire many and done' : function (test) {
+  '20. should be able to fire many and done' : function (test) {
 
     var emitter = this.emitter,
         addedEvents = setHelper(emitter,test,'test25');
@@ -535,7 +522,7 @@ module.exports = basicEvents({
     test.done();
   },
 
-  '22. should be able to list all onAny listeners' : function (test) {
+  '21. should be able to list all onAny listeners' : function (test) {
     var emitter = this.emitter,
         addedEvents = setHelper(emitter, test, 'test26'),
         fn = function (tag) {
@@ -567,7 +554,7 @@ module.exports = basicEvents({
     test.done();
   },
 
-  '23. should not expand beyond the namespace' : function (test) {
+  '22. should not expand beyond the namespace' : function (test) {
     var emitter = this.emitter,
         addedEvents = setHelper(emitter,test,'test27');
 
@@ -578,7 +565,7 @@ module.exports = basicEvents({
     test.done();
   },
 
-  '24. should raise errors, if error is emitted and not caught' : function (test) {
+  '23. should raise errors, if error is emitted and not caught' : function (test) {
     var emitter = this.emitter,
         error   = new Error('Something Funny Happened');
 
@@ -607,7 +594,7 @@ module.exports = basicEvents({
     test.done();
   },
 
-  '25. should raise errors on namespaces, if error is emitted and not caught' : function (test) {
+  '24. should raise errors on namespaces, if error is emitted and not caught' : function (test) {
     var emitter = this.emitter,
         error   = new Error('Something Funny Happened');
 
@@ -638,7 +625,7 @@ module.exports = basicEvents({
     test.done();
   },
 
-  '26. should support old config for EE2' : function (test) {
+  '25. should support old config for EE2' : function (test) {
     if(typeof require !== 'undefined') {
       EventEmitter2 = require('../lib/ee2').EventEmitter2;
     }
@@ -660,7 +647,7 @@ module.exports = basicEvents({
     test.done();
   },
 
-  '27. should reject bad wildcard inputs' : function (test) {
+  '26. should reject bad wildcard inputs' : function (test) {
     var emitter = this.emitter;
         addedEvents = setHelper(emitter,test,'test31');
 
@@ -770,7 +757,7 @@ module.exports = basicEvents({
     test.done();
   },
 
-  '28. Should be able to start with 0 max listeners' : function (test) {
+  '27. Should be able to start with 0 max listeners' : function (test) {
 
     if(typeof require !== 'undefined') {
       EventEmitter2 = require('../lib/ee2').EventEmitter2;
@@ -795,7 +782,7 @@ module.exports = basicEvents({
     test.done();
   },
 
-  '29. should raise maxListeners when too many are registerd' : function (test) {
+  '28. should raise maxListeners when too many are registerd' : function (test) {
     var emitter = this.emitter;
 
     emitter.on('maxListeners', function () {
