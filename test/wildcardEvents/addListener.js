@@ -1,5 +1,5 @@
-var simpleEvents = require('nodeunit').testCase;
 
+var simpleEvents = require('nodeunit').testCase;
 var file = '../../lib/eventemitter2';
 
 module.exports = simpleEvents({
@@ -29,11 +29,27 @@ module.exports = simpleEvents({
     
     var emitter = this.emitter;
     var type = 'some.listener.bar';
-    
+
     emitter.on(type, function () {
       test.ok(true, 'The event was raised');
     });
     
+    test.equal(emitter.listeners(type).length, 1, 'There are three emitters');
+    
+    test.expect(1);
+    test.done();
+
+  },
+  
+  '1a. Add a single listener on a single event (using an array).': function (test) {
+    
+    var emitter = this.emitter;
+    var type = ['some', 'listener', 'bar'];
+
+    emitter.on(type, function () {
+      test.ok(true, 'The event was raised');
+    });
+
     test.equal(emitter.listeners(type).length, 1, 'There are three emitters');
     
     test.expect(1);
@@ -60,6 +76,27 @@ module.exports = simpleEvents({
     test.done();
 
   },
+  
+  '2a. Add two listeners on a single event (using an array).': function (test) {
+    
+    var emitter = this.emitter;
+    var type = ['some', 'listener', 'bar'];
+    
+    emitter.on(type, function () {
+      test.ok(true, 'The event was raised');
+    });
+    
+    emitter.on(type, function () {
+      test.ok(true, 'The event was raised');
+    });
+    
+    test.equal(emitter.listeners(type).length, 2, 'There are three emitters');
+    
+    test.expect(1);
+    test.done();
+
+  },  
+  
   '3. Add three listeners on a single event.': function (test) {
     
     var emitter = this.emitter;
@@ -83,6 +120,7 @@ module.exports = simpleEvents({
     test.done();
 
   },
+  
   '4. Add two listeners to two different events.': function (test) {
 
     var emitter = this.emitter;
@@ -139,7 +177,7 @@ module.exports = simpleEvents({
 
   },
   
-  '7. Listeners on *, *.*, *.test with emissions from foo.test and other.emit': function (test) {
+  '7. Listeners on `*`, `*.*`, `*.test` with emissions from `foo.test` and `other.emit`': function (test) {
     var emitter = this.emitter;
     var f = function () {
       test.ok(true, 'the event was fired')
@@ -156,7 +194,7 @@ module.exports = simpleEvents({
     test.done();
   },
   
-  '8. Listeners on *, *.*, foo.test with emissions from *, *.* and foo.test': function (test) {
+  '8. Listeners on `*`, `*.*`, foo.test with emissions from `*`, `*.*` and `foo.test`': function (test) {
     var emitter = this.emitter;
     var f = function () {
       test.ok(true, 'the event was fired')
@@ -172,6 +210,20 @@ module.exports = simpleEvents({
     
     test.expect(5);
     test.done();
-  }
+  },
+  
+  '9. Listeners on `*`. (using an array)': function (test) {
+    
+    var emitter = this.emitter;
+    var f = function () {
+      test.ok(true, 'the event was fired')
+    };
+
+    emitter.on(['*'], f);
+    emitter.emit('*')
+    
+    test.expect(1);
+    test.done();
+  },
 
 });

@@ -23,10 +23,10 @@ Right
 
 ## Features
 
- - Namespaces/Wildcards
- - Times To Listen (TTL), extends the `once` concept
- - Browser environment compatibility
- - 2x faster than Node.js event emitter for non-namespaced events.
+ - Namespaces/Wildcards.
+ - Times To Listen (TTL), extends the `once` concept with `many`.
+ - Browser environment compatibility.
+ - ~2x faster than Node.js event emitter for non-namespaced events.
 
 ## Differences (Non breaking, compatible with existing EventEmitter)
 
@@ -34,10 +34,9 @@ Right
  
 ```javascript
     var server = EventEmitter2({
-      wildcard: true, // should the event emitter use wildcards (**caution, this has a performance impact**).
-      delimiter: '/', // the delimiter used to segment namespaces, defaults to `.`.
+      wildcard: true, // should the event emitter use wildcards.
+      delimiter: '::', // the delimiter used to segment namespaces, defaults to `.`.
       maxListeners: 20, // the max number of listeners that can be assigned to an event, defaults to 10.
-      caseSensitive: true // this is a big red button, don't press it... or else... I'm just warning you.
     });
 ```
 
@@ -53,6 +52,14 @@ Right
 
 ```javascript
     server.many('foo', 4, function() {
+      console.log('hello');
+    });
+```
+
+ - Pass in a namespaced event as an array rather than a delimited string.
+
+```javascript
+    server.many(['foo', 'bar', 'bazz'], function() {
       console.log('hello');
     });
 ```
