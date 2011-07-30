@@ -76,6 +76,25 @@ All EventEmitters emit the event `newListener` when new listeners are
 added.
 
 
+**Namespaces** with **Wildcards**
+To use namespaces/wildcards, pass the `wildcard` option into the EventEmitter constructor.
+When namespaces/wildcards are enabled, events can either be strings (`foo.bar`) separated
+by a delimiter or arrays (`['foo', 'bar']`). The delimiter is also configurable as a 
+constructor option.
+
+An event name passed to any event emitter method can contain a wild card (the `*` character).
+If the event name is a string, a wildcard may appear as `foo.*`. If the event name is an array, 
+the wildcard may appear as `['foo', '*']`.
+
+If either of the above described events were passed to the `on` method, subsequent emits such 
+as the following would be observed...
+
+```javascript
+   emitter.emit(['foo.bazz']);
+   emitter.emit(['foo', 'bar']);
+```
+
+
 #### emitter.addListener(event, listener)
 #### emitter.on(event, listener)
 
