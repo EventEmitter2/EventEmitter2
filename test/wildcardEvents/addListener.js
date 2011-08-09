@@ -211,14 +211,14 @@ module.exports = simpleEvents({
     test.expect(5);
     test.done();
   },
-  
+
   '9. Listeners on `*`. (using an array)': function (test) {
     
     var emitter = this.emitter;
     var f = function () {
       test.ok(true, 'the event was fired')
     };
-
+    
     emitter.on(['*'], f);
     emitter.emit('*')
     
@@ -226,4 +226,23 @@ module.exports = simpleEvents({
     test.done();
   },
 
+  '10. actual event name': function(test) {
+
+    var emitter = this.emitter;
+
+    emitter.on('foo', function() {
+      emitter.emit('bar'); // changes the current event, passes the old one in as a parameter.
+    });
+    
+    emitter.on('*', function() {
+       console.log(this.event);
+     });
+
+
+
+     emitter.emit('foo');
+    
+    test.done();
+  }
+  
 });

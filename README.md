@@ -122,12 +122,12 @@ Adds a listener that will be fired when any event is emitted.
     });
 ```
 
-#### emitter.unAny(listener)
+#### emitter.offAny(listener)
 
 Removes the listener that will be fired when any event is emitted.
 
 ```javascript
-    server.unAny(function(value) {
+    server.offAny(function(value) {
       console.log('This event will be listened to exactly four times.');
     });
 ```
@@ -154,7 +154,7 @@ Adds a listener that will execute **n times** for the event before being removed
 
 
 #### emitter.removeListener(event, listener)
-#### emitter.un(event, listener)
+#### emitter.off(event, listener)
 
 Remove a listener from the listener array for the specified event. **Caution**: changes array indices in the listener array behind the listener.
 

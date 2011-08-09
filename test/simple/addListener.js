@@ -143,7 +143,7 @@ module.exports = simpleEvents({
 
     emitter.onAny(f);
     emitter.emit('test23.ns5.ns5', 'someData'); //1
-    emitter.unAny(f);
+    emitter.offAny(f);
     emitter.emit('test21'); //0
     emitter.onAny(f);
     emitter.onAny(f);
@@ -152,7 +152,22 @@ module.exports = simpleEvents({
     test.expect(3);
     test.done();
 
-  }
+  },
 
+  '8. should be able to listen on any event (error event)' : function (test) {
+
+    var emitter = this.emitter;
+    var type = 'somelistenerbar';
+    var f = function () {
+      test.ok(true, 'the event was fired')
+    };
+    emitter.onAny(f);
+
+    emitter.emit('error');
+
+    test.expect(1);
+    test.done();
+
+  }
 
 });

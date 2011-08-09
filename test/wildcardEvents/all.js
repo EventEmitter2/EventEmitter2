@@ -537,7 +537,7 @@ module.exports = basicEvents({
     var listeners = emitter.listenersAny();
     test.equals(listeners.length, 1, 'should be one any listeners');
 
-    emitter.unAny(fn);
+    emitter.offAny(fn);
     listeners = emitter.listenersAny();
     test.ok(listeners.length === 0, 'should be no any listeners');
 
@@ -546,7 +546,7 @@ module.exports = basicEvents({
     listeners = emitter.listenersAny();
     test.equals(listeners.length, 2, 'should be two any listeners');
 
-    emitter.unAny();
+    emitter.offAny();
     listeners = emitter.listenersAny();
     test.ok(listeners.length === 0, 'should be no any listeners');
 
