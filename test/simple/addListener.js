@@ -154,7 +154,7 @@ module.exports = simpleEvents({
 
   },
 
-  '8. should be able to listen on any event (error event)' : function (test) {
+  '8. should be able to listen on any event (should cause an error)' : function (test) {
 
     var emitter = this.emitter;
     var type = 'somelistenerbar';
