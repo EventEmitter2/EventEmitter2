@@ -185,11 +185,6 @@ Returns an array of listeners that are listening for any event that is specified
 
 Execute each of the listeners that may be listening for the specified event name in order with the list of arguments.
 
-#### emitter.emitAll(event, [arg1], [arg2], [...])
-
-Execute each of the listeners that may be listening for the specified event name in order with the list of arguments.
-
-
 ## Test coverage
 
 There is a test suite that tries to cover each use case, it can be found <a href="https://github.com/hij1nx/EventEmitter2/tree/master/test">here</a>.
