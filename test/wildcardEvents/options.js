@@ -8,7 +8,9 @@ function setHelper (emitter, test, testName){
     testName + '.*', 
     testName + '.ns1', 
     testName + '.ns1.ns2', 
-    testName + '.ns2.*'
+    testName + '.ns2.*',
+    testName + '.**',
+    testName = '.ns2.**'
   ];
 
   for (var i = 0; i < eventNames.length; i++) {
@@ -18,7 +20,7 @@ function setHelper (emitter, test, testName){
   }
 
   return eventNames;
-};
+}
 
 module.exports = basicEvents({
 
