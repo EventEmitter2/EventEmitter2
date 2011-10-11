@@ -243,6 +243,20 @@ module.exports = simpleEvents({
      emitter.emit('foo');
     
     test.done();
+  },
+  
+  '10. emitters must explicitly in only their qualified namespaces.': function(test) {
+
+    var emitter = this.emitter;
+
+    emitter.on('*.bar', function () {
+      test.ok(true, '`*.bar` was fired.');
+    });
+
+    emitter.emit('foo.*');
+
+    test.expect(1);
+    test.done();
   }
   
 });
