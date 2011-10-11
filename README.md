@@ -1,25 +1,6 @@
-
 # EventEmitter2
 
 EventEmitter2 is a an implementation of the EventEmitter found in Node.js
-
-# ATTENTION! BREAKING CHANGES TO BE COMPATIBLE WITH NODE.JS EVENT EMITTER.
-
-Wrong
-
-```javascript
-    server.on('foo.*', function(event, value1, value2) { // DOES NOT PASS THE EVENT AS FIRST ARGUMENT.
-      console.log(event, value1, value2);
-    });
-```
-
-Right
-
-```javascript
-    server.on('foo.*', function(value1, value2) {
-      console.log(this.event, value1, value2);
-    });
-```
 
 ## Features
 
@@ -203,11 +184,6 @@ Returns an array of listeners that are listening for any event that is specified
 #### emitter.emit(event, [arg1], [arg2], [...])
 
 Execute each of the listeners that may be listening for the specified event name in order with the list of arguments.
-
-#### emitter.emitAll(event, [arg1], [arg2], [...])
-
-Execute each of the listeners that may be listening for the specified event name in order with the list of arguments.
-
 
 ## Test coverage
 

@@ -1,6 +1,6 @@
 {
   "name": "eventemitter2",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "description": "A Node.js event emitter implementation with namespaces, wildcards, TTL and browser support.",
   "keywords": ["event", "events", "emitter", "eventemitter"],
   "author": "hij1nx <hij1nx@nodejitsu.com> http://twitter.com/hij1nx",
@@ -8,13 +8,14 @@
     "hij1nx <hij1nx@nodejitsu.com>",
     "jameson <jameson@nodejitsu.com>"
   ],
-  "contributers": [
+  "contributors": [
     "Charlie Robbins <charlie@nodejitsu.com> http://twitter.com/indexzero",
     "Jameson Lee <jameson@nodejitsu.com> http://twitter.com/Jamesonjlee",
     "Jeroen van Duffelen <jvduf@nodejitsu.com> http://www.twitter.com/jvduf",
     "Fedor Indutny <fedor.indutny@gmail.com> http://www.twitter.com/indutny"
   ],
   "licenses": [{"type": "MIT"}],
+  "homepage": "https://github.com/hij1nx/EventEmitter2",
   "repositories": [{
       "type": "git",
       "url": "git://github.com/hij1nx/EventEmitter2.git" 
