@@ -245,7 +245,7 @@ module.exports = simpleEvents({
     test.done();
   },
   
-  '10. emitters must explicitly in only their qualified namespaces.': function(test) {
+  '11. emitters must explicitly in only their qualified namespaces.': function(test) {
 
     var emitter = this.emitter;
 
