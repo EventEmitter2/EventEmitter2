@@ -245,18 +245,35 @@ module.exports = simpleEvents({
     test.done();
   },
   
-  '11. emitters must explicitly in only their qualified namespaces.': function(test) {
-
+  '11. Listeners on `**`, `*.**`, `**.*`, `**.**`, `**.test`, `**.bar.**`, `other.**` with emissions from `foo.bar.test` and `other.emit`': function (test) {
     var emitter = this.emitter;
+    var i = 0;
+    var f = function (n) {
+      return function() {
+        //console.log('Event', n, 'fired');
+        test.ok(true, 'the event was fired');
+      };
+    };
 
-    emitter.on('*.bar', function () {
-      test.ok(true, '`*.bar` was fired.');
-    });
+    emitter.on('**.test', f(i++));     // 0: 0 + 1 + 0 + 0 + 1
+    emitter.on('**.bar.**', f(i++));   // 1: 0 + 1 + 1 + 1 + 0
+    emitter.on('**.*', f(i++));        // 2: 1 + 0 + 0 + 0 + 1
+    emitter.on('*.**', f(i++));        // 3: 1 + 1 + 1 + 1 + 1
+    emitter.on('**', f(i++));          // 4: 1 + 1 + 1 + 1 + 0
+    emitter.on('other.**', f(i++));    // 5: 1 + 0 + 0 + 0 + 1
+    emitter.on('foo.**.test', f(i++)); // 6: 0 + 1 + 0 + 0 + 0
+    // Add forbidden patterns for safety purpose.
+    emitter.on('**.**', f(i++));         // 7: 0
+    emitter.on('a.b.**.**', f(i++));     // 8: 0
+    emitter.on('**.**.a.b', f(i++));     // 9: 0
+    emitter.on('a.b.**.**.a.b', f(i++)); // 10: 0
 
-    emitter.emit('foo.*');
-
-    test.expect(1);
-    test.done();
-  }
+    emitter.emit('other.emit');   // 4  
+    emitter.emit('foo.bar.test'); // 5
+    emitter.emit('foo.bar.test.bar.foo.test.foo'); // 3
+    emitter.emit('bar.bar.bar.bar.bar.bar'); // 3
+    emitter.emit('**.*'); // 4
+    
+    test.expect(19);
   
 });

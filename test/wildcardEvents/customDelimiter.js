@@ -173,6 +173,41 @@ module.exports = simpleEvents({
     
     test.expect(5);
     test.done();
+  },
+  
+  '9. Listeners on **, **::*, **::test with emissions from foo::test and other::emit': function (test) {
+    var emitter = this.emitter;
+    var f = function () {
+      test.ok(true, 'the event was fired');
+    };
+
+    emitter.on('**::test', f);
+    emitter.on('**::*', f);
+    emitter.on('**', f);
+
+    emitter.emit('other::emit'); // 2
+    emitter.emit('foo::test');   // 3
+    
+    test.expect(5);
+    test.done();
+  },
+  
+  '10. Listeners on **, **::*, foo.test with emissions from **, **::* and foo.test': function (test) {
+    var emitter = this.emitter;
+    var f = function () {
+      test.ok(true, 'the event was fired');
+    };
+
+    emitter.on('foo::test', f);
+    emitter.on('**::*', f);
+    emitter.on('**', f);
+
+    emitter.emit('**::*'); // 2   
+    emitter.emit('foo::test'); // 2
+    emitter.emit('**'); // 3
+    
+    test.expect(7);
+    test.done();
   }
 
 });
