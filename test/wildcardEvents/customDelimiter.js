@@ -193,20 +193,23 @@ module.exports = simpleEvents({
   },
   
   '10. Listeners on **, **::*, foo.test with emissions from **, **::* and foo.test': function (test) {
-    var emitter = this.emitter;
-    var f = function () {
-      test.ok(true, 'the event was fired');
+    var emitter = this.emitter, i = 0;
+    var f = function (n) {
+      return function() {
+        //console.log(n, this.event);
+        test.ok(true, 'the event was fired');
+      };
     };
 
-    emitter.on('foo::test', f);
-    emitter.on('**::*', f);
-    emitter.on('**', f);
+    emitter.on('foo::test', f(i++));
+    emitter.on('**::*', f(i++));
+    emitter.on('**', f(i++));
 
-    emitter.emit('**::*'); // 2   
-    emitter.emit('foo::test'); // 2
+    emitter.emit('**::*'); // 3   
+    emitter.emit('foo::test'); // 3
     emitter.emit('**'); // 3
     
-    test.expect(7);
+    test.expect(9);
     test.done();
   }
 
