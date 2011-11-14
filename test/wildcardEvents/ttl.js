@@ -161,13 +161,17 @@ module.exports = simpleEvents({
   },
   
   '8. Emitting with a multi-level wildcard on once': function(test) {
-    var emitter = this.emitter;
+    var emitter = this.emitter, i = 0;
     var type = 'test1.**';
-    var functionA = function() { test.ok(true, 'Event was fired'); };
+    var functionA = function(n) {
+      return function() {
+        //console.log(n, this.event);
+        test.ok(true, 'Event was fired');
+      };
+    }
 
-    emitter.once(type, functionA);
-    emitter.on(type,functionA);
-
+    emitter.once(type, functionA(i++));
+    emitter.on(type,functionA(i++));
     emitter.emit(type); //2
     emitter.emit(type); //1
 
