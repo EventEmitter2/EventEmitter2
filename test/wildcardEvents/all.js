@@ -801,4 +801,29 @@ module.exports = basicEvents({
     test.expect(2);
     test.done();
   } */
+  
+  '29. No warning should be raised if we set maxListener to be greater before adding' : function (test) {
+    var emitter = this.emitter;
+    var type = 'test29.*';
+
+    // set to 20
+    emitter.setMaxListeners(20);
+
+    for (var i = 0; i < 15 ; i++) {
+      emitter.on(type, function () {
+        test.ok(true, 'event was raised');
+      });
+    }
+
+//    require('eyes').inspect(emitter._events);
+
+    var listeners = emitter.listeners(type);
+    test.equal(listeners.length, 15, 'should have 15');
+    test.ok(!(emitter.listenerTree[ 'test29' ]['*']._listeners.warned), 'should not have been set');
+
+    test.expect(2);
+    test.done();
+  }
+
+ 
 });
