@@ -269,14 +269,14 @@ module.exports = simpleEvents({
 
     // check number of listeners by wild card
     listeners = emitter.listeners(type1);
-    test.equal(listeners.length, 1, 'should only have 2');
+    test.equal(listeners.length, 2, 'should only have 2');
 
     // remove by wild card should remove both
     emitter.removeListener(type1, f);
     listeners = emitter.listeners(type1);
     test.equal(listeners.length, 0, 'should be 0');
 
-    test.expect(1);
+    test.expect(2);
     test.done();
   }
 
