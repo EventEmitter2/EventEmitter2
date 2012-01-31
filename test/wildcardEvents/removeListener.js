@@ -208,6 +208,77 @@ module.exports = simpleEvents({
 
     test.expect(5);
     test.done();
+  },
+
+  '8. Its ok to listen on wildcard, so it is ok to remove it.' : function (test) {
+    var emitter = this.emitter,
+        type1 = '*.wild.card',
+        type2 = 'just.another.event',
+        listeners;
+
+    var f = function () {
+      test.ok(true, 'event was raised');
+    };
+
+    emitter.on(type2, f);
+    emitter.on(type1, f);
+
+    //remove
+    emitter.removeListener(type1, f);
+    listeners = emitter.listeners(type1);
+    test.equal(listeners.length, 0, 'should be 0');
+
+    test.expect(1);
+    test.done();
+  },
+
+  '9. And (8) should not depend on order of listening.' : function (test) {
+    var emitter = this.emitter,
+        type1 = '*.wild.card',
+        type2 = 'just.another.event',
+        listeners;
+
+    var f = function () {
+      test.ok(true, 'event was raised');
+    };
+
+    emitter.on(type1, f);
+    emitter.on(type2, f);
+
+    //remove
+    emitter.removeListener(type1, f);
+    listeners = emitter.listeners(type1);
+    test.equal(listeners.length, 0, 'should be 0');
+
+    test.expect(1);
+    test.done();
+  },
+
+  '10. Reporting many listeners on wildcard all should removed.' : function (test) {
+    var emitter = this.emitter,
+        type1 = '*.wild.card',
+        type2 = 'exact.wild.card',
+        listeners;
+
+    var f = function () {
+      test.ok(true, 'event was raised');
+    };
+
+    emitter.on(type1, f);
+    emitter.on(type2, f);
+
+    // check number of listeners by wild card
+    listeners = emitter.listeners(type1);
+    test.equal(listeners.length, 2, 'should only have 2');
+
+    // remove by wild card should remove both
+    emitter.removeListener(type1, f);
+    listeners = emitter.listeners(type1);
+    test.equal(listeners.length, 0, 'should be 0');
+
+    test.expect(2);
+    test.done();
   }
+
 
 });
