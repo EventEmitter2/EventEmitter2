@@ -64,18 +64,20 @@ process.on('exit', function() {
                       console,
                       Buffer,
                       process,
-                      ArrayBuffer,
-                      Int8Array,
-                      Uint8Array,
-                      Int16Array,
-                      Uint16Array,
-                      Int32Array,
-                      Uint32Array,
-                      Float32Array,
-                      Float64Array,
-                      DataView,
+                      global.ArrayBuffer!==undefined?ArrayBuffer:null,
+                      global.Int8Array!==undefined?Int8Array:null,
+                      global.Uint8Array!==undefined?Uint8Array:null,
+                      global.Int16Array!==undefined?Int16Array:null,
+                      global.Uint16Array!==undefined?Uint16Array:null,
+                      global.Int32Array!==undefined?Int32Array:null,
+                      global.Uint32Array!==undefined?Uint32Array:null,
+                      global.Float32Array!==undefined?Float32Array:null,
+                      global.Float64Array!==undefined?Float64Array:null,
+                      global.DataView!==undefined?DataView:null,
                       AssertionError,
-                      global];
+                      global,
+                      events
+                      ];
 
   if (global.errno) {
     knownGlobals.push(errno);
