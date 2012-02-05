@@ -168,6 +168,25 @@ module.exports = simpleEvents({
     test.expect(1);
     test.done();
 
+  },
+
+  '9. onAny alias' : function (test) {
+
+    var emitter = this.emitter;
+    var type = 'somelistenerbar';
+    
+    var f = function () {
+      test.ok(true, 'the event was fired');
+    };
+    
+    emitter.on(f);
+
+    emitter.emit('foo');
+    emitter.emit('bar');
+
+    test.expect(2);
+    test.done();
+
   }
 
 });
