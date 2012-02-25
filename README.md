@@ -14,7 +14,8 @@ EventEmitter2 is a an implementation of the EventEmitter found in Node.js
  - The constructor takes a configuration object.
  
 ```javascript
-    var server = EventEmitter2({
+    var EventEmitter2 = require('eventemitter2').EventEmitter2;
+    var server = new EventEmitter2({
       wildcard: true, // should the event emitter use wildcards.
       delimiter: '::', // the delimiter used to segment namespaces, defaults to `.`.
       maxListeners: 20, // the max number of listeners that can be assigned to an event, defaults to 10.
