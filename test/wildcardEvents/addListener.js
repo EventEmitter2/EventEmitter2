@@ -283,5 +283,25 @@ module.exports = simpleEvents({
     
     test.expect(58);
     test.done();
+  },
+
+  '12. Check return values of emit for wildcard emitter.': function (test) {
+    
+    var emitter = this.emitter;
+
+    emitter.on('foo.*', function () {
+      test.ok(true, 'The event was raised');
+    });
+    
+    emitter.onAny(function () {
+      test.ok(true, 'The event was raised');
+    });
+
+    test.ok(emitter.emit('foo.blah'), 'emit should return true after calling a listener');
+    test.ok(emitter.emit('bar'), 'emit should return true after calling a listener');
+
+    test.expect(5);
+    test.done();
   }
+
 });
