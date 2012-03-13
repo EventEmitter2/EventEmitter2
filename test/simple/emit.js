@@ -130,7 +130,24 @@ module.exports = simpleEvents({
     test.expect(16);
     test.done();
 
-  }
+  },
+  '6. Check return values of emit.': function (test) {
+
+    var emitter = this.emitter;
+
+    function functionA() { test.ok(true, 'The event was raised'); }
+
+    emitter.on('test6', functionA);
+
+    test.ok(emitter.emit('test6'), 'emit should return true after calling a listener');
+    test.ok(!emitter.emit('other'), 'emit should return false when no listener was called');
+
+    emitter.onAny(functionA);
+    test.ok(emitter.emit('other'), 'emit should return true after calling an onAny() listener');
+
+    test.expect(5);
+    test.done();
+  },  
 
 });
 
