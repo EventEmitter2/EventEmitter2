@@ -186,6 +186,10 @@ Returns an array of listeners that are listening for any event that is specified
 
 Execute each of the listeners that may be listening for the specified event name in order with the list of arguments.
 
+#### emitter.idle(event, timeout, callback, [arg1], [arg2], [...])
+
+Sets an idle timer that calls the specified callback with the event and arguments if the event is not emitted within the specified timeout.  Upon the event being emitted, the timer is set back up.
+
 ## Test coverage
 
 There is a test suite that tries to cover each use case, it can be found <a href="https://github.com/hij1nx/EventEmitter2/tree/master/test">here</a>.
