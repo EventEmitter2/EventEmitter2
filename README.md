@@ -171,7 +171,7 @@ Returns an array of listeners for the specified event. This array can be manipul
     console.log(console.log(server.listeners('get')); // [ [Function] ]
 ```
 
-#### emitter.listenersAny(event)
+#### emitter.listenersAny()
 
 Returns an array of listeners that are listening for any event that is specified. This array can be manipulated, e.g. to remove listeners.
 
