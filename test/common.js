@@ -74,6 +74,7 @@ process.on('exit', function() {
                       global.Float32Array!==undefined?Float32Array:null,
                       global.Float64Array!==undefined?Float64Array:null,
                       global.DataView!==undefined?DataView:null,
+                      global.Uint8ClampedArray!==undefined?Uint8ClampedArray:null,
                       AssertionError,
                       global,
                       events
@@ -120,4 +121,3 @@ process.on('exit', function() {
 // normal HTTP modules. This ensures they fit the same API.
 exports.httpTest = function httpTest(cb) {
 };
-
