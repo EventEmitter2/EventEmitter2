@@ -5,16 +5,15 @@ var file = '../../lib/eventemitter2';
 module.exports = simpleEvents({
 
   setUp: function (callback) {
-    var EventEmitter2;
 
     if(typeof require !== 'undefined') {
-      EventEmitter2 = require(file).EventEmitter2;
+      this.EventEmitter2 = require(file).EventEmitter2;
     }
     else {
-      EventEmitter2 = window.EventEmitter2;
+      this.EventEmitter2 = window.EventEmitter2;
     }
 
-    this.emitter = new EventEmitter2;
+    this.emitter = new this.EventEmitter2;
     callback();
   },
 
@@ -129,5 +128,16 @@ module.exports = simpleEvents({
     test.expect(2);
     test.done();
   },
-
+  'maxListeners parameter. Passing maxListeners as a parameter should override default.' : function (test) {
+    var emitter = new this.EventEmitter2({
+      maxListeners: 2
+    });
+    console.log(emitter, test.equal, test.ok);
+    emitter.on('a', function () {});
+    emitter.on('a', function () {});
+    emitter.on('a', function () {});    
+    test.ok(emitter._events.a.warned,
+      '.on() should warn when maxListeners is exceeded.');
+    test.done();
+  }
 });

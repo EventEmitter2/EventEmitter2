@@ -5,16 +5,14 @@ var file = '../../lib/eventemitter2';
 module.exports = simpleEvents({
 
   setUp: function (callback) {
-    var EventEmitter2;
-
     if(typeof require !== 'undefined') {
-      EventEmitter2 = require(file).EventEmitter2;
+      this.EventEmitter2 = require(file).EventEmitter2;
     }
     else {
-      EventEmitter2 = window.EventEmitter2;
+      this.EventEmitter2 = window.EventEmitter2;
     }
 
-    this.emitter = new EventEmitter2({ verbose: true });
+    this.emitter = new this.EventEmitter2({ verbose: true });
     callback();
   },
 
@@ -136,9 +134,8 @@ module.exports = simpleEvents({
   '7. should be able to listen on any event' : function (test) {
 
     var emitter = this.emitter;
-    var type = 'somelistenerbar';
     var f = function () {
-      test.ok(true, 'the event was fired')
+      test.ok(true, 'the event was fired');
     };
 
     emitter.onAny(f);
@@ -157,9 +154,8 @@ module.exports = simpleEvents({
   '8. should be able to listen on any event (should cause an error)' : function (test) {
 
     var emitter = this.emitter;
-    var type = 'somelistenerbar';
     var f = function () {
-      test.ok(true, 'the event was fired')
+      test.ok(true, 'the event was fired');
     };
     emitter.onAny(f);
 
@@ -173,7 +169,6 @@ module.exports = simpleEvents({
   '9. onAny alias' : function (test) {
 
     var emitter = this.emitter;
-    var type = 'somelistenerbar';
     
     var f = function () {
       test.ok(true, 'the event was fired');
@@ -188,5 +183,4 @@ module.exports = simpleEvents({
     test.done();
 
   }
-
 });
