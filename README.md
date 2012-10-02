@@ -90,7 +90,7 @@ Adds a listener to the end of the listeners array for the specified event.
 
 ```javascript
     server.on('data', function(value) {
-      console.log('This event will be listened to exactly four times.');
+      console.log('The event was raised!');
     });
 ```
 
@@ -100,7 +100,7 @@ Adds a listener that will be fired when any event is emitted.
 
 ```javascript
     server.onAny(function(value) {
-      console.log('This event will be listened to exactly four times.');
+      console.log('All events trigger this.');
     });
 ```
 
@@ -110,7 +110,7 @@ Removes the listener that will be fired when any event is emitted.
 
 ```javascript
     server.offAny(function(value) {
-      console.log('This event will be listened to exactly four times.');
+      console.log('The event was raised!');
     });
 ```
 
@@ -130,7 +130,7 @@ Adds a listener that will execute **n times** for the event before being removed
 
 ```javascript
     server.many('get', 4, function (value) {
-      console.log('Ah, we have our first value!');
+      console.log('This event will be listened to exactly four times.');
     });
 ```
 
