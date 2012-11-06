@@ -1,31 +1,22 @@
-var simpleEvents= require('nodeunit').testCase;
 
+var simpleEvents= require('nodeunit').testCase;
 var file = '../../lib/eventemitter2';
+var EventEmitter2;
+
+if(typeof require !== 'undefined') {
+  EventEmitter2 = require(file).EventEmitter2;
+}
+else {
+  EventEmitter2 = window.EventEmitter2;
+}
 
 module.exports = simpleEvents({
 
-  setUp: function (callback) {
-    var EventEmitter2;
-
-    if(typeof require !== 'undefined') {
-      EventEmitter2 = require(file).EventEmitter2;
-    }
-    else {
-      EventEmitter2 = window.EventEmitter2;
-    }
-
-    this.emitter = new EventEmitter2;
-    callback();
-  },
-
-  tearDown: function (callback) {
-    //clean up?
-    callback();
-  },
-
   'removeListener1. adding 1, removing 1' : function (test) {
-    var emitter = this.emitter,
-        type = 'remove',
+
+    var emitter = new EventEmitter2;
+
+    var type = 'remove',
         listeners;
 
     var f = function f() {
@@ -46,8 +37,10 @@ module.exports = simpleEvents({
   },
 
   'removeListener2. adding 2, removing 1' : function (test) {
-    var emitter = this.emitter,
-        type = 'remove',
+    
+    var emitter = new EventEmitter2;
+
+    var type = 'remove',
         listeners;
 
     var f = function f() {
@@ -69,8 +62,10 @@ module.exports = simpleEvents({
   },
 
   'removeListener3. adding 3, removing 1' : function (test) {
-    var emitter = this.emitter,
-        type = 'remove',
+
+    var emitter = new EventEmitter2;
+
+    var type = 'remove',
         listeners;
 
     var f = function f() {
@@ -93,8 +88,9 @@ module.exports = simpleEvents({
   },
 
   'removeListener4. should error if we don\'t pass in a function' : function (test) {
-    var emitter = this.emitter,
-        type = 'remove',
+    
+    var emitter = new EventEmitter2;
+    var type = 'remove',
         listeners;
 
     var f = function f() {
@@ -115,8 +111,9 @@ module.exports = simpleEvents({
   },
 
   'removeListener5. removing a different function, should not remove' : function (test) {
-    var emitter = this.emitter,
-        type = 'remove',
+    
+    var emitter = new EventEmitter2;
+    var type = 'remove',
         listeners;
 
     var f = function f() {
@@ -140,8 +137,9 @@ module.exports = simpleEvents({
   },
 
   'removeListener6. removing all functions' : function (test) {
-    var emitter = this.emitter,
-        type = 'remove',
+    
+    var emitter = new EventEmitter2;
+    var type = 'remove',
         listeners;
 
     var f = function f() {
@@ -165,8 +163,9 @@ module.exports = simpleEvents({
   },
 
   'removeListener7. removing different event, should not remove' : function (test) {
-    var emitter = this.emitter,
-        type = 'remove',
+    
+    var emitter = new EventEmitter2;
+    var type = 'remove',
         listeners;
 
     var f = function f() {
@@ -193,7 +192,5 @@ module.exports = simpleEvents({
 
     test.expect(4);
     test.done();
-  },
-
-
+  }
 });

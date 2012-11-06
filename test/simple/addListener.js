@@ -1,29 +1,19 @@
-var simpleEvents = require('nodeunit').testCase;
 
+var simpleEvents = require('nodeunit').testCase;
 var file = '../../lib/eventemitter2';
+
+if(typeof require !== 'undefined') {
+  EventEmitter2 = require(file).EventEmitter2;
+}
+else {
+  EventEmitter2 = window.EventEmitter2;
+}
 
 module.exports = simpleEvents({
 
-  setUp: function (callback) {
-    if(typeof require !== 'undefined') {
-      this.EventEmitter2 = require(file).EventEmitter2;
-    }
-    else {
-      this.EventEmitter2 = window.EventEmitter2;
-    }
-
-    this.emitter = new this.EventEmitter2({ verbose: true });
-    callback();
-  },
-
-  tearDown: function (callback) {
-    //clean up?
-    callback();
-  },
-
   '1. Add a single listener on a single event.': function (test) {
-    
-    var emitter = this.emitter;
+
+    var emitter = new EventEmitter2({ verbose: true });
 
     emitter.on('test1', function () {
       test.ok(true, 'The event was raised');
@@ -36,8 +26,8 @@ module.exports = simpleEvents({
 
   },
   '2. Add two listeners on a single event.': function (test) {
-    
-    var emitter = this.emitter;
+
+    var emitter = new EventEmitter2({ verbose: true });
 
     emitter.on('test1', function () {
       test.ok(true, 'The event was raised');
@@ -54,8 +44,8 @@ module.exports = simpleEvents({
 
   },
   '3. Add three listeners on a single event.': function (test) {
-    
-    var emitter = this.emitter;
+
+    var emitter = new EventEmitter2({ verbose: true });
 
     emitter.on('test1', function () {
       test.ok(true, 'The event was raised');
@@ -77,7 +67,7 @@ module.exports = simpleEvents({
   },
   '4. Add two listeners to two different events.': function (test) {
 
-    var emitter = this.emitter;
+    var emitter = new EventEmitter2({ verbose: true });
 
     emitter.on('test1', function () {
       test.ok(true, 'The event was raised');
@@ -104,7 +94,7 @@ module.exports = simpleEvents({
   },
   '5. Never adding any listeners should yield a listeners array with the length of 0.': function (test) {
 
-    var emitter = this.emitter;
+    var emitter = new EventEmitter2({ verbose: true });
 
     emitter.on('test1', function () {
       test.ok(true, 'The event was raised');
@@ -118,7 +108,8 @@ module.exports = simpleEvents({
 
   '6. the listener added should be the right listener.': function (test) {
 
-    var emitter = this.emitter;
+    var emitter = new EventEmitter2({ verbose: true });
+
     var type = 'somelistenerbar';
     var f = function () {};
 
@@ -133,7 +124,8 @@ module.exports = simpleEvents({
 
   '7. should be able to listen on any event' : function (test) {
 
-    var emitter = this.emitter;
+    var emitter = new EventEmitter2({ verbose: true });
+
     var f = function () {
       test.ok(true, 'the event was fired');
     };
@@ -153,7 +145,8 @@ module.exports = simpleEvents({
 
   '8. should be able to listen on any event (should cause an error)' : function (test) {
 
-    var emitter = this.emitter;
+    var emitter = new EventEmitter2({ verbose: true });
+
     var f = function () {
       test.ok(true, 'the event was fired');
     };
@@ -167,9 +160,9 @@ module.exports = simpleEvents({
   },
 
   '9. onAny alias' : function (test) {
-
-    var emitter = this.emitter;
     
+    var emitter = new EventEmitter2({ verbose: true });
+
     var f = function () {
       test.ok(true, 'the event was fired');
     };

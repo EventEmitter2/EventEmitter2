@@ -1,29 +1,20 @@
-var simpleEvents= require('nodeunit').testCase;
 
+var simpleEvents= require('nodeunit').testCase;
 var file = '../../lib/eventemitter2';
+var EventEmitter2;
+
+if(typeof require !== 'undefined') {
+  EventEmitter2 = require(file).EventEmitter2;
+}
+else {
+  EventEmitter2 = window.EventEmitter2;
+}
 
 module.exports = simpleEvents({
 
-  setUp: function (callback) {
-
-    if(typeof require !== 'undefined') {
-      this.EventEmitter2 = require(file).EventEmitter2;
-    }
-    else {
-      this.EventEmitter2 = window.EventEmitter2;
-    }
-
-    this.emitter = new this.EventEmitter2;
-    callback();
-  },
-
-  tearDown: function (callback) {
-    //clean up?
-    callback();
-  },
-
   'setMaxListener1. default behavior of 10 listeners.' : function (test) {
-    var emitter = this.emitter;
+
+    var emitter = new EventEmitter2;
 
     for (var i = 0; i < 10; i++) {
       emitter.on('foobar', function () {
@@ -39,7 +30,8 @@ module.exports = simpleEvents({
   },
 
   'setMaxListener2. If we added more than 10, should not see them' : function (test) {
-    var emitter = this.emitter;
+
+    var emitter = new EventEmitter2;
 
     for (var i = 0; i < 10 ; i++) {
       emitter.on('foobar2', function () {
@@ -50,7 +42,6 @@ module.exports = simpleEvents({
     emitter.on('foobar2', function () {
       test.ok(true, 'event was raised');
     });
-    console.log('move on');
 
     var listeners = emitter.listeners('foobar2');
     test.equal(listeners.length, 11, 'should have 11');
@@ -61,7 +52,8 @@ module.exports = simpleEvents({
   },
 
   'setMaxListener3. if we set maxListener to be greater before adding' : function (test) {
-    var emitter = this.emitter;
+
+    var emitter = new EventEmitter2;
     var type = 'foobar3';
 
     // set to 20
@@ -73,8 +65,6 @@ module.exports = simpleEvents({
       });
     }
 
-//    require('eyes').inspect(emitter._events);
-
     var listeners = emitter.listeners(type);
     test.equal(listeners.length, 15, 'should have 15');
     test.ok(!(emitter._events[type].warned), 'should not have been set');
@@ -84,7 +74,8 @@ module.exports = simpleEvents({
   },
 
   'setMaxListener4. should be able to change it right at 10' : function (test) {
-    var emitter = this.emitter;
+
+    var emitter = new EventEmitter2;
     var type = 'foobar4';
 
     for (var i = 0; i < 10 ; i++) {
@@ -98,8 +89,6 @@ module.exports = simpleEvents({
       test.ok(true, 'event was raised');
     });
 
-//    require('eyes').inspect(emitter._events);
-
     var listeners = emitter.listeners(type);
     test.equal(listeners.length, 11, 'should have 11');
     test.ok(!(emitter._events[type].warned), 'should not have been set');
@@ -109,7 +98,8 @@ module.exports = simpleEvents({
   },
 
   'setMaxListener5. if we set maxListener to be 0 should add endlessly' : function (test) {
-    var emitter = this.emitter;
+
+    var emitter = new EventEmitter2;    
     var type = 'foobar';
 
     // set to 0
@@ -129,9 +119,11 @@ module.exports = simpleEvents({
     test.done();
   },
   'maxListeners parameter. Passing maxListeners as a parameter should override default.' : function (test) {
-    var emitter = new this.EventEmitter2({
+    
+    var emitter = new EventEmitter2({
       maxListeners: 2
     });
+
     console.log(emitter, test.equal, test.ok);
     emitter.on('a', function () {});
     emitter.on('a', function () {});

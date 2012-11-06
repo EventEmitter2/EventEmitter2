@@ -1,34 +1,24 @@
 var simpleEvents = require('nodeunit').testCase;
-
 var file = '../../lib/eventemitter2';
+
+var EventEmitter2;
+
+if(typeof require !== 'undefined') {
+  EventEmitter2 = require(file).EventEmitter2;
+}
+else {
+  EventEmitter2 = window.EventEmitter2;
+}
 
 module.exports = simpleEvents({
 
-  setUp: function (callback) {
-    var EventEmitter2;
+  '1. A listener added with `once` should only listen once and then be removed.': function (test) {
 
-    if(typeof require !== 'undefined') {
-      EventEmitter2 = require(file).EventEmitter2;
-    }
-    else {
-      EventEmitter2 = window.EventEmitter2;
-    }
-
-    this.emitter = new EventEmitter2({
+    var emitter = new EventEmitter2({
       wildcard : true,
       verbose : true
     });
-    callback();
-  },
 
-  tearDown: function (callback) {
-    //clean up?
-    callback();
-  },
-
-  '1. A listener added with `once` should only listen once and then be removed.': function (test) {
-
-    var emitter = this.emitter;
     var type = 'test1.foo.bar';
     
     emitter.once(type, function () {
@@ -44,7 +34,11 @@ module.exports = simpleEvents({
   },
   '2. A listener with a TTL of 4 should only listen 4 times.': function (test) {
 
-    var emitter = this.emitter;
+    var emitter = new EventEmitter2({
+      wildcard : true,
+      verbose : true
+    });
+
     var type = 'test1.foo.bar';
 
     emitter.many(type, 4, function (value1) {
@@ -63,7 +57,11 @@ module.exports = simpleEvents({
   },
   '3. A listener with a TTL of 4 should only listen 4 times and pass parameters.': function (test) {
 
-    var emitter = this.emitter;
+    var emitter = new EventEmitter2({
+      wildcard : true,
+      verbose : true
+    });
+
     var type = 'test1.foo.bar';
 
     emitter.many(type, 4, function (value1, value2, value3) {
@@ -83,7 +81,11 @@ module.exports = simpleEvents({
   },
   '4. Remove an event listener by signature.': function (test) {
 
-    var emitter = this.emitter;
+    var emitter = new EventEmitter2({
+      wildcard : true,
+      verbose : true
+    });
+
     var type = 'test1.foo.bar';
     var count = 0;
 
@@ -117,8 +119,12 @@ module.exports = simpleEvents({
 
   },
   '5. `removeListener` and `once`': function(test) {
-    
-    var emitter = this.emitter;
+ 
+     var emitter = new EventEmitter2({
+      wildcard : true,
+      verbose : true
+    });
+   
     var type = 'test1.foo.bar';
     var functionA = function() { test.ok(true, 'Event was fired'); };
 
@@ -132,7 +138,12 @@ module.exports = simpleEvents({
   },
 
   '6. Listening with a wildcard on once' : function (test) {
-    var emitter = this.emitter;
+
+    var emitter = new EventEmitter2({
+      wildcard : true,
+      verbose : true
+    });
+
     var type = 'test1.foo.*';
     var functionA = function() { test.ok(true, 'Event was fired'); };
 
@@ -147,7 +158,12 @@ module.exports = simpleEvents({
   },
 
   '7. Emitting with a wildcard targeted at once' : function (test) {
-    var emitter = this.emitter;
+
+    var emitter = new EventEmitter2({
+      wildcard : true,
+      verbose : true
+    });
+
     var type = 'test1.foo.bar';
     var type2 = 'test1.foo.*';
     var functionA = function() { test.ok(true, 'Event was fired'); };
@@ -161,17 +177,23 @@ module.exports = simpleEvents({
   },
   
   '8. Emitting with a multi-level wildcard on once': function(test) {
-    var emitter = this.emitter, i = 0;
+
+    var emitter = new EventEmitter2({
+      wildcard : true,
+      verbose : true
+    });
+
+    var i = 0;
     var type = 'test1.**';
     var functionA = function(n) {
       return function() {
-        //console.log(n, this.event);
+        console.log(n, this.event);
         test.ok(true, 'Event was fired');
       };
     }
 
     emitter.once(type, functionA(i++));
-    emitter.on(type,functionA(i++));
+    emitter.on(type, functionA(i++));
     emitter.emit(type); //2
     emitter.emit(type); //1
 
@@ -180,7 +202,12 @@ module.exports = simpleEvents({
   },
 
   '9. Emitting with a multi-level wildcard targeted at once' : function (test) {
-    var emitter = this.emitter;
+
+    var emitter = new EventEmitter2({
+      wildcard : true,
+      verbose : true
+    });
+  
     var type = 'test1.foo.bar';
     var type2 = 'test1.**';
     var functionA = function() { test.ok(true, 'Event was fired'); };

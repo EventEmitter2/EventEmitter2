@@ -76,8 +76,7 @@ process.on('exit', function() {
                       global.DataView!==undefined?DataView:null,
                       global.Uint8ClampedArray!==undefined?Uint8ClampedArray:null,
                       AssertionError,
-                      global,
-                      events
+                      global
                       ];
 
   if (global.errno) {

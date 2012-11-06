@@ -1,32 +1,21 @@
-var simpleEvents = require('nodeunit').testCase;
 
+var simpleEvents = require('nodeunit').testCase;
 var file = '../../lib/eventemitter2';
+var EventEmitter2;
+
+if(typeof require !== 'undefined') {
+  EventEmitter2 = require(file).EventEmitter2;
+}
+else {
+  EventEmitter2 = window.EventEmitter2;
+}
 
 module.exports = simpleEvents({
 
-  setUp: function (callback) {
-    var EventEmitter2;
-
-    if(typeof require !== 'undefined') {
-      EventEmitter2 = require(file).EventEmitter2;
-    }
-    else {
-      EventEmitter2 = window.EventEmitter2;
-    }
-
-    this.emitter = new EventEmitter2();
-    callback();
-  },
-
-  tearDown: function (callback) {
-    //clean up?
-    callback();
-  },
-
   '1. A listener added with `once` should only listen once and then be removed.': function (test) {
-
-    var emitter = this.emitter;
     
+    var emitter = new EventEmitter2();
+
     emitter.once('test1', function () {
       test.ok(true, 'The event was raised once');
     });
@@ -40,7 +29,7 @@ module.exports = simpleEvents({
   },
   '2. A listener with a TTL of 4 should only listen 4 times.': function (test) {
 
-    var emitter = this.emitter;
+    var emitter = new EventEmitter2();
 
     emitter.many('test1', 4, function (value1) {
       test.ok(true, 'The event was raised 4 times.');
@@ -58,7 +47,7 @@ module.exports = simpleEvents({
   },
   '3. A listener with a TTL of 4 should only listen 4 times and pass parameters.': function (test) {
 
-    var emitter = this.emitter;
+    var emitter = new EventEmitter2();
 
     emitter.many('test1', 4, function (value1, value2, value3) {
       test.ok(typeof value1 !== 'undefined', 'got value 1');
@@ -77,7 +66,7 @@ module.exports = simpleEvents({
   },
   '4. Remove an event listener by signature.': function (test) {
 
-    var emitter = this.emitter;
+    var emitter = new EventEmitter2();
     var count = 0;
 
     function f1(event) {
@@ -110,8 +99,8 @@ module.exports = simpleEvents({
 
   },
   '5. `removeListener` and `once`': function(test) {
-    
-    var emitter = this.emitter;
+
+    var emitter = new EventEmitter2();
     var functionA = function() { test.ok(true, 'Event was fired'); };
 
     emitter.once('testA', functionA);

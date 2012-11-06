@@ -7,7 +7,15 @@ EventEmitter2 is a an implementation of the EventEmitter found in Node.js
  - Namespaces/Wildcards.
  - Times To Listen (TTL), extends the `once` concept with `many`.
  - Browser environment compatibility.
- - ~2x faster than Node.js event emitter for non-namespaced events.
+ - Demonstrates good performance in benchmarks
+
+```
+EventEmitterHeatUp x 3,728,965 ops/sec \302\2610.68% (60 runs sampled)
+EventEmitter x 2,822,904 ops/sec \302\2610.74% (63 runs sampled)
+EventEmitter2 x 7,251,227 ops/sec \302\2610.55% (58 runs sampled)
+EventEmitter2 (wild) x 3,220,268 ops/sec \302\2610.44% (65 runs sampled)
+Fastest is EventEmitter2
+```
 
 ## Differences (Non breaking, compatible with existing EventEmitter)
 
@@ -18,6 +26,7 @@ EventEmitter2 is a an implementation of the EventEmitter found in Node.js
     var server = new EventEmitter2({
       wildcard: true, // should the event emitter use wildcards.
       delimiter: '::', // the delimiter used to segment namespaces, defaults to `.`.
+      newListener: false, // if you want to emit the newListener event set to true.
       maxListeners: 20, // the max number of listeners that can be assigned to an event, defaults to 10.
     });
 ```
@@ -72,7 +81,7 @@ If either of the above described events were passed to the `on` method, subseque
 as the following would be observed...
 
 ```javascript
-   emitter.emit(['foo.bazz']);
+   emitter.emit('foo.bazz');
    emitter.emit(['foo', 'bar']);
 ```
 

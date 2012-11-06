@@ -2,32 +2,23 @@
 var simpleEvents = require('nodeunit').testCase;
 var file = '../../lib/eventemitter2';
 
+var EventEmitter2;
+
+if(typeof require !== 'undefined') {
+  EventEmitter2 = require(file).EventEmitter2;
+}
+else {
+  EventEmitter2 = window.EventEmitter2;
+}
+
 module.exports = simpleEvents({
-
-  setUp: function (callback) {
-    var EventEmitter2;
-
-    if(typeof require !== 'undefined') {
-      EventEmitter2 = require(file).EventEmitter2;
-    }
-    else {
-      EventEmitter2 = window.EventEmitter2;
-    }
-
-    this.emitter = new EventEmitter2({ 
-      wildcard: true
-    });
-    callback();
-  },
-
-  tearDown: function (callback) {
-    //clean up?
-    callback();
-  },
 
   '1. Add a single listener on a single event.': function (test) {
     
-    var emitter = this.emitter;
+    var emitter = new EventEmitter2({ 
+      wildcard: true
+    });
+
     var type = 'some.listener.bar';
 
     emitter.on(type, function () {
@@ -42,8 +33,11 @@ module.exports = simpleEvents({
   },
   
   '1a. Add a single listener on a single event (using an array).': function (test) {
-    
-    var emitter = this.emitter;
+
+    var emitter = new EventEmitter2({ 
+      wildcard: true
+    });
+
     var type = ['some', 'listener', 'bar'];
 
     emitter.on(type, function () {
@@ -59,7 +53,10 @@ module.exports = simpleEvents({
 
   '2. Add two listeners on a single event.': function (test) {
     
-    var emitter = this.emitter;
+    var emitter = new EventEmitter2({ 
+      wildcard: true
+    });
+
     var type = 'some.listener.bar';
     
     emitter.on(type, function () {
@@ -79,7 +76,10 @@ module.exports = simpleEvents({
   
   '2a. Add two listeners on a single event (using an array).': function (test) {
     
-    var emitter = this.emitter;
+    var emitter = new EventEmitter2({ 
+      wildcard: true
+    });
+
     var type = ['some', 'listener', 'bar'];
     
     emitter.on(type, function () {
@@ -98,8 +98,11 @@ module.exports = simpleEvents({
   },  
   
   '3. Add three listeners on a single event.': function (test) {
-    
-    var emitter = this.emitter;
+
+    var emitter = new EventEmitter2({ 
+      wildcard: true
+    });
+
     var type = 'some.listener.bar';
     
     emitter.on(type, function () {
@@ -123,7 +126,10 @@ module.exports = simpleEvents({
   
   '4. Add two listeners to two different events.': function (test) {
 
-    var emitter = this.emitter;
+    var emitter = new EventEmitter2({ 
+      wildcard: true
+    });
+
     var type = 'some.listener.bar';
     
     emitter.on(type, function () {
@@ -150,7 +156,11 @@ module.exports = simpleEvents({
   },
 
   '5. Never adding any listeners should yield a listeners array with the length of 0.': function (test) {
-    var emitter = this.emitter;
+
+    var emitter = new EventEmitter2({ 
+      wildcard: true
+    });
+
     var type = 'some.listener.bar';
     
     emitter.on(type, function () {
@@ -164,7 +174,11 @@ module.exports = simpleEvents({
   },
 
   '6. the listener added should be the right listener.': function (test) {
-    var emitter = this.emitter;
+
+    var emitter = new EventEmitter2({ 
+      wildcard: true
+    });
+
     var type = 'some.listener.bar';
     var f = function () {};
     
@@ -178,7 +192,11 @@ module.exports = simpleEvents({
   },
   
   '7. Listeners on `*`, `*.*`, `*.test` with emissions from `foo.test` and `other.emit`': function (test) {
-    var emitter = this.emitter;
+
+    var emitter = new EventEmitter2({ 
+      wildcard: true
+    });
+
     var f = function () {
       test.ok(true, 'the event was fired')
     };
@@ -195,7 +213,11 @@ module.exports = simpleEvents({
   },
   
   '8. Listeners on `*`, `*.*`, foo.test with emissions from `*`, `*.*` and `foo.test`': function (test) {
-    var emitter = this.emitter;
+
+    var emitter = new EventEmitter2({ 
+      wildcard: true
+    });
+
     var f = function () {
       test.ok(true, 'the event was fired')
     };
@@ -213,8 +235,11 @@ module.exports = simpleEvents({
   },
 
   '9. Listeners on `*`. (using an array)': function (test) {
-    
-    var emitter = this.emitter;
+
+    var emitter = new EventEmitter2({ 
+      wildcard: true
+    });
+
     var f = function () {
       test.ok(true, 'the event was fired')
     };
@@ -228,7 +253,9 @@ module.exports = simpleEvents({
 
   '10. actual event name': function(test) {
 
-    var emitter = this.emitter;
+    var emitter = new EventEmitter2({ 
+      wildcard: true
+    });
 
     emitter.on('foo', function() {
       emitter.emit('bar'); // changes the current event, passes the old one in as a parameter.
@@ -236,17 +263,19 @@ module.exports = simpleEvents({
     
     emitter.on('*', function() {
        console.log(this.event);
-     });
+    });
 
-
-
-     emitter.emit('foo');
+    emitter.emit('foo');
     
     test.done();
   },
   
   '11. Listeners with multi-level wildcards': function (test) {
-    var emitter = this.emitter;
+
+    var emitter = new EventEmitter2({ 
+      wildcard: true
+    });
+
     var i = 0;
     var f = function (n) {
       return function() {
@@ -286,8 +315,10 @@ module.exports = simpleEvents({
   },
 
   '12. Check return values of emit for wildcard emitter.': function (test) {
-    
-    var emitter = this.emitter;
+
+    var emitter = new EventEmitter2({ 
+      wildcard: true
+    });
 
     emitter.on('foo.*', function () {
       test.ok(true, 'The event was raised');

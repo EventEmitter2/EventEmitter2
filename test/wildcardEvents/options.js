@@ -1,7 +1,15 @@
 var basicEvents = require('nodeunit').testCase;
 var lib = '../../lib/eventemitter2';
 
-/////helper///////
+var EventEmitter2;
+
+if(typeof require !== 'undefined') {
+  EventEmitter2 = require(lib).EventEmitter2;
+}
+else {
+  EventEmitter2 = window.EventEmitter2;
+}
+
 function setHelper (emitter, test, testName){
   var eventNames = [
     testName, 
@@ -24,35 +32,15 @@ function setHelper (emitter, test, testName){
 
 module.exports = basicEvents({
 
-  setUp: function (callback) {
-    var EventEmitter2;
+  'intialize 1. Configuration Flags Test.': function (test) {
 
-    if(typeof require !== 'undefined') {
-      EventEmitter2 = require(lib).EventEmitter2;
-    }
-    else {
-      EventEmitter2 = window.EventEmitter2;
-    }
-
-    this.emitter = new EventEmitter2({ 
+    var emitter = new EventEmitter2({ 
       wildcard: true,
       verbose: true
     });
-    this.emitterDefault = new EventEmitter2({
+
+    var emitterDefault = new EventEmitter2({
     });
-
-    callback();
-  },
-
-  tearDown: function (callback) {
-    //clean up?
-    callback();
-  },
-
-  'intialize 1. Configuration Flags Test.': function (test) {
-    // lazy
-    var emitter = this.emitter,
-        emitterDefault = this.emitterDefault;
 
     test.ok(!emitterDefault.wildcard, 'default .wildcard should be false');
     test.ok(emitter.wildcard, '.wildcard should be true when set');
@@ -63,8 +51,13 @@ module.exports = basicEvents({
   },
   'initialize 2. creating a wildcard EE should have listenerTree.': function (test) {
 
-    var emitter = this.emitter,
-        emitterDefault = this.emitterDefault;
+    var emitter = new EventEmitter2({ 
+      wildcard: true,
+      verbose: true
+    });
+
+    var emitterDefault = new EventEmitter2({
+    });
 
     test.ok(emitter.listenerTree, 'listenerTree should exist');
     test.equal(typeof emitter.listenerTree, 'object', 'listenerTree should be an Object');

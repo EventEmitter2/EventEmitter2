@@ -1,28 +1,18 @@
 var simpleEvents = require('nodeunit').testCase;
-
 var file = '../../lib/eventemitter2';
-
 var EventEmitter2;
+
+if(typeof require !== 'undefined') {
+  EventEmitter2 = require(file).EventEmitter2;
+}
+else {
+  EventEmitter2 = window.EventEmitter2;
+}
 
 module.exports = simpleEvents({
 
-  setUp: function (callback) {
-    if(typeof require !== 'undefined') {
-      EventEmitter2 = require(file).EventEmitter2;
-    }
-    else {
-      EventEmitter2 = window.EventEmitter2;
-    }
-
-    callback();
-  },
-
-  tearDown: function (callback) {
-    //clean up?
-    callback();
-  },
-
   'reconfigure1. initialize, removeAllListeners' : function (test) {
+    
     var emitter,
         config = {
           wildcard: true, // should the event emitter use wildcards.

@@ -1,34 +1,25 @@
 var simpleEvents= require('nodeunit').testCase;
-
 var file = '../../lib/eventemitter2';
+
+var EventEmitter2;
+
+if(typeof require !== 'undefined') {
+  EventEmitter2 = require(file).EventEmitter2;
+}
+else {
+  EventEmitter2 = window.EventEmitter2;
+}
 
 module.exports = simpleEvents({
 
-  setUp: function (callback) {
-    var EventEmitter2;
-
-    if(typeof require !== 'undefined') {
-      EventEmitter2 = require(file).EventEmitter2;
-    }
-    else {
-      EventEmitter2 = window.EventEmitter2;
-    }
-
-    this.emitter = new EventEmitter2({
+  '1. add a single event and then remove the event.' : function (test) {
+    
+    var emitter = new EventEmitter2({
       wildcard : true,
       verbose : true
     });
-    callback();
-  },
 
-  tearDown: function (callback) {
-    //clean up?
-    callback();
-  },
-
-  '1. add a single event and then remove the event.' : function (test) {
-    var emitter = this.emitter,
-        type = 'remove.foo.bar',
+    var type = 'remove.foo.bar',
         listeners;
 
     var f = function () {
@@ -49,8 +40,13 @@ module.exports = simpleEvents({
   },
 
   '2. Add two events and then remove only one of those events.' : function (test) {
-    var emitter = this.emitter,
-        type = 'remove.foo.bar',
+
+    var emitter = new EventEmitter2({
+      wildcard : true,
+      verbose : true
+    });
+
+    var type = 'remove.foo.bar',
         listeners;
 
     var f = function f() {
@@ -73,8 +69,13 @@ module.exports = simpleEvents({
   },
 
   '3. Add three events and remove only one of the events that was added.' : function (test) {
-    var emitter = this.emitter,
-        type = 'remove.foo.bar',
+
+    var emitter = new EventEmitter2({
+      wildcard : true,
+      verbose : true
+    });
+
+    var type = 'remove.foo.bar',
         listeners;
 
     var f = function () {
@@ -97,8 +98,13 @@ module.exports = simpleEvents({
   },
 
   '4. Should error if we don\'t pass a function to the emit method.' : function (test) {
-    var emitter = this.emitter,
-        type = 'remove.foo.bar',
+
+    var emitter = new EventEmitter2({
+      wildcard : true,
+      verbose : true
+    });
+
+    var type = 'remove.foo.bar',
         listeners;
 
     var f = function () {
@@ -119,8 +125,13 @@ module.exports = simpleEvents({
   },
 
   '5. Removing one listener should not affect another listener.' : function (test) {
-    var emitter = this.emitter,
-        type = 'remove.foo.bar',
+
+    var emitter = new EventEmitter2({
+      wildcard : true,
+      verbose : true
+    });
+
+    var type = 'remove.foo.bar',
         listeners;
 
     var f = function () {
@@ -145,8 +156,12 @@ module.exports = simpleEvents({
 
   '6. Remove all listener functions.' : function (test) {
 
-    var emitter = this.emitter,
-        type = 'remove.foo.bar',
+    var emitter = new EventEmitter2({
+      wildcard : true,
+      verbose : true
+    });
+
+    var type = 'remove.foo.bar',
         listeners;
 
     var f = function () {
@@ -172,8 +187,11 @@ module.exports = simpleEvents({
 
   '7. Removing listeners for one event should not affect another event\'s listeners.' : function (test) {
 
-    var emitter = this.emitter;
-    
+    var emitter = new EventEmitter2({
+      wildcard : true,
+      verbose : true
+    });
+
     var type = 'remove.foo.bar';
     
     var listeners;
@@ -211,8 +229,13 @@ module.exports = simpleEvents({
   },
 
   '8. Its ok to listen on wildcard, so it is ok to remove it.' : function (test) {
-    var emitter = this.emitter,
-        type1 = '*.wild.card',
+
+    var emitter = new EventEmitter2({
+      wildcard : true,
+      verbose : true
+    });
+
+    var type1 = '*.wild.card',
         type2 = 'just.another.event',
         listeners;
 
@@ -233,8 +256,13 @@ module.exports = simpleEvents({
   },
 
   '9. And (8) should not depend on order of listening.' : function (test) {
-    var emitter = this.emitter,
-        type1 = '*.wild.card',
+
+    var emitter = new EventEmitter2({
+      wildcard : true,
+      verbose : true
+    });
+
+    var type1 = '*.wild.card',
         type2 = 'just.another.event',
         listeners;
 
@@ -255,8 +283,13 @@ module.exports = simpleEvents({
   },
 
   '10. Reporting many listeners on wildcard all should removed.' : function (test) {
-    var emitter = this.emitter,
-        type1 = '*.wild.card',
+
+    var emitter = new EventEmitter2({
+      wildcard : true,
+      verbose : true
+    });
+
+    var type1 = '*.wild.card',
         type2 = 'exact.wild.card',
         listeners;
 
