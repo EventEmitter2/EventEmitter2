@@ -143,6 +143,16 @@ Adds a listener that will execute **n times** for the event before being removed
     });
 ```
 
+#### emitter.sample(event, sampleSize, listener)
+
+Adds a listener that will be fired whenever **n** events are emitted.
+
+```javascript
+    server.sample('get', 100, function (value) {
+      console.log('This event will fire every 100 "get"s.');
+    });
+```
+
 
 #### emitter.removeListener(event, listener)
 #### emitter.off(event, listener)
