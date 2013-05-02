@@ -17,10 +17,10 @@
   ],
   "licenses": [{"type": "MIT"}],
   "homepage": "https://github.com/hij1nx/EventEmitter2",
-  "repositories": [{
+  "repository": {
       "type": "git",
       "url": "git://github.com/hij1nx/EventEmitter2.git" 
-  }],
+  },
   "devDependencies": {
     "nodeunit": "*",
     "benchmark" : ">= 0.2.2"
