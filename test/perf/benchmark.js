@@ -44,10 +44,10 @@ suite
   })
 
   .on('cycle', function(event, bench) {
-    console.log(String(bench));
+    console.log(String(event.target));
   })
   .on('complete', function() {
-    console.log('Fastest is ' + this.filter('fastest').pluck('name'));
+    console.log('\nFastest is ' + this.filter('fastest').pluck('name'));
   })
 
   .run(true);
