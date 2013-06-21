@@ -58,12 +58,16 @@ exports.globalCheck = true;
 process.on('exit', function() {
   if (!exports.globalCheck) return;
   var knownGlobals = [setTimeout,
+                      setImmediate,
                       setInterval,
+                      clearImmediate,
                       clearTimeout,
                       clearInterval,
                       console,
                       Buffer,
                       process,
+                      testFullSpec_param_found,
+                      TAP_Global_Harness,
                       global.ArrayBuffer!==undefined?ArrayBuffer:null,
                       global.Int8Array!==undefined?Int8Array:null,
                       global.Uint8Array!==undefined?Uint8Array:null,
