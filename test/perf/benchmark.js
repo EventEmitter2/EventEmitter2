@@ -7,6 +7,8 @@ var emitter = new EventEmitter;
 
 var EventEmitter2 = require('../../lib/eventemitter2').EventEmitter2;
 var emitter2 = new EventEmitter2;
+var emitter4 = new EventEmitter2({ wildcard: true });
+var emitter5 = new EventEmitter2({ wildcard: true });
 
 var EventEmitter3 = require('events').EventEmitter;
 var emitter3 = new EventEmitter3;
@@ -40,6 +42,22 @@ suite
     emitter2.on('test2.foo', function () { 1==1; });
     emitter2.emit('test2.foo');
     emitter2.removeAllListeners('test2.foo');
+
+  })
+
+  .add('EventEmitter2 (single-level wildcard)', function() {
+
+    emitter4.on('test4.*', function () { 1==1; });
+    emitter4.emit('test4.foo');
+    emitter4.removeAllListeners('test4.*');
+
+  })
+
+  .add('EventEmitter2 (multi-level wildcard)', function() {
+
+    emitter5.on('start.**.end', function () { 1==1; });
+    emitter5.emit('start.foo.bar.end');
+    emitter5.removeAllListeners('start.**.end');
 
   })
 
