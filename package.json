@@ -21,5 +21,9 @@
   "scripts" : {
     "test" : "nodeunit test/simple/* && nodeunit test/wildcardEvents/*",
     "benchmark" : "node test/perf/benchmark.js"
-  }
+  },
+  "files": [
+    "lib/eventemitter2.js",
+    "index.js"
+  ]
 }
