@@ -1,6 +1,6 @@
-
 var simpleEvents = require('nodeunit').testCase;
 var file = '../../lib/eventemitter2';
+var EventEmitter2;
 
 if(typeof require !== 'undefined') {
   EventEmitter2 = require(file).EventEmitter2;
