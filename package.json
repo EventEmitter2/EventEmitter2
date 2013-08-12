@@ -19,7 +19,7 @@
   },
   "main": "./lib/eventemitter2.js",
   "scripts" : {
-    "test" : "nodeunit test/simple/* && nodeunit test/wildcardEvents/*",
+    "test" : "nodeunit test/simple/ && nodeunit test/wildcardEvents/",
     "benchmark" : "node test/perf/benchmark.js"
   },
   "files": [
