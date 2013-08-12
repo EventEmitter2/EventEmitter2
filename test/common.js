@@ -58,9 +58,7 @@ exports.globalCheck = true;
 process.on('exit', function() {
   if (!exports.globalCheck) return;
   var knownGlobals = [setTimeout,
-                      setImmediate,
                       setInterval,
-                      clearImmediate,
                       clearTimeout,
                       clearInterval,
                       console,
@@ -83,6 +81,9 @@ process.on('exit', function() {
                       global
                       ];
 
+  if (global.setImmediate) {
+    knownGlobals.push(setImmediate, clearImmediate);
+  }
   if (global.errno) {
     knownGlobals.push(errno);
   }
