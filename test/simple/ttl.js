@@ -110,6 +110,26 @@ module.exports = simpleEvents({
 
     test.expect(0);
     test.done();
+  },
+  '6. A listener added with `sample` 3 should fire once every 3 events.': function (test) {
+
+    var emitter = new EventEmitter2();
+
+    emitter.sample('testSample', 3, function () {
+      test.ok(true, 'The event was raised once');
+    });
+
+    emitter.emit('testSample');
+    emitter.emit('testSample');
+    test.expect(0);
+    emitter.emit('testSample'); // should fire here
+    test.expect(1);
+    emitter.emit('testSample');
+    emitter.emit('testSample');
+    test.expect(1);
+
+    test.done();
+
   }
   
 });
