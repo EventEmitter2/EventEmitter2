@@ -1,0 +1,17 @@
+{
+  "name": "EventEmitter2",
+  "version": "0.4.13",
+  "description": "A Node.js event emitter implementation with namespaces, wildcards, TTL and browser support.",
+  "keywords": [
+    "event",
+    "events",
+    "emitter",
+    "eventemitter"
+  ],
+  "main": "lib/eventemitter2.js",
+  "scripts": [
+    "lib/eventemitter2.js"
+  ],
+  "license": "MIT",
+  "repo": "https://raw.github.com/littlebitselectronics/EventEmitter2"
+}
