@@ -12,7 +12,7 @@ else {
 
 module.exports = simpleEvents({
 
-  '1. Add two listeners on a single event and collect data.': function (test) {
+  '1. Add two listeners on a single event and collect results.': function (test) {
 
     var emitter = new EventEmitter2({ verbose: true });
 
@@ -29,79 +29,94 @@ module.exports = simpleEvents({
     emitter.on('test2', functionA);
     emitter.on('test2', functionB);
 
-    var collected = emitter.collect('test2');
+    var results = emitter.collect('test2');
 
-    test.deepEqual([ "A", "B" ], collected.sort());
+    test.deepEqual([ "A", "B" ], results);
 
     test.expect(3);
     test.done();
 
   },  
-  '2. Add two listeners on a single event and emit the event twice.': function (test) {
+  '2. Add two listeners on a single event and collect results twice.': function (test) {
 
     var emitter = new EventEmitter2({ verbose: true });
 
-    function functionA() { test.ok(true, 'The event was raised'); }
-    function functionB() { test.ok(true, 'The event was raised'); }
-
-    emitter.on('test2', functionA);
-    emitter.on('test2', functionB);
-
-    emitter.emit('test2');
-    emitter.emit('test2');
-
-    test.expect(4);
-    test.done();
-
-  },
-  '3. Add two listeners on a single event and emit the event with a parameter.': function (test) {
-
-    var emitter = new EventEmitter2({ verbose: true });
-
-    function functionA(value1) {
+    function functionA() {
       test.ok(true, 'The event was raised');
-      test.equal(typeof value1, 'string', 'The event was raised');
+      return "A";
     }
-  
-    function functionB(value1) {
+
+    function functionB() {
       test.ok(true, 'The event was raised');
-      test.equal(typeof value1, 'string', 'The event was raised');
+      return "B";
     }
 
     emitter.on('test2', functionA);
     emitter.on('test2', functionB);
 
-    emitter.emit('test2', 'Hello, Node');
+    var results = emitter.collect('test2').concat(emitter.collect('test2'));
 
-    test.expect(4);
+    test.deepEqual([ "A", "B", "A", "B" ], results);
+
+    test.expect(5);
     test.done();
 
   },
-  '4. Add two listeners on an single event and emit the event twice with a parameter.': function (test) {
+  '3. Add two listeners on a single event and collect results with a parameter.': function (test) {
 
     var emitter = new EventEmitter2({ verbose: true });
 
     function functionA(value1) {
       test.ok(true, 'The event was raised');
       test.equal(typeof value1, 'string', 'The event was raised');
+      return "A";
     }
   
     function functionB(value1) {
       test.ok(true, 'The event was raised');
       test.equal(typeof value1, 'string', 'The event was raised');
+      return "B";
     }
 
     emitter.on('test2', functionA);
     emitter.on('test2', functionB);
 
-    emitter.emit('test2', 'Hello, Node1');
-    emitter.emit('test2', 'Hello, Node2');
+    var results = emitter.collect('test2', 'Hello, Node');
 
-    test.expect(8);
+    test.deepEqual([ "A", "B" ], results);
+
+    test.expect(5);
     test.done();
 
   },
-  '5. Add two listeners on an single event and emit the event twice with multiple parameters.': function (test) {
+  '4. Add two listeners on an single event and collect results twice with a parameter.': function (test) {
+
+    var emitter = new EventEmitter2({ verbose: true });
+
+    function functionA(value1) {
+      test.ok(true, 'The event was raised');
+      test.equal(typeof value1, 'string', 'The event was raised');
+      return "A";
+    }
+  
+    function functionB(value1) {
+      test.ok(true, 'The event was raised');
+      test.equal(typeof value1, 'string', 'The event was raised');
+      return "B";
+    }
+
+    emitter.on('test2', functionA);
+    emitter.on('test2', functionB);
+
+    var results = emitter.collect('test2', 'Hello, Node1').concat(emitter.collect('test2', 'Hello, Node2'));
+
+    test.deepEqual([ "A", "B", "A", "B" ], results);
+
+    test.expect(9);
+    test.done();
+
+  },
+  '5. Add two listeners on an single event and collect results twice with multiple parameters.': function (test) {
 
     var emitter = new EventEmitter2({ verbose: true });
 
@@ -110,6 +125,7 @@ module.exports = simpleEvents({
       test.equal(typeof value1, 'string', 'The value named "value1" is OK');
       test.equal(typeof value2, 'string', 'The value named "value2" is OK');
       test.equal(typeof value3, 'string', 'The value named "value3" is OK');
+      return "A";
     }
   
     function functionB(value1, value2, value3) {
@@ -117,31 +133,37 @@ module.exports = simpleEvents({
       test.equal(typeof value1, 'string', 'The value named "value1" is OK');
       test.equal(typeof value2, 'string', 'The value named "value2" is OK');
       test.equal(typeof value3, 'string', 'The value named "value3" is OK');
+      return "B";
     }
 
     emitter.on('test2', functionA);
     emitter.on('test2', functionB);
 
-    emitter.emit('test2', 'Hello, Node1', 'Hello, Node2', 'Hello, Node3');
-    emitter.emit('test2', 'Hello, Node1', 'Hello, Node2', 'Hello, Node3');
+    var results = emitter.collect('test2', 'Hello, Node1', 'Hello, Node2', 'Hello, Node3')
+      .concat(emitter.collect('test2', 'Hello, Node1', 'Hello, Node2', 'Hello, Node3'));
 
-    test.expect(16);
+    test.deepEqual([ "A", "B", "A", "B" ], results);
+
+    test.expect(17);
     test.done();
 
   },
-  '6. Check return values of emit.': function (test) {
+  '6. Check return values of collect.': function (test) {
 
     var emitter = new EventEmitter2({ verbose: true });
 
-    function functionA() { test.ok(true, 'The event was raised'); }
+    function functionA() {
+      test.ok(true, 'The event was raised');
+      return "A";
+    }
 
     emitter.on('test6', functionA);
 
-    test.ok(emitter.emit('test6'), 'emit should return true after calling a listener');
-    test.ok(!emitter.emit('other'), 'emit should return false when no listener was called');
+    test.deepEqual([ "A" ], emitter.collect('test6'), 'collect should return a result after calling a listener');
+    test.deepEqual([], emitter.collect('other'), 'collect should not return any results when no listener was called');
 
     emitter.onAny(functionA);
-    test.ok(emitter.emit('other'), 'emit should return true after calling an onAny() listener');
+    test.deepEqual([ "A" ], emitter.collect('other'), 'collect should return a result after calling an onAny() listener');
 
     test.expect(5);
     test.done();
