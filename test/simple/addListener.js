@@ -175,5 +175,20 @@ module.exports = simpleEvents({
     test.expect(2);
     test.done();
 
+  },
+
+  '10. onAny with invalid argument' : function (test) {
+
+    var emitter = new EventEmitter2({ verbose: true });
+
+    test.throws(function () {
+      emitter.onAny(null);
+    }, 'An exception should be thrown');
+
+    test.ok(!emitter.emit('foo'), 'emit should not return true');
+
+    test.expect(2);
+    test.done();
+
   }
 });
