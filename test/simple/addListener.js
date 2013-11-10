@@ -185,7 +185,7 @@ module.exports = simpleEvents({
       emitter.onAny(null);
     }, 'An exception should be thrown');
 
-    test.ok(!emitter.emit('foo'), "emit should not return true");
+    test.ok(!emitter.emit('foo'), 'emit should not return true');
 
     test.expect(2);
     test.done();
