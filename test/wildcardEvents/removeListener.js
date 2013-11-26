@@ -13,7 +13,7 @@ else {
 module.exports = simpleEvents({
 
   '1. add a single event and then remove the event.' : function (test) {
-    
+
     var emitter = new EventEmitter2({
       wildcard : true,
       verbose : true
@@ -55,7 +55,7 @@ module.exports = simpleEvents({
 
     emitter.on(type, f);
     emitter.on(type, f);
-    
+
     listeners = emitter.listeners(type);
     test.equal(listeners.length, 2, 'should only have 2');
 
@@ -193,9 +193,9 @@ module.exports = simpleEvents({
     });
 
     var type = 'remove.foo.bar';
-    
+
     var listeners;
-    
+
     var f = function () {
       test.ok(true, 'event was raised');
     };
@@ -215,7 +215,7 @@ module.exports = simpleEvents({
     emitter.removeAllListeners(type+type);
     listeners = emitter.listeners(type);
     test.equal(listeners.length, 10, 'should be 10');
-    
+
     emitter.removeAllListeners(type+'.'+type);
     listeners = emitter.listeners(type);
     test.equal(listeners.length, 10, 'should be 10');

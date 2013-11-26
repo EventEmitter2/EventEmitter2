@@ -12,7 +12,7 @@ else {
 module.exports = simpleEvents({
 
   'reconfigure1. initialize, removeAllListeners' : function (test) {
-    
+
     var emitter,
         config = {
           wildcard: true, // should the event emitter use wildcards.

@@ -20,7 +20,7 @@ module.exports = simpleEvents({
     });
 
     var type = 'test1.foo.bar';
-    
+
     emitter.once(type, function () {
       test.ok(true, 'The event was raised once');
     });
@@ -95,12 +95,12 @@ module.exports = simpleEvents({
     }
 
     emitter.on(type, f1);
-    
+
     function f2(event) {
       "event B";
-      test.ok(true, 'The event was raised less than 3 times.');  
-    }    
-    
+      test.ok(true, 'The event was raised less than 3 times.');
+    }
+
     emitter.on(type, f2);
 
     function f3(event) {
@@ -119,12 +119,12 @@ module.exports = simpleEvents({
 
   },
   '5. `removeListener` and `once`': function(test) {
- 
+
      var emitter = new EventEmitter2({
       wildcard : true,
       verbose : true
     });
-   
+
     var type = 'test1.foo.bar';
     var functionA = function() { test.ok(true, 'Event was fired'); };
 
@@ -175,7 +175,7 @@ module.exports = simpleEvents({
     test.expect(1);
     test.done();
   },
-  
+
   '8. Emitting with a multi-level wildcard on once': function(test) {
 
     var emitter = new EventEmitter2({
@@ -207,7 +207,7 @@ module.exports = simpleEvents({
       wildcard : true,
       verbose : true
     });
-  
+
     var type = 'test1.foo.bar';
     var type2 = 'test1.**';
     var functionA = function() { test.ok(true, 'Event was fired'); };
@@ -219,5 +219,5 @@ module.exports = simpleEvents({
     test.expect(1);
     test.done();
   }
-  
+
 });

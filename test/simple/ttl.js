@@ -13,7 +13,7 @@ else {
 module.exports = simpleEvents({
 
   '1. A listener added with `once` should only listen once and then be removed.': function (test) {
-    
+
     var emitter = new EventEmitter2();
 
     emitter.once('test1', function () {
@@ -75,12 +75,12 @@ module.exports = simpleEvents({
     }
 
     emitter.on('test1', f1);
-    
+
     function f2(event) {
       "event B";
-      test.ok(true, 'The event was raised less than 3 times.');  
-    }    
-    
+      test.ok(true, 'The event was raised less than 3 times.');
+    }
+
     emitter.on('test1', f2);
 
     function f3(event) {
@@ -111,5 +111,5 @@ module.exports = simpleEvents({
     test.expect(0);
     test.done();
   }
-  
+
 });

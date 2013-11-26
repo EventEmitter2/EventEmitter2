@@ -11,15 +11,15 @@ else {
 
 function setHelper (emitter, test, testName){
   var eventNames = [
-    testName, 
-    testName + '.*', 
-    testName + '.ns1', 
-    testName + '.ns1.ns2', 
+    testName,
+    testName + '.*',
+    testName + '.ns1',
+    testName + '.ns1.ns2',
     testName + '.ns2.*'
   ];
 
   for (var i = 0; i < eventNames.length; i++) {
-    emitter.on(eventNames[i], function () { 
+    emitter.on(eventNames[i], function () {
         test.ok(true, eventNames[i] + 'has fired');
     });
   }
@@ -30,8 +30,8 @@ function setHelper (emitter, test, testName){
 module.exports = basicEvents({
 
   '1. An event can be namespaced.': function (test) {
-    
-    var emitter = new EventEmitter2({ 
+
+    var emitter = new EventEmitter2({
       wildcard: true,
       verbose: true
     });
@@ -39,16 +39,16 @@ module.exports = basicEvents({
     emitter.on('test1.ns1', function () {
       test.ok(true, 'The event was raised');
     });
-    
+
     emitter.emit('test1.ns1');
-    
+
     test.expect(1);
     test.done();
 
   },
   '2. An event can be namespaced and accept values.': function (test) {
-    
-    var emitter = new EventEmitter2({ 
+
+    var emitter = new EventEmitter2({
       wildcard: true,
       verbose: true
     });
@@ -57,16 +57,16 @@ module.exports = basicEvents({
       test.ok(true, 'The event was raised');
       test.ok(typeof value1 !== 'undefined', 'The event was raised with the value `' + value1 + '`.');
     });
-    
+
     emitter.emit('test2.ns1', 1);
-    
+
     test.expect(2);
-    test.done();    
+    test.done();
 
   },
   '3. A namespaced event can be raised multiple times and accept values.': function (test) {
 
-    var emitter = new EventEmitter2({ 
+    var emitter = new EventEmitter2({
       wildcard: true,
       verbose: true
     });
@@ -76,18 +76,18 @@ module.exports = basicEvents({
        test.ok(arguments.length === 3, 'The event was raised with the correct number of arguments');
        test.ok(value1 === 1 || value1 === 4, 'The event was raised with the value `' + value1 + '`.');
        test.ok(value2 === 2 || value2 === 5, 'The event was raised with the value `' + value2 + '`.');
-       test.ok(value3 === 3 || value3 === 6, 'The event was raised with the value `' + value3 + '`.');            
+       test.ok(value3 === 3 || value3 === 6, 'The event was raised with the value `' + value3 + '`.');
     });
-    
+
     emitter.emit('test3.ns1', 1, 2, 3);
     emitter.emit('test3.ns1', 4, 5, 6);
-    
+
     test.expect(10);
     test.done();
-  },    
+  },
   '4. A listener should support wild cards.': function (test) {
-    
-    var emitter = new EventEmitter2({ 
+
+    var emitter = new EventEmitter2({
       wildcard: true,
       verbose: true
     });
@@ -95,16 +95,16 @@ module.exports = basicEvents({
     emitter.on('test4.*', function () {
       test.ok(true, 'The event was raised');
     });
-    
+
     emitter.emit('test4.ns1');
-    
+
     test.expect(1);
     test.done();
 
   },
   '5. Emitting an event should support wildcards.': function (test) {
-    
-    var emitter = new EventEmitter2({ 
+
+    var emitter = new EventEmitter2({
       wildcard: true,
       verbose: true
     });
@@ -120,8 +120,8 @@ module.exports = basicEvents({
 
   },
   '6. A listener should support complex wild cards.': function (test) {
-    
-    var emitter = new EventEmitter2({ 
+
+    var emitter = new EventEmitter2({
       wildcard: true,
       verbose: true
     });
@@ -129,16 +129,16 @@ module.exports = basicEvents({
     emitter.on('test10.*.foo', function () {
       test.ok(true, 'The event was raised');
     });
-    
+
     emitter.emit('test10.ns1.foo');
-    
+
     test.expect(1);
-    test.done();    
+    test.done();
 
   },
   '7. Emitting an event should support complex wildcards.': function (test) {
-    
-    var emitter = new EventEmitter2({ 
+
+    var emitter = new EventEmitter2({
       wildcard: true,
       verbose: true
     });
@@ -146,16 +146,16 @@ module.exports = basicEvents({
     emitter.on('test11.ns1.foo', function () {
       test.ok(true, 'The event was raised');
     });
-    
+
     emitter.emit('test11.*.foo');
-    
+
     test.expect(1);
-    test.done();    
+    test.done();
 
   },
   '8. Emitting an event should support complex wildcards multiple times, a valid listener should accept values.': function (test) {
-    
-    var emitter = new EventEmitter2({ 
+
+    var emitter = new EventEmitter2({
       wildcard: true,
       verbose: true
     });
@@ -165,19 +165,19 @@ module.exports = basicEvents({
       test.ok(arguments.length === 3, 'The event was raised with the correct number of arguments');
       test.ok(value1 === 1 || value1 === 4, 'The event was raised with the value `' + value1 + '`.');
       test.ok(value2 === 2 || value2 === 5, 'The event was raised with the value `' + value1 + '`.');
-      test.ok(value3 === 3 || value3 === 6, 'The event was raised with the value `' + value1 + '`.');            
+      test.ok(value3 === 3 || value3 === 6, 'The event was raised with the value `' + value1 + '`.');
     });
-    
+
     emitter.emit('test12.*.ns2', 1, 2, 3);
     emitter.emit('test12.*.ns2', 4, 5, 6);
-    
+
     test.expect(10);
     test.done();
-    
+
   },
   '9. List all the listeners for a particular event.': function(test) {
 
-    var emitter = new EventEmitter2({ 
+    var emitter = new EventEmitter2({
       wildcard: true,
       verbose: true
     });
@@ -198,8 +198,8 @@ module.exports = basicEvents({
 
   },
   '10. should be able to listen on any event' : function (test) {
-    
-    var emitter = new EventEmitter2({ 
+
+    var emitter = new EventEmitter2({
       wildcard: true,
       verbose: true
     });
@@ -210,17 +210,17 @@ module.exports = basicEvents({
       test.equal(bar, 1);
       test.ok(true, 'raised test23.ns5.ns5');
     }
-    
+
     emitter.onAny(fn);
     emitter.emit('test23.ns5.ns5', 'foo', 1);
     test.expect(4);
     test.done();
 
   },
-  
+
   '11. No warning should be raised if we set maxListener to be greater before adding' : function (test) {
 
-    var emitter = new EventEmitter2({ 
+    var emitter = new EventEmitter2({
       wildcard: true,
       verbose: true
     });
@@ -244,5 +244,5 @@ module.exports = basicEvents({
     test.done();
   }
 
- 
+
 });

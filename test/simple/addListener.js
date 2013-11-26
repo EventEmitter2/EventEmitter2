@@ -54,11 +54,11 @@ module.exports = simpleEvents({
     emitter.on('test1', function () {
       test.ok(true, 'The event was raised');
     });
-    
+
     emitter.on('test1', function () {
       test.ok(true, 'The event was raised');
     });
-    
+
     test.equal(emitter.listeners('test1').length, 3, 'There are three emitters');
 
     test.expect(1);
@@ -76,7 +76,7 @@ module.exports = simpleEvents({
     emitter.on('test1', function () {
       test.ok(true, 'The event was raised');
     });
-    
+
     emitter.on('test2', function () {
       test.ok(true, 'The event was raised');
     });
@@ -160,13 +160,13 @@ module.exports = simpleEvents({
   },
 
   '9. onAny alias' : function (test) {
-    
+
     var emitter = new EventEmitter2({ verbose: true });
 
     var f = function () {
       test.ok(true, 'the event was fired');
     };
-    
+
     emitter.on(f);
 
     emitter.emit('foo');
