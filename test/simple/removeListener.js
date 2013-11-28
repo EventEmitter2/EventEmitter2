@@ -37,7 +37,7 @@ module.exports = simpleEvents({
   },
 
   'removeListener2. adding 2, removing 1' : function (test) {
-    
+
     var emitter = new EventEmitter2;
 
     var type = 'remove',
@@ -88,7 +88,7 @@ module.exports = simpleEvents({
   },
 
   'removeListener4. should error if we don\'t pass in a function' : function (test) {
-    
+
     var emitter = new EventEmitter2;
     var type = 'remove',
         listeners;
@@ -111,7 +111,7 @@ module.exports = simpleEvents({
   },
 
   'removeListener5. removing a different function, should not remove' : function (test) {
-    
+
     var emitter = new EventEmitter2;
     var type = 'remove',
         listeners;
@@ -137,7 +137,7 @@ module.exports = simpleEvents({
   },
 
   'removeListener6. removing all functions' : function (test) {
-    
+
     var emitter = new EventEmitter2;
     var type = 'remove',
         listeners;
@@ -163,7 +163,7 @@ module.exports = simpleEvents({
   },
 
   'removeListener7. removing different event, should not remove' : function (test) {
-    
+
     var emitter = new EventEmitter2;
     var type = 'remove',
         listeners;

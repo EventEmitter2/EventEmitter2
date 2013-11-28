@@ -27,7 +27,7 @@ module.exports = simpleEvents({
     test.expect(2);
     test.done();
 
-  },  
+  },
   '2. Add two listeners on a single event and emit the event twice.': function (test) {
 
     var emitter = new EventEmitter2({ verbose: true });
@@ -53,7 +53,7 @@ module.exports = simpleEvents({
       test.ok(true, 'The event was raised');
       test.equal(typeof value1, 'string', 'The event was raised');
     }
-  
+
     function functionB(value1) {
       test.ok(true, 'The event was raised');
       test.equal(typeof value1, 'string', 'The event was raised');
@@ -76,7 +76,7 @@ module.exports = simpleEvents({
       test.ok(true, 'The event was raised');
       test.equal(typeof value1, 'string', 'The event was raised');
     }
-  
+
     function functionB(value1) {
       test.ok(true, 'The event was raised');
       test.equal(typeof value1, 'string', 'The event was raised');
@@ -102,7 +102,7 @@ module.exports = simpleEvents({
       test.equal(typeof value2, 'string', 'The value named "value2" is OK');
       test.equal(typeof value3, 'string', 'The value named "value3" is OK');
     }
-  
+
     function functionB(value1, value2, value3) {
       test.ok(true, 'The event was raised');
       test.equal(typeof value1, 'string', 'The value named "value1" is OK');
@@ -136,7 +136,7 @@ module.exports = simpleEvents({
 
     test.expect(5);
     test.done();
-  },  
+  },
 
 });
 

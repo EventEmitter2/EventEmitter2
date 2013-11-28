@@ -99,7 +99,7 @@ module.exports = simpleEvents({
 
   'setMaxListener5. if we set maxListener to be 0 should add endlessly' : function (test) {
 
-    var emitter = new EventEmitter2;    
+    var emitter = new EventEmitter2;
     var type = 'foobar';
 
     // set to 0
@@ -119,7 +119,7 @@ module.exports = simpleEvents({
     test.done();
   },
   'maxListeners parameter. Passing maxListeners as a parameter should override default.' : function (test) {
-    
+
     var emitter = new EventEmitter2({
       maxListeners: 2
     });
@@ -127,7 +127,7 @@ module.exports = simpleEvents({
     console.log(emitter, test.equal, test.ok);
     emitter.on('a', function () {});
     emitter.on('a', function () {});
-    emitter.on('a', function () {});    
+    emitter.on('a', function () {});
     test.ok(emitter._events.a.warned,
       '.on() should warn when maxListeners is exceeded.');
     test.done();
