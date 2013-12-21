@@ -135,7 +135,7 @@ Adds a **one time** listener for the event. The listener is invoked only the fir
 
 #### emitter.many(event, timesToListen, listener)
 
-Adds a listener that will execute **n times** for the event before being removed. The listener is invoked only the first time the event is fired, after which it is removed.
+Adds a listener that will execute **n times** for the event before being removed. The listener is invoked only the first **n times** the event is fired, after which it is removed.
 
 ```javascript
     server.many('get', 4, function (value) {
