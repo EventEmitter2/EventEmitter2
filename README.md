@@ -1,4 +1,4 @@
-![build-status](https://www.codeship.io/projects/3ad58940-4c7d-0131-15d5-5a8cd3f550f8/status)
+[![build-status](https://www.codeship.io/projects/3ad58940-4c7d-0131-15d5-5a8cd3f550f8/status)](https://www.codeship.io/projects/11259)
 
 # SYNOPSIS
 
