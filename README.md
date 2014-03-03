@@ -204,7 +204,7 @@ manipulated, e.g. to remove listeners.
     server.on('get', function(value) {
       console.log('someone connected!');
     });
-    console.log(console.log(server.listeners('get')); // [ [Function] ]
+    console.log(server.listeners('get')); // [ [Function] ]
 ```
 
 ### emitter.listenersAny()
@@ -216,7 +216,7 @@ specified. This array can be manipulated, e.g. to remove listeners.
     server.onAny(function(value) {
       console.log('someone connected!');
     });
-    console.log(console.log(server.listenersAny()[0]); // [ [Function] ]
+    console.log(server.listenersAny()[0]); // [ [Function] ]
 ```
 
 ### emitter.emit(event, [arg1], [arg2], [...])
