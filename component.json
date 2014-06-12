@@ -12,6 +12,5 @@
   "scripts": [
     "lib/eventemitter2.js"
   ],
-  "license": "MIT",
-  "repo": "https://raw.github.com/littlebitselectronics/EventEmitter2"
+  "license": "MIT"
 }
