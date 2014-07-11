@@ -84,7 +84,7 @@ trace and exit the program.
 
 All EventEmitters emit the event `newListener` when new listeners are
 added. EventEmitters also emit the event `removeListener` when listeners are
-removed, and `removeListenerAll` when listeners added through `onAny` are
+removed, and `removeListenerAny` when listeners added through `onAny` are
 removed.
 
 
