@@ -83,7 +83,9 @@ If there is no listener for it, then the default action is to print a stack
 trace and exit the program.
 
 All EventEmitters emit the event `newListener` when new listeners are
-added.
+added. EventEmitters also emit the event `removeListener` when listeners are
+removed, and `removeListenerAll` when listeners added through `onAny` are
+removed.
 
 
 **Namespaces** with **Wildcards**
