@@ -9,6 +9,7 @@ EventEmitter2 is an implementation of the EventEmitter found in Node.js
 ### FEATURES
  - Namespaces/Wildcards.
  - Times To Listen (TTL), extends the `once` concept with `many`.
+ - Allows a listener to stop propagation of an event
  - Browser environment compatibility.
  - Demonstrates good performance in benchmarks
 
@@ -23,7 +24,7 @@ Fastest is EventEmitter2
 ### Differences (Non breaking, compatible with existing EventEmitter)
 
  - The constructor takes a configuration object.
- 
+
 ```javascript
     var EventEmitter2 = require('eventemitter2').EventEmitter2;
     var server = new EventEmitter2({
@@ -36,12 +37,12 @@ Fastest is EventEmitter2
       //
       // the delimiter used to segment namespaces, defaults to `.`.
       //
-      delimiter: '::', 
-      
+      delimiter: '::',
+
       //
       // if you want to emit the newListener event set to true.
       //
-      newListener: false, 
+      newListener: false,
 
       //
       // max listeners that can be assigned to an event, default 10.
@@ -87,16 +88,17 @@ added.
 
 
 **Namespaces** with **Wildcards**
-To use namespaces/wildcards, pass the `wildcard` option into the EventEmitter 
-constructor. When namespaces/wildcards are enabled, events can either be 
-strings (`foo.bar`) separated by a delimiter or arrays (`['foo', 'bar']`). The 
+
+To use namespaces/wildcards, pass the `wildcard` option into the EventEmitter
+constructor. When namespaces/wildcards are enabled, events can either be
+strings (`foo.bar`) separated by a delimiter or arrays (`['foo', 'bar']`). The
 delimiter is also configurable as a constructor option.
 
-An event name passed to any event emitter method can contain a wild card (the 
-`*` character). If the event name is a string, a wildcard may appear as `foo.*`. 
+An event name passed to any event emitter method can contain a wild card (the
+`*` character). If the event name is a string, a wildcard may appear as `foo.*`.
 If the event name is an array, the wildcard may appear as `['foo', '*']`.
 
-If either of the above described events were passed to the `on` method, 
+If either of the above described events were passed to the `on` method,
 subsequent emits such as the following would be observed...
 
 ```javascript
@@ -104,6 +106,9 @@ subsequent emits such as the following would be observed...
    emitter.emit(['foo', 'bar']);
 ```
 
+**Stopping Propagation**
+
+To stop propagation of an event, a listener can `return false;`. The check is made with the `===` operator, so all other falsy types will allow propagation to continue.
 
 ### emitter.addListener(event, listener)
 ### emitter.on(event, listener)
@@ -144,7 +149,7 @@ Removes the listener that will be fired when any event is emitted.
 
 #### emitter.once(event, listener)
 
-Adds a **one time** listener for the event. The listener is invoked 
+Adds a **one time** listener for the event. The listener is invoked
 only the first time the event is fired, after which it is removed.
 
 ```javascript
@@ -156,7 +161,7 @@ only the first time the event is fired, after which it is removed.
 ### emitter.many(event, timesToListen, listener)
 
 Adds a listener that will execute **n times** for the event before being
-removed. The listener is invoked only the first **n times** the event is 
+removed. The listener is invoked only the first **n times** the event is
 fired, after which it is removed.
 
 ```javascript
@@ -169,7 +174,7 @@ fired, after which it is removed.
 ### emitter.removeListener(event, listener)
 ### emitter.off(event, listener)
 
-Remove a listener from the listener array for the specified event. 
+Remove a listener from the listener array for the specified event.
 **Caution**: changes array indices in the listener array behind the listener.
 
 ```javascript
@@ -189,15 +194,15 @@ Removes all listeners, or those of the specified event.
 
 ### emitter.setMaxListeners(n)
 
-By default EventEmitters will print a warning if more than 10 listeners 
-are added to it. This is a useful default which helps finding memory leaks. 
-Obviously not all Emitters should be limited to 10. This function allows 
+By default EventEmitters will print a warning if more than 10 listeners
+are added to it. This is a useful default which helps finding memory leaks.
+Obviously not all Emitters should be limited to 10. This function allows
 that to be increased. Set to zero for unlimited.
 
 
 ### emitter.listeners(event)
 
-Returns an array of listeners for the specified event. This array can be 
+Returns an array of listeners for the specified event. This array can be
 manipulated, e.g. to remove listeners.
 
 ```javascript
@@ -209,7 +214,7 @@ manipulated, e.g. to remove listeners.
 
 ### emitter.listenersAny()
 
-Returns an array of listeners that are listening for any event that is 
+Returns an array of listeners that are listening for any event that is
 specified. This array can be manipulated, e.g. to remove listeners.
 
 ```javascript
@@ -221,7 +226,7 @@ specified. This array can be manipulated, e.g. to remove listeners.
 
 ### emitter.emit(event, [arg1], [arg2], [...])
 
-Execute each of the listeners that may be listening for the specified event 
+Execute each of the listeners that may be listening for the specified event
 name in order with the list of arguments.
 
 # LICENSE
@@ -230,19 +235,19 @@ name in order with the list of arguments.
 
 Copyright (c) 2011 hij1nx <http://www.twitter.com/hij1nx>
 
-Permission is hereby granted, free of charge, to any person obtaining a copy 
-of this software and associated documentation files (the 'Software'), to deal 
-in the Software without restriction, including without limitation the rights 
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell 
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the 'Software'), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 copies of the Software, and to permit persons to whom the Software is furnished
 to do so, subject to the following conditions:
 
 The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
 
-THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
-FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR 
+FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
 COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN
-AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION 
+AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
