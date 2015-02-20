@@ -204,8 +204,9 @@ module.exports = basicEvents({
       verbose: true
     });
 
-    var fn = function (foo, bar) {
+    var fn = function (event, foo, bar) {
       test.equal(this.event, 'test23.ns5.ns5')
+      test.equal(event, 'test23.ns5.ns5')
       test.equal(foo, 'foo');
       test.equal(bar, 1);
       test.ok(true, 'raised test23.ns5.ns5');
@@ -213,7 +214,7 @@ module.exports = basicEvents({
 
     emitter.onAny(fn);
     emitter.emit('test23.ns5.ns5', 'foo', 1);
-    test.expect(4);
+    test.expect(5);
     test.done();
 
   },
