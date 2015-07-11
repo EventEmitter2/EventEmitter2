@@ -1,21 +1,11 @@
-
 var simpleEvents = require('nodeunit').testCase;
-var file = '../../lib/eventemitter2';
-
-var EventEmitter2;
-
-if(typeof require !== 'undefined') {
-  EventEmitter2 = require(file).EventEmitter2;
-}
-else {
-  EventEmitter2 = window.EventEmitter2;
-}
+var EventEmitter3 = require('../../lib/EventEmitter3');
 
 module.exports = simpleEvents({
 
   '1. Add a single listener on a single event.': function (test) {
 
-    var emitter = new EventEmitter2({
+    var emitter = new EventEmitter3({
       wildcard: true,
       delimiter: '::'
     });
@@ -35,7 +25,7 @@ module.exports = simpleEvents({
 
   '2. Add two listeners on a single event.': function (test) {
 
-    var emitter = new EventEmitter2({
+    var emitter = new EventEmitter3({
       wildcard: true,
       delimiter: '::'
     });
@@ -58,7 +48,7 @@ module.exports = simpleEvents({
   },
   '3. Add three listeners on a single event.': function (test) {
 
-    var emitter = new EventEmitter2({
+    var emitter = new EventEmitter3({
       wildcard: true,
       delimiter: '::'
     });
@@ -85,7 +75,7 @@ module.exports = simpleEvents({
   },
   '4. Add two listeners to two different events.': function (test) {
 
-    var emitter = new EventEmitter2({
+    var emitter = new EventEmitter3({
       wildcard: true,
       delimiter: '::'
     });
@@ -117,7 +107,7 @@ module.exports = simpleEvents({
 
   '5. Never adding any listeners should yield a listeners array with the length of 0.': function (test) {
 
-    var emitter = new EventEmitter2({
+    var emitter = new EventEmitter3({
       wildcard: true,
       delimiter: '::'
     });
@@ -136,7 +126,7 @@ module.exports = simpleEvents({
 
   '6. the listener added should be the right listener.': function (test) {
 
-    var emitter = new EventEmitter2({
+    var emitter = new EventEmitter3({
       wildcard: true,
       delimiter: '::'
     });
@@ -155,7 +145,7 @@ module.exports = simpleEvents({
 
   '7. Listeners on *, *::*, *::test with emissions from foo::test and other::emit': function (test) {
 
-    var emitter = new EventEmitter2({
+    var emitter = new EventEmitter3({
       wildcard: true,
       delimiter: '::'
     });
@@ -177,7 +167,7 @@ module.exports = simpleEvents({
 
   '8. Listeners on *, *::*, foo.test with emissions from *, *::* and foo.test': function (test) {
 
-    var emitter = new EventEmitter2({
+    var emitter = new EventEmitter3({
       wildcard: true,
       delimiter: '::'
     });
@@ -200,7 +190,7 @@ module.exports = simpleEvents({
 
   '9. Listeners on **, **::*, **::test with emissions from foo::test and other::emit': function (test) {
 
-    var emitter = new EventEmitter2({
+    var emitter = new EventEmitter3({
       wildcard: true,
       delimiter: '::'
     });
@@ -222,7 +212,7 @@ module.exports = simpleEvents({
 
   '10. Listeners on **, **::*, foo.test with emissions from **, **::* and foo.test': function (test) {
 
-    var emitter = new EventEmitter2({
+    var emitter = new EventEmitter3({
       wildcard: true,
       delimiter: '::'
     });

@@ -1,6 +1,6 @@
 {
-  "name": "eventemitter2",
-  "version": "0.4.14",
+  "name": "EventEmitter3",
+  "version": "1.0.0",
   "description": "A Node.js event emitter implementation with namespaces, wildcards, TTL and browser support.",
   "keywords": [
     "event",
@@ -8,9 +8,9 @@
     "emitter",
     "eventemitter"
   ],
-  "main": "lib/eventemitter2.js",
+  "main": "lib/EventEmitter3.js",
   "scripts": [
-    "lib/eventemitter2.js"
+    "lib/EventEmitter3.js"
   ],
   "license": "MIT"
 }

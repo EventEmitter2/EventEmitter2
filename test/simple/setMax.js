@@ -1,20 +1,11 @@
-
-var simpleEvents= require('nodeunit').testCase;
-var file = '../../lib/eventemitter2';
-var EventEmitter2;
-
-if(typeof require !== 'undefined') {
-  EventEmitter2 = require(file).EventEmitter2;
-}
-else {
-  EventEmitter2 = window.EventEmitter2;
-}
+var simpleEvents = require('nodeunit').testCase;
+var EventEmitter3 = require('../../lib/EventEmitter3');
 
 module.exports = simpleEvents({
 
   'setMaxListener1. default behavior of 10 listeners.' : function (test) {
 
-    var emitter = new EventEmitter2;
+    var emitter = new EventEmitter3();
 
     for (var i = 0; i < 10; i++) {
       emitter.on('foobar', function () {
@@ -31,7 +22,7 @@ module.exports = simpleEvents({
 
   'setMaxListener2. If we added more than 10, should not see them' : function (test) {
 
-    var emitter = new EventEmitter2;
+    var emitter = new EventEmitter3();
 
     for (var i = 0; i < 10 ; i++) {
       emitter.on('foobar2', function () {
@@ -53,7 +44,7 @@ module.exports = simpleEvents({
 
   'setMaxListener3. if we set maxListener to be greater before adding' : function (test) {
 
-    var emitter = new EventEmitter2;
+    var emitter = new EventEmitter3();
     var type = 'foobar3';
 
     // set to 20
@@ -75,7 +66,7 @@ module.exports = simpleEvents({
 
   'setMaxListener4. should be able to change it right at 10' : function (test) {
 
-    var emitter = new EventEmitter2;
+    var emitter = new EventEmitter3();
     var type = 'foobar4';
 
     for (var i = 0; i < 10 ; i++) {
@@ -99,7 +90,7 @@ module.exports = simpleEvents({
 
   'setMaxListener5. if we set maxListener to be 0 should add endlessly' : function (test) {
 
-    var emitter = new EventEmitter2;
+    var emitter = new EventEmitter3();
     var type = 'foobar';
 
     // set to 0
@@ -120,7 +111,7 @@ module.exports = simpleEvents({
   },
   'maxListeners parameter. Passing maxListeners as a parameter should override default.' : function (test) {
 
-    var emitter = new EventEmitter2({
+    var emitter = new EventEmitter3({
       maxListeners: 2
     });
 

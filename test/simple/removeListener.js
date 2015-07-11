@@ -1,20 +1,11 @@
-
-var simpleEvents= require('nodeunit').testCase;
-var file = '../../lib/eventemitter2';
-var EventEmitter2;
-
-if(typeof require !== 'undefined') {
-  EventEmitter2 = require(file).EventEmitter2;
-}
-else {
-  EventEmitter2 = window.EventEmitter2;
-}
+var simpleEvents = require('nodeunit').testCase;
+var EventEmitter3 = require('../../lib/EventEmitter3');
 
 module.exports = simpleEvents({
 
   'removeListener1. adding 1, removing 1' : function (test) {
 
-    var emitter = new EventEmitter2;
+    var emitter = new EventEmitter3();
 
     var type = 'remove',
         listeners;
@@ -38,7 +29,7 @@ module.exports = simpleEvents({
 
   'removeListener2. adding 2, removing 1' : function (test) {
 
-    var emitter = new EventEmitter2;
+    var emitter = new EventEmitter3();
 
     var type = 'remove',
         listeners;
@@ -63,7 +54,7 @@ module.exports = simpleEvents({
 
   'removeListener3. adding 3, removing 1' : function (test) {
 
-    var emitter = new EventEmitter2;
+    var emitter = new EventEmitter3();
 
     var type = 'remove',
         listeners;
@@ -89,7 +80,7 @@ module.exports = simpleEvents({
 
   'removeListener4. should error if we don\'t pass in a function' : function (test) {
 
-    var emitter = new EventEmitter2;
+    var emitter = new EventEmitter3();
     var type = 'remove',
         listeners;
 
@@ -112,7 +103,7 @@ module.exports = simpleEvents({
 
   'removeListener5. removing a different function, should not remove' : function (test) {
 
-    var emitter = new EventEmitter2;
+    var emitter = new EventEmitter3();
     var type = 'remove',
         listeners;
 
@@ -138,7 +129,7 @@ module.exports = simpleEvents({
 
   'removeListener6. removing all functions' : function (test) {
 
-    var emitter = new EventEmitter2;
+    var emitter = new EventEmitter3();
     var type = 'remove',
         listeners;
 
@@ -164,7 +155,7 @@ module.exports = simpleEvents({
 
   'removeListener7. removing different event, should not remove' : function (test) {
 
-    var emitter = new EventEmitter2;
+    var emitter = new EventEmitter3();
     var type = 'remove',
         listeners;
 

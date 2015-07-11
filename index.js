@@ -1,1 +1,1 @@
-module.exports = require('./lib/eventemitter2');
+module.exports = require('./lib/EventEmitter3');

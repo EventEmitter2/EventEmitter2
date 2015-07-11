@@ -1,13 +1,5 @@
-var basicEvents = require('nodeunit').testCase;
-
-var EventEmitter2;
-
-if(typeof require !== 'undefined') {
-  EventEmitter2 = require('../../lib/eventemitter2').EventEmitter2;
-}
-else {
-  EventEmitter2 = window.EventEmitter2;
-}
+var simpleEvents = require('nodeunit').testCase;
+var EventEmitter3 = require('../../lib/EventEmitter3');
 
 function setHelper (emitter, test, testName){
   var eventNames = [
@@ -27,11 +19,11 @@ function setHelper (emitter, test, testName){
   return eventNames;
 };
 
-module.exports = basicEvents({
+module.exports = simpleEvents({
 
   '1. An event can be namespaced.': function (test) {
 
-    var emitter = new EventEmitter2({
+    var emitter = new EventEmitter3({
       wildcard: true,
       verbose: true
     });
@@ -48,7 +40,7 @@ module.exports = basicEvents({
   },
   '2. An event can be namespaced and accept values.': function (test) {
 
-    var emitter = new EventEmitter2({
+    var emitter = new EventEmitter3({
       wildcard: true,
       verbose: true
     });
@@ -66,7 +58,7 @@ module.exports = basicEvents({
   },
   '3. A namespaced event can be raised multiple times and accept values.': function (test) {
 
-    var emitter = new EventEmitter2({
+    var emitter = new EventEmitter3({
       wildcard: true,
       verbose: true
     });
@@ -87,7 +79,7 @@ module.exports = basicEvents({
   },
   '4. A listener should support wild cards.': function (test) {
 
-    var emitter = new EventEmitter2({
+    var emitter = new EventEmitter3({
       wildcard: true,
       verbose: true
     });
@@ -104,7 +96,7 @@ module.exports = basicEvents({
   },
   '5. Emitting an event should support wildcards.': function (test) {
 
-    var emitter = new EventEmitter2({
+    var emitter = new EventEmitter3({
       wildcard: true,
       verbose: true
     });
@@ -121,7 +113,7 @@ module.exports = basicEvents({
   },
   '6. A listener should support complex wild cards.': function (test) {
 
-    var emitter = new EventEmitter2({
+    var emitter = new EventEmitter3({
       wildcard: true,
       verbose: true
     });
@@ -138,7 +130,7 @@ module.exports = basicEvents({
   },
   '7. Emitting an event should support complex wildcards.': function (test) {
 
-    var emitter = new EventEmitter2({
+    var emitter = new EventEmitter3({
       wildcard: true,
       verbose: true
     });
@@ -155,7 +147,7 @@ module.exports = basicEvents({
   },
   '8. Emitting an event should support complex wildcards multiple times, a valid listener should accept values.': function (test) {
 
-    var emitter = new EventEmitter2({
+    var emitter = new EventEmitter3({
       wildcard: true,
       verbose: true
     });
@@ -177,7 +169,7 @@ module.exports = basicEvents({
   },
   '9. List all the listeners for a particular event.': function(test) {
 
-    var emitter = new EventEmitter2({
+    var emitter = new EventEmitter3({
       wildcard: true,
       verbose: true
     });
@@ -199,13 +191,13 @@ module.exports = basicEvents({
   },
   '10. should be able to listen on any event' : function (test) {
 
-    var emitter = new EventEmitter2({
+    var emitter = new EventEmitter3({
       wildcard: true,
       verbose: true
     });
 
-    var fn = function (foo, bar) {
-      test.equal(this.event, 'test23.ns5.ns5')
+    var fn = function (event, foo, bar) {
+      test.equal(event, 'test23.ns5.ns5')
       test.equal(foo, 'foo');
       test.equal(bar, 1);
       test.ok(true, 'raised test23.ns5.ns5');
@@ -220,7 +212,7 @@ module.exports = basicEvents({
 
   '11. No warning should be raised if we set maxListener to be greater before adding' : function (test) {
 
-    var emitter = new EventEmitter2({
+    var emitter = new EventEmitter3({
       wildcard: true,
       verbose: true
     });
