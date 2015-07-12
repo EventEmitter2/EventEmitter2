@@ -1,11 +1,11 @@
 var simpleEvents = require('nodeunit').testCase;
-var EventEmitter3 = require('../../lib/EventEmitter3');
+var Reventer = require('../../lib/Reventer');
 
 module.exports = simpleEvents({
 
   '1. Add two listeners on a single event and emit the event.': function (test) {
 
-    var emitter = new EventEmitter3({ verbose: true });
+    var emitter = new Reventer({ verbose: true });
 
     function functionA() { test.ok(true, 'The event was raised'); }
     function functionB() { test.ok(true, 'The event was raised'); }
@@ -21,7 +21,7 @@ module.exports = simpleEvents({
   },
   '2. Add two listeners on a single event and emit the event twice.': function (test) {
 
-    var emitter = new EventEmitter3({ verbose: true });
+    var emitter = new Reventer({ verbose: true });
 
     function functionA() { test.ok(true, 'The event was raised'); }
     function functionB() { test.ok(true, 'The event was raised'); }
@@ -38,7 +38,7 @@ module.exports = simpleEvents({
   },
   '3. Add two listeners on a single event and emit the event with a parameter.': function (test) {
 
-    var emitter = new EventEmitter3({ verbose: true });
+    var emitter = new Reventer({ verbose: true });
 
     function functionA(value1) {
       test.ok(true, 'The event was raised');
@@ -61,7 +61,7 @@ module.exports = simpleEvents({
   },
   '4. Add two listeners on an single event and emit the event twice with a parameter.': function (test) {
 
-    var emitter = new EventEmitter3({ verbose: true });
+    var emitter = new Reventer({ verbose: true });
 
     function functionA(value1) {
       test.ok(true, 'The event was raised');
@@ -85,7 +85,7 @@ module.exports = simpleEvents({
   },
   '5. Add two listeners on an single event and emit the event twice with multiple parameters.': function (test) {
 
-    var emitter = new EventEmitter3({ verbose: true });
+    var emitter = new Reventer({ verbose: true });
 
     function functionA(value1, value2, value3) {
       test.ok(true, 'The event was raised');
@@ -113,7 +113,7 @@ module.exports = simpleEvents({
   },
   '6. Check return values of emit.': function (test) {
 
-    var emitter = new EventEmitter3({ verbose: true });
+    var emitter = new Reventer({ verbose: true });
 
     function functionA() { test.ok(true, 'The event was raised'); }
 

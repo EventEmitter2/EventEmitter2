@@ -1,5 +1,5 @@
 var simpleEvents = require('nodeunit').testCase;
-var EventEmitter3 = require('../../lib/EventEmitter3');
+var Reventer = require('../../lib/Reventer');
 
 function setHelper (emitter, test, testName){
   var eventNames = [
@@ -23,7 +23,7 @@ module.exports = simpleEvents({
 
   '1. An event can be namespaced.': function (test) {
 
-    var emitter = new EventEmitter3({
+    var emitter = new Reventer({
       wildcard: true,
       verbose: true
     });
@@ -40,7 +40,7 @@ module.exports = simpleEvents({
   },
   '2. An event can be namespaced and accept values.': function (test) {
 
-    var emitter = new EventEmitter3({
+    var emitter = new Reventer({
       wildcard: true,
       verbose: true
     });
@@ -58,7 +58,7 @@ module.exports = simpleEvents({
   },
   '3. A namespaced event can be raised multiple times and accept values.': function (test) {
 
-    var emitter = new EventEmitter3({
+    var emitter = new Reventer({
       wildcard: true,
       verbose: true
     });
@@ -79,7 +79,7 @@ module.exports = simpleEvents({
   },
   '4. A listener should support wild cards.': function (test) {
 
-    var emitter = new EventEmitter3({
+    var emitter = new Reventer({
       wildcard: true,
       verbose: true
     });
@@ -96,7 +96,7 @@ module.exports = simpleEvents({
   },
   '5. Emitting an event should support wildcards.': function (test) {
 
-    var emitter = new EventEmitter3({
+    var emitter = new Reventer({
       wildcard: true,
       verbose: true
     });
@@ -113,7 +113,7 @@ module.exports = simpleEvents({
   },
   '6. A listener should support complex wild cards.': function (test) {
 
-    var emitter = new EventEmitter3({
+    var emitter = new Reventer({
       wildcard: true,
       verbose: true
     });
@@ -130,7 +130,7 @@ module.exports = simpleEvents({
   },
   '7. Emitting an event should support complex wildcards.': function (test) {
 
-    var emitter = new EventEmitter3({
+    var emitter = new Reventer({
       wildcard: true,
       verbose: true
     });
@@ -147,7 +147,7 @@ module.exports = simpleEvents({
   },
   '8. Emitting an event should support complex wildcards multiple times, a valid listener should accept values.': function (test) {
 
-    var emitter = new EventEmitter3({
+    var emitter = new Reventer({
       wildcard: true,
       verbose: true
     });
@@ -169,7 +169,7 @@ module.exports = simpleEvents({
   },
   '9. List all the listeners for a particular event.': function(test) {
 
-    var emitter = new EventEmitter3({
+    var emitter = new Reventer({
       wildcard: true,
       verbose: true
     });
@@ -191,7 +191,7 @@ module.exports = simpleEvents({
   },
   '10. should be able to listen on any event' : function (test) {
 
-    var emitter = new EventEmitter3({
+    var emitter = new Reventer({
       wildcard: true,
       verbose: true
     });
@@ -212,7 +212,7 @@ module.exports = simpleEvents({
 
   '11. No warning should be raised if we set maxListener to be greater before adding' : function (test) {
 
-    var emitter = new EventEmitter3({
+    var emitter = new Reventer({
       wildcard: true,
       verbose: true
     });

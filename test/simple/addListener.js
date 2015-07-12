@@ -1,11 +1,11 @@
 var simpleEvents = require('nodeunit').testCase;
-var EventEmitter3 = require('../../lib/EventEmitter3');
+var Reventer = require('../../lib/Reventer');
 
 module.exports = simpleEvents({
 
   '1. Add a single listener on a single event.': function (test) {
 
-    var emitter = new EventEmitter3({ verbose: true });
+    var emitter = new Reventer({ verbose: true });
 
     emitter.on('test1', function () {
       test.ok(true, 'The event was raised');
@@ -19,7 +19,7 @@ module.exports = simpleEvents({
   },
   '2. Add two listeners on a single event.': function (test) {
 
-    var emitter = new EventEmitter3({ verbose: true });
+    var emitter = new Reventer({ verbose: true });
 
     emitter.on('test1', function () {
       test.ok(true, 'The event was raised');
@@ -37,7 +37,7 @@ module.exports = simpleEvents({
   },
   '3. Add three listeners on a single event.': function (test) {
 
-    var emitter = new EventEmitter3({ verbose: true });
+    var emitter = new Reventer({ verbose: true });
 
     emitter.on('test1', function () {
       test.ok(true, 'The event was raised');
@@ -59,7 +59,7 @@ module.exports = simpleEvents({
   },
   '4. Add two listeners to two different events.': function (test) {
 
-    var emitter = new EventEmitter3({ verbose: true });
+    var emitter = new Reventer({ verbose: true });
 
     emitter.on('test1', function () {
       test.ok(true, 'The event was raised');
@@ -86,7 +86,7 @@ module.exports = simpleEvents({
   },
   '5. Never adding any listeners should yield a listeners array with the length of 0.': function (test) {
 
-    var emitter = new EventEmitter3({ verbose: true });
+    var emitter = new Reventer({ verbose: true });
 
     emitter.on('test1', function () {
       test.ok(true, 'The event was raised');
@@ -100,7 +100,7 @@ module.exports = simpleEvents({
 
   '6. the listener added should be the right listener.': function (test) {
 
-    var emitter = new EventEmitter3({ verbose: true });
+    var emitter = new Reventer({ verbose: true });
 
     var type = 'somelistenerbar';
     var f = function () {};
@@ -116,7 +116,7 @@ module.exports = simpleEvents({
 
   '7. should be able to listen on any event' : function (test) {
 
-    var emitter = new EventEmitter3({ verbose: true });
+    var emitter = new Reventer({ verbose: true });
 
     var f = function () {
       test.ok(true, 'the event was fired');
@@ -137,7 +137,7 @@ module.exports = simpleEvents({
 
   '8. should be able to listen on any event (should cause an error)' : function (test) {
 
-    var emitter = new EventEmitter3({ verbose: true });
+    var emitter = new Reventer({ verbose: true });
 
     var f = function () {
       test.ok(true, 'the event was fired');
@@ -153,7 +153,7 @@ module.exports = simpleEvents({
 
   '9. onAny alias' : function (test) {
 
-    var emitter = new EventEmitter3({ verbose: true });
+    var emitter = new Reventer({ verbose: true });
 
     var f = function () {
       test.ok(true, 'the event was fired');
@@ -171,7 +171,7 @@ module.exports = simpleEvents({
 
   '10. onAny with invalid argument' : function (test) {
 
-    var emitter = new EventEmitter3({ verbose: true });
+    var emitter = new Reventer({ verbose: true });
 
     test.throws(function () {
       emitter.onAny(null);

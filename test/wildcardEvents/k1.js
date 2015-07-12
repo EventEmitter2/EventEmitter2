@@ -22,9 +22,9 @@
 
 var common = require('../common');
 var assert = require('assert');
-var EventEmitter3 = require('../../lib/EventEmitter3');
+var Reventer = require('../../lib/Reventer');
 
-var e = new EventEmitter3({wildcard: true});
+var e = new Reventer({wildcard: true});
 var countWildcard = 0;
 var counMultiLevelWildcard = 0;
 var countAny = 0;

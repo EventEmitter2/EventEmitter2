@@ -1,11 +1,11 @@
 var simpleEvents = require('nodeunit').testCase;
-var EventEmitter3 = require('../../lib/EventEmitter3');
+var Reventer = require('../../lib/Reventer');
 
 module.exports = simpleEvents({
 
   '1. Add a single listener on a single event.': function (test) {
 
-    var emitter = new EventEmitter3({
+    var emitter = new Reventer({
       wildcard: true
     });
 
@@ -24,7 +24,7 @@ module.exports = simpleEvents({
 
   '1a. Add a single listener on a single event (using an array).': function (test) {
 
-    var emitter = new EventEmitter3({
+    var emitter = new Reventer({
       wildcard: true
     });
 
@@ -43,7 +43,7 @@ module.exports = simpleEvents({
 
   '2. Add two listeners on a single event.': function (test) {
 
-    var emitter = new EventEmitter3({
+    var emitter = new Reventer({
       wildcard: true
     });
 
@@ -66,7 +66,7 @@ module.exports = simpleEvents({
 
   '2a. Add two listeners on a single event (using an array).': function (test) {
 
-    var emitter = new EventEmitter3({
+    var emitter = new Reventer({
       wildcard: true
     });
 
@@ -89,7 +89,7 @@ module.exports = simpleEvents({
 
   '3. Add three listeners on a single event.': function (test) {
 
-    var emitter = new EventEmitter3({
+    var emitter = new Reventer({
       wildcard: true
     });
 
@@ -116,7 +116,7 @@ module.exports = simpleEvents({
 
   '4. Add two listeners to two different events.': function (test) {
 
-    var emitter = new EventEmitter3({
+    var emitter = new Reventer({
       wildcard: true
     });
 
@@ -147,7 +147,7 @@ module.exports = simpleEvents({
 
   '5. Never adding any listeners should yield a listeners array with the length of 0.': function (test) {
 
-    var emitter = new EventEmitter3({
+    var emitter = new Reventer({
       wildcard: true
     });
 
@@ -165,7 +165,7 @@ module.exports = simpleEvents({
 
   '6. the listener added should be the right listener.': function (test) {
 
-    var emitter = new EventEmitter3({
+    var emitter = new Reventer({
       wildcard: true
     });
 
@@ -183,7 +183,7 @@ module.exports = simpleEvents({
 
   '7. Listeners on `*`, `*.*`, `*.test` with emissions from `foo.test` and `other.emit`': function (test) {
 
-    var emitter = new EventEmitter3({
+    var emitter = new Reventer({
       wildcard: true
     });
 
@@ -204,7 +204,7 @@ module.exports = simpleEvents({
 
   '8. Listeners on `*`, `*.*`, foo.test with emissions from `*`, `*.*` and `foo.test`': function (test) {
 
-    var emitter = new EventEmitter3({
+    var emitter = new Reventer({
       wildcard: true
     });
 
@@ -226,7 +226,7 @@ module.exports = simpleEvents({
 
   '9. Listeners on `*`. (using an array)': function (test) {
 
-    var emitter = new EventEmitter3({
+    var emitter = new Reventer({
       wildcard: true
     });
 
@@ -243,7 +243,7 @@ module.exports = simpleEvents({
 
   '10. actual event name': function(test) {
 
-    var emitter = new EventEmitter3({
+    var emitter = new Reventer({
       wildcard: true
     });
 
@@ -262,7 +262,7 @@ module.exports = simpleEvents({
 
   '11. Listeners with multi-level wildcards': function (test) {
 
-    var emitter = new EventEmitter3({
+    var emitter = new Reventer({
       wildcard: true
     });
 
@@ -306,7 +306,7 @@ module.exports = simpleEvents({
 
   '12. Check return values of emit for wildcard emitter.': function (test) {
 
-    var emitter = new EventEmitter3({
+    var emitter = new Reventer({
       wildcard: true
     });
 

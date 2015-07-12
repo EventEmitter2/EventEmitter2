@@ -1,5 +1,5 @@
 var simpleEvents = require('nodeunit').testCase;
-var EventEmitter3 = require('../../lib/EventEmitter3');
+var Reventer = require('../../lib/Reventer');
 
 module.exports = simpleEvents({
 
@@ -12,7 +12,7 @@ module.exports = simpleEvents({
           maxListeners: 20 // the max number of listeners that can be assigned to an event, defaults to 10.
       };
 
-    emitter = new EventEmitter3(config);
+    emitter = new Reventer(config);
 
     emitter.removeAllListeners();
 
@@ -30,7 +30,7 @@ module.exports = simpleEvents({
     var emitter,
         amount = 99;
 
-    emitter = new EventEmitter3();
+    emitter = new Reventer();
 
     emitter.setMaxListeners(amount);
 

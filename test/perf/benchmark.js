@@ -7,8 +7,8 @@ var emitter = new EventEmitter();
 var EventEmitter2 = require('events').EventEmitter;
 var emitter2 = new EventEmitter2();
 
-var EventEmitter3 = require('../../lib/eventemitter3');
-var emitter3 = new EventEmitter3();
+var Reventer = require('../../lib/Reventer');
+var emitter3 = new Reventer();
 
 suite
 
@@ -26,7 +26,7 @@ suite
     emitter.removeAllListeners('test1');
 
   })
-  .add('EventEmitter3', function() {
+  .add('Reventer', function() {
 
     emitter3.on('test3', function () { 1==1; });
     emitter3.emit('test3');
@@ -34,7 +34,7 @@ suite
 
   })
 
-  .add('EventEmitter3 (wild)', function() {
+  .add('Reventer (wild)', function() {
 
     emitter3.on('test3.foo', function () { 1==1; });
     emitter3.emit('test3.foo');

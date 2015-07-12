@@ -1,11 +1,11 @@
 var simpleEvents = require('nodeunit').testCase;
-var EventEmitter3 = require('../../lib/EventEmitter3');
+var Reventer = require('../../lib/Reventer');
 
 module.exports = simpleEvents({
 
   '1. add a single event and then remove the event.' : function (test) {
 
-    var emitter = new EventEmitter3({
+    var emitter = new Reventer({
       wildcard : true,
       verbose : true
     });
@@ -32,7 +32,7 @@ module.exports = simpleEvents({
 
   '2. Add two events and then remove only one of those events.' : function (test) {
 
-    var emitter = new EventEmitter3({
+    var emitter = new Reventer({
       wildcard : true,
       verbose : true
     });
@@ -61,7 +61,7 @@ module.exports = simpleEvents({
 
   '3. Add three events and remove only one of the events that was added.' : function (test) {
 
-    var emitter = new EventEmitter3({
+    var emitter = new Reventer({
       wildcard : true,
       verbose : true
     });
@@ -90,7 +90,7 @@ module.exports = simpleEvents({
 
   '4. Should error if we don\'t pass a function to the emit method.' : function (test) {
 
-    var emitter = new EventEmitter3({
+    var emitter = new Reventer({
       wildcard : true,
       verbose : true
     });
@@ -117,7 +117,7 @@ module.exports = simpleEvents({
 
   '5. Removing one listener should not affect another listener.' : function (test) {
 
-    var emitter = new EventEmitter3({
+    var emitter = new Reventer({
       wildcard : true,
       verbose : true
     });
@@ -147,7 +147,7 @@ module.exports = simpleEvents({
 
   '6. Remove all listener functions.' : function (test) {
 
-    var emitter = new EventEmitter3({
+    var emitter = new Reventer({
       wildcard : true,
       verbose : true
     });
@@ -178,7 +178,7 @@ module.exports = simpleEvents({
 
   '7. Removing listeners for one event should not affect another event\'s listeners.' : function (test) {
 
-    var emitter = new EventEmitter3({
+    var emitter = new Reventer({
       wildcard : true,
       verbose : true
     });
@@ -221,7 +221,7 @@ module.exports = simpleEvents({
 
   '8. Its ok to listen on wildcard, so it is ok to remove it.' : function (test) {
 
-    var emitter = new EventEmitter3({
+    var emitter = new Reventer({
       wildcard : true,
       verbose : true
     });
@@ -248,7 +248,7 @@ module.exports = simpleEvents({
 
   '9. And (8) should not depend on order of listening.' : function (test) {
 
-    var emitter = new EventEmitter3({
+    var emitter = new Reventer({
       wildcard : true,
       verbose : true
     });
@@ -275,7 +275,7 @@ module.exports = simpleEvents({
 
   '10. Reporting many listeners on wildcard all should removed.' : function (test) {
 
-    var emitter = new EventEmitter3({
+    var emitter = new Reventer({
       wildcard : true,
       verbose : true
     });
@@ -305,7 +305,7 @@ module.exports = simpleEvents({
   },
 
   '11. Add some listeners with wildcards and remove only the wildcard' : function (test) {
-    var emitter = new EventEmitter3({
+    var emitter = new Reventer({
       wildcard : true,
       verbose : true
     });

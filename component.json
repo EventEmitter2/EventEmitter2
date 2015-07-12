@@ -1,5 +1,5 @@
 {
-  "name": "EventEmitter3",
+  "name": "Reventer",
   "version": "1.0.0",
   "description": "A Node.js event emitter implementation with namespaces, wildcards, TTL and browser support.",
   "keywords": [
@@ -8,9 +8,9 @@
     "emitter",
     "eventemitter"
   ],
-  "main": "lib/EventEmitter3.js",
+  "main": "lib/Reventer.js",
   "scripts": [
-    "lib/EventEmitter3.js"
+    "lib/Reventer.js"
   ],
   "license": "MIT"
 }

@@ -1,10 +1,10 @@
 [![build-status](https://www.codeship.io/projects/925d6000-09fc-0133-3120-36ea30c979a9/status)](https://www.codeship.io/projects/90643)
 
-[![NPM version](https://badge.fury.io/js/eventemitter3.png)](http://badge.fury.io/js/eventemitter3)
+[![NPM version](https://badge.fury.io/js/Reventer.png)](http://badge.fury.io/js/Reventer)
 
 # SYNOPSIS
 
-EventEmitter3 is a fork of the [EventEmitter2 project](https://github.com/asyncly/EventEmitter2) that fixes the onAny method to no longer use this as a reference and properly use AMD/CommonJS packaging.
+Reventer is a fork of the [EventEmitter2 project](https://github.com/asyncly/EventEmitter2) that fixes the onAny method to no longer use this as a reference and properly use AMD/CommonJS packaging.
 
 Credits to [hij1nx](http://www.twitter.com/hij1nx) the original author and maintainer of EventEmitter2.
 
@@ -21,8 +21,8 @@ Credits to [hij1nx](http://www.twitter.com/hij1nx) the original author and maint
  - The constructor takes a configuration object.
 
 ```javascript
-    var EventEmitter3 = require('eventemitter3');
-    var server = new EventEmitter3({
+    var Reventer = require('Reventer');
+    var server = new Reventer({
 
       //
       // use wildcards.

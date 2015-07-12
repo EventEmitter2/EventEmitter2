@@ -1,22 +1,22 @@
 {
-  "name": "EventEmitter3",
+  "name": "Reventer",
   "version": "0.0.1",
   "description": "A Node.js event emitter implementation with namespaces, wildcards, TTL and browser support.",
   "keywords": ["event", "events", "emitter", "eventemitter"],
   "author": "Jesse Dijkstra <mail@jessedijkstra.nl>",
   "license": "MIT",
-  "repository": "git://github.com/jessedijkstra/EventEmitter3.git",
+  "repository": "git://github.com/jessedijkstra/Reventer.git",
   "devDependencies": {
     "nodeunit": "*",
     "benchmark" : ">= 0.2.2"
   },
-  "main": "./lib/eventemitter3.js",
+  "main": "./lib/Reventer.js",
   "scripts" : {
     "test" : "nodeunit test/simple/ && nodeunit test/wildcardEvents/",
     "benchmark" : "node test/perf/benchmark.js"
   },
   "files": [
-    "lib/eventemitter3.js",
+    "lib/Reventer.js",
     "index.js"
   ]
 }

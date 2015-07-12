@@ -1,11 +1,11 @@
 var simpleEvents = require('nodeunit').testCase;
-var EventEmitter3 = require('../../lib/EventEmitter3');
+var Reventer = require('../../lib/Reventer');
 
 module.exports = simpleEvents({
 
   '1. A listener added with `once` should only listen once and then be removed.': function (test) {
 
-    var emitter = new EventEmitter3({
+    var emitter = new Reventer({
       wildcard : true,
       verbose : true
     });
@@ -25,7 +25,7 @@ module.exports = simpleEvents({
   },
   '2. A listener with a TTL of 4 should only listen 4 times.': function (test) {
 
-    var emitter = new EventEmitter3({
+    var emitter = new Reventer({
       wildcard : true,
       verbose : true
     });
@@ -48,7 +48,7 @@ module.exports = simpleEvents({
   },
   '3. A listener with a TTL of 4 should only listen 4 times and pass parameters.': function (test) {
 
-    var emitter = new EventEmitter3({
+    var emitter = new Reventer({
       wildcard : true,
       verbose : true
     });
@@ -72,7 +72,7 @@ module.exports = simpleEvents({
   },
   '4. Remove an event listener by signature.': function (test) {
 
-    var emitter = new EventEmitter3({
+    var emitter = new Reventer({
       wildcard : true,
       verbose : true
     });
@@ -111,7 +111,7 @@ module.exports = simpleEvents({
   },
   '5. `removeListener` and `once`': function(test) {
 
-     var emitter = new EventEmitter3({
+     var emitter = new Reventer({
       wildcard : true,
       verbose : true
     });
@@ -130,7 +130,7 @@ module.exports = simpleEvents({
 
   '6. Listening with a wildcard on once' : function (test) {
 
-    var emitter = new EventEmitter3({
+    var emitter = new Reventer({
       wildcard : true,
       verbose : true
     });
@@ -150,7 +150,7 @@ module.exports = simpleEvents({
 
   '7. Emitting with a wildcard targeted at once' : function (test) {
 
-    var emitter = new EventEmitter3({
+    var emitter = new Reventer({
       wildcard : true,
       verbose : true
     });
@@ -169,7 +169,7 @@ module.exports = simpleEvents({
 
   '8. Emitting with a multi-level wildcard on once': function(test) {
 
-    var emitter = new EventEmitter3({
+    var emitter = new Reventer({
       wildcard : true,
       verbose : true
     });
@@ -194,7 +194,7 @@ module.exports = simpleEvents({
 
   '9. Emitting with a multi-level wildcard targeted at once' : function (test) {
 
-    var emitter = new EventEmitter3({
+    var emitter = new Reventer({
       wildcard : true,
       verbose : true
     });
