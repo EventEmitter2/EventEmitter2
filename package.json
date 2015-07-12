@@ -1,29 +1,22 @@
 {
-  "name": "eventemitter2",
-  "version": "0.4.14",
+  "name": "Reventer",
+  "version": "0.0.1",
   "description": "A Node.js event emitter implementation with namespaces, wildcards, TTL and browser support.",
   "keywords": ["event", "events", "emitter", "eventemitter"],
-  "author": "hij1nx <paolo@async.ly> http://twitter.com/hij1nx",
-  "contributors": [
-    "Eric Elliott",
-    "Charlie Robbins <charlie@nodejitsu.com> http://twitter.com/indexzero",
-    "Jameson Lee <jameson@nodejitsu.com> http://twitter.com/Jamesonjlee",
-    "Jeroen van Duffelen <jvduf@nodejitsu.com> http://www.twitter.com/jvduf",
-    "Fedor Indutny <fedor.indutny@gmail.com> http://www.twitter.com/indutny"
-  ],
+  "author": "Jesse Dijkstra <mail@jessedijkstra.nl>",
   "license": "MIT",
-  "repository": "git://github.com/hij1nx/EventEmitter2.git",
+  "repository": "git://github.com/jessedijkstra/Reventer.git",
   "devDependencies": {
     "nodeunit": "*",
     "benchmark" : ">= 0.2.2"
   },
-  "main": "./lib/eventemitter2.js",
+  "main": "./lib/Reventer.js",
   "scripts" : {
     "test" : "nodeunit test/simple/ && nodeunit test/wildcardEvents/",
     "benchmark" : "node test/perf/benchmark.js"
   },
   "files": [
-    "lib/eventemitter2.js",
+    "lib/Reventer.js",
     "index.js"
   ]
 }

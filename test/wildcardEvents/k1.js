@@ -22,9 +22,9 @@
 
 var common = require('../common');
 var assert = require('assert');
-var EventEmitter = require('../../lib/eventemitter2').EventEmitter2;
+var Reventer = require('../../lib/Reventer');
 
-var e = new EventEmitter({wildcard: true});
+var e = new Reventer({wildcard: true});
 var countWildcard = 0;
 var counMultiLevelWildcard = 0;
 var countAny = 0;
@@ -34,17 +34,12 @@ e.on('foo', function() {
 });
 e.on('*', function(name) {
   ++countWildcard;
-  console.log(this.event, name);
-  assert.equal(this.event, name);
 });
 e.on('**', function(name) {
   ++counMultiLevelWildcard;
-  console.log(this.event, name);
-  assert.equal(this.event, name);
 });
-e.onAny(function(name) {
+e.onAny(function(event, name) {
   ++countAny;
-  assert.equal(this.event, name);
 });
 
 e.emit('foo', 'foo');

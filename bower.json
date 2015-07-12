@@ -1,6 +1,0 @@
-{
-  "name": "eventemitter2",
-  "version": "0.4.14",
-  "description": "A Node.js event emitter implementation with namespaces, wildcards, TTL and browser support.",
-  "main": "lib/eventemitter2.js"
-}

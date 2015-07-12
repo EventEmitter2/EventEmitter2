@@ -1,14 +1,5 @@
-var basicEvents = require('nodeunit').testCase;
-var lib = '../../lib/eventemitter2';
-
-var EventEmitter2;
-
-if(typeof require !== 'undefined') {
-  EventEmitter2 = require(lib).EventEmitter2;
-}
-else {
-  EventEmitter2 = window.EventEmitter2;
-}
+var simpleEvents = require('nodeunit').testCase;
+var Reventer = require('../../lib/Reventer');
 
 function setHelper (emitter, test, testName){
   var eventNames = [
@@ -30,16 +21,16 @@ function setHelper (emitter, test, testName){
   return eventNames;
 }
 
-module.exports = basicEvents({
+module.exports = simpleEvents({
 
   'intialize 1. Configuration Flags Test.': function (test) {
 
-    var emitter = new EventEmitter2({
+    var emitter = new Reventer({
       wildcard: true,
       verbose: true
     });
 
-    var emitterDefault = new EventEmitter2({
+    var emitterDefault = new Reventer({
     });
 
     test.ok(!emitterDefault.wildcard, 'default .wildcard should be false');
@@ -51,12 +42,12 @@ module.exports = basicEvents({
   },
   'initialize 2. creating a wildcard EE should have listenerTree.': function (test) {
 
-    var emitter = new EventEmitter2({
+    var emitter = new Reventer({
       wildcard: true,
       verbose: true
     });
 
-    var emitterDefault = new EventEmitter2({
+    var emitterDefault = new Reventer({
     });
 
     test.ok(emitter.listenerTree, 'listenerTree should exist');
