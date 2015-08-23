@@ -192,5 +192,18 @@ module.exports = simpleEvents({
 
     test.expect(4);
     test.done();
+  },
+
+  'removeListener8. when _events doesn\'t exist' : function (test) {
+
+    var emitter = new EventEmitter2;
+    var type = 'remove';
+
+    delete emitter._events;
+    emitter.removeAllListeners();
+    emitter.removeAllListeners(type);
+
+    test.expect(0);
+    test.done();
   }
 });
