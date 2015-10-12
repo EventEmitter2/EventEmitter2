@@ -120,7 +120,90 @@ module.exports = simpleEvents({
     test.done();
 
   },
-  '6. Check return values of emit.': function (test) {
+  '6. Stop propagation of an event.': function (test) {
+
+    var emitter = new EventEmitter2({ verbose: true });
+
+    function functionA() {
+      test.ok(true, 'The event was raised');
+    }
+
+    function functionB() {
+      test.ok(true, 'The event was raised');
+      return true;
+    }
+
+    function functionC() {
+      test.ok(true, 'The event was raised');
+      return null;
+    }
+
+    function functionD() {
+      test.ok(true, 'The event was raised');
+      return false;
+    }
+
+    function functionE() {
+      test.ok(true, 'The event should not have been raised');
+    }
+
+    emitter.on('test2', functionA);
+    emitter.on('test2', functionB);
+    emitter.on('test2', functionC);
+    emitter.on('test2', functionD);
+    emitter.on('test2', functionE);
+
+    emitter.emit('test2');
+
+    test.expect(4);
+    test.done();
+
+  },
+  '6. Stop propagation of an onAny event.': function (test) {
+
+    var emitter = new EventEmitter2({ verbose: true });
+
+    function functionA() {
+      test.ok(true, 'The event was raised');
+    }
+
+    function functionB() {
+      test.ok(true, 'The event was raised');
+      return true;
+    }
+
+    function functionC() {
+      test.ok(true, 'The event was raised');
+      return null;
+    }
+
+    function functionD() {
+      test.ok(true, 'The event was raised');
+      return false;
+    }
+
+    function functionE() {
+      test.ok(true, 'The event should not have been raised');
+    }
+
+    function functionF() {
+      test.ok(true, 'The event should not have been raised');
+    }
+
+    emitter.onAny(functionA);
+    emitter.onAny(functionB);
+    emitter.onAny(functionC);
+    emitter.onAny(functionD);
+    emitter.on('test2', functionE);
+    emitter.onAny(functionF);
+
+    emitter.emit('test2');
+
+    test.expect(4);
+    test.done();
+
+  },
+  '7. Check return values of emit.': function (test) {
 
     var emitter = new EventEmitter2({ verbose: true });
 
@@ -136,7 +219,7 @@ module.exports = simpleEvents({
 
     test.expect(5);
     test.done();
-  },
+  }
 
 });
 
