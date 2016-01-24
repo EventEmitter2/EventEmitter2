@@ -5,7 +5,7 @@
 
 # SYNOPSIS
 
-EventEmitter2 is an implementation of the EventEmitter found in Node.js
+EventEmitter2 is an implementation of the EventEmitter module found in Node.js. In addition to having a better benchmark performance than EventEmitter and being browser-compatible, it also extends the interface of EventEmitter with additianal non-breaking features.
 
 # DESCRIPTION
 
@@ -23,16 +23,16 @@ EventEmitter2 (wild) x 3,220,268 ops/sec \302\2610.44% (65 runs sampled)
 Fastest is EventEmitter2
 ```
 
-### Differences (Non breaking, compatible with existing EventEmitter)
+### Differences (Non-breaking, compatible with existing EventEmitter)
 
- - The constructor takes a configuration object.
+ - The EventEmitter2 constructor takes an optional configuration object.
  
 ```javascript
     var EventEmitter2 = require('eventemitter2').EventEmitter2;
     var server = new EventEmitter2({
 
       //
-      // use wildcards.
+      // set this to `true` to use wildcards. It defaults to `false`.
       //
       wildcard: true,
 
@@ -42,12 +42,12 @@ Fastest is EventEmitter2
       delimiter: '::', 
       
       //
-      // if you want to emit the newListener event set to true.
+      // set this to `true` if you want to emit the newListener event. The default value is `true`.
       //
       newListener: false, 
 
       //
-      // max listeners that can be assigned to an event, default 10.
+      // the maximum amount of listeners that can be assigned to an event, default 10.
       //
       maxListeners: 20
     });
@@ -106,6 +106,17 @@ subsequent emits such as the following would be observed...
    emitter.emit('foo.bazz');
    emitter.emit(['foo', 'bar']);
 ```
+
+# Multi-level Wildcards
+A double wildcard (the string `**`) matches any number of levels (zero or more) of events. So if for example `'foo.**'` is passed to the `on` method, the following events would be observed:
+
+````javascript
+    emitter.emit('foo');
+    emitter.emit('foo.bar');
+    emitter.emit('foo.bar.baz');
+````
+
+On the other hand, if the single-wildcard event name was passed to the on method, the callback would only observe the second of these events.
 
 
 ### emitter.addListener(event, listener)
@@ -173,7 +184,7 @@ fired, after which it is removed.
 ### emitter.off(event, listener)
 
 Remove a listener from the listener array for the specified event. 
-**Caution**: changes array indices in the listener array behind the listener.
+**Caution**: Calling this method changes the array indices in the listener array behind the listener.
 
 ```javascript
     var callback = function(value) {
