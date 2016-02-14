@@ -238,6 +238,40 @@ specified. This array can be manipulated, e.g. to remove listeners.
 Execute each of the listeners that may be listening for the specified event 
 name in order with the list of arguments.
 
+### emitter.emitAsync(event, [arg1], [arg2], [...])
+
+Return the results of the listeners via [Promise.all](https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Promise/all).
+Only this method doesn't work [IE](http://caniuse.com/#search=promise).
+
+```javascript
+    emitter.on('get',function(i) {
+      return new Promise(function(resolve){
+        setTimeout(function(){
+          resolve(i+3);
+        },50);
+      });
+    });
+    emitter.on('get',function(i) {
+      return new Promise(function(resolve){
+        resolve(i+2)
+      });
+    });
+    emitter.on('get',function(i) {
+      return Promise.resolve(i+1);
+    });
+    emitter.on('get',function(i) {
+      return i+0;
+    });
+    emitter.on('get',function(i) {
+      // noop
+    });
+    
+    emitter.emitAsync('get',0)
+    .then(function(results){
+      console.log(results); // [3,2,1,0,undefined]
+    });
+```
+
 # LICENSE
 
 (The MIT License)
