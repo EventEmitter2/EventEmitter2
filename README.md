@@ -140,10 +140,10 @@ Adds a listener to the end of the listeners array for the specified event.
 
 ### emitter.onAny(listener)
 
-Adds a listener that will be fired when any event is emitted.
+Adds a listener that will be fired when any event is emitted. The event name is passed as the first argument to the callback.
 
 ```javascript
-    server.onAny(function(value) {
+    server.onAny(function(event, value) {
       console.log('All events trigger this.');
     });
 ```
