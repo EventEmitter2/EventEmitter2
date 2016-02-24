@@ -18,7 +18,7 @@
 // DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
 // USE OR OTHER DEALINGS IN THE SOFTWARE.
-
+"use strict";
 var path = require('path');
 var assert = require('assert');
 
@@ -102,6 +102,16 @@ process.on('exit', function() {
     knownGlobals.push(DTRACE_NET_SOCKET_READ);
     knownGlobals.push(DTRACE_NET_SOCKET_WRITE);
   }
+
+	if(global.COUNTER_NET_SERVER_CONNECTION){
+    knownGlobals.push(COUNTER_NET_SERVER_CONNECTION);
+    knownGlobals.push(COUNTER_NET_SERVER_CONNECTION_CLOSE);
+    knownGlobals.push(COUNTER_HTTP_SERVER_REQUEST);
+    knownGlobals.push(COUNTER_HTTP_SERVER_RESPONSE);
+		knownGlobals.push(COUNTER_HTTP_CLIENT_REQUEST);
+    knownGlobals.push(COUNTER_HTTP_CLIENT_RESPONSE);
+  }
+
 
   for (var x in global) {
     var found = false;
