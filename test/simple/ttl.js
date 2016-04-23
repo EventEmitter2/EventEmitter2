@@ -110,6 +110,33 @@ module.exports = simpleEvents({
 
     test.expect(0);
     test.done();
-  }
+  },
+  '6. `once` followed by `on` should work fine': function(test) {
+    // the trick here is that listeners changed in between of
+    // emit call
+    var emitter = new EventEmitter2();
+    var functionA = function() { test.ok(true, 'Event was fired'); };
 
+    emitter.once('testA', functionA);
+    emitter.on('testA', functionA);
+
+    emitter.emit('testA');
+
+    test.expect(2);
+    test.done();
+  },
+  '7. `onAny` handler that modifies `onAny` listerners should work fine': function(test) {
+    // the trick here is that listeners changed in between of
+    // emit call
+    var emitter = new EventEmitter2();
+    var functionA = function() { test.ok(true, 'Event was fired'); };
+
+    emitter.onAny(function () { emitter.offAny(functionA); } );
+    emitter.onAny(functionA);
+
+    emitter.emit('testA');
+
+    test.expect(1);
+    test.done();
+  }
 });
