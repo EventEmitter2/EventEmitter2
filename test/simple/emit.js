@@ -138,5 +138,21 @@ module.exports = simpleEvents({
     test.done();
   },
 
+  '7. Check return values of wildcardEmitter.emit.': function (test) {
+    var emitter = new EventEmitter2({ verbose: true, wildcard: true });
+    function functionA() { test.ok(true, 'The event was raised'); }
+
+    emitter.on('test7', functionA);
+    emitter.on('wildcard.*', functionA);
+
+    test.ok(emitter.emit('test7'), 'emit should return true after calling a listener');
+    test.ok(emitter.emit('wildcard.7'), 'emit should return true after calling a wildcard listener');
+    test.ok(!emitter.emit('other7'), 'emit should return false when no listener was called');
+    test.ok(!emitter.emit('other.7'), 'emit should return false when no wildcard listener was called');
+
+    test.expect(6);
+    test.done();
+  },
+
 });
 
