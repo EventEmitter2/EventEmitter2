@@ -56,8 +56,5 @@ declare module eventemitter2 {
     }
 } 
 
-declare module "eventemitter2" {
-    export = {
-        EventEmitter2 : eventemitter2
-    };
-}
+
+export {eventemitter2 as EventEmitter2 };
