@@ -26,5 +26,9 @@
     "lib/eventemitter2.js",
     "index.js",
     "eventemitter2.d.ts"
-  ]
+  ],
+  "typings": "./eventemitter2.d.ts",
+  "typescript": {
+    "definition": "./eventemitter2.d.ts"
+  }
 }
