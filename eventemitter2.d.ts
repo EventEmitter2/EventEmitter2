@@ -6,22 +6,22 @@ declare module eventemitter2 {
          * @default false
          * @description set this to `true` to use wildcards.
          */
-        wildcard: boolean,
+        wildcard?: boolean,
         /**
          * @default '.'
          * @description the delimiter used to segment namespaces.
          */
-        delimiter: string, 
+        delimiter?: string, 
         /**
          * @default true
          * @description set this to `true` if you want to emit the newListener events.
          */
-        newListener: boolean, 
+        newListener?: boolean, 
         /**
          * @default 10
          * @description the maximum amount of listeners that can be assigned to an event.
          */
-        maxListeners: number
+        maxListeners?: number
     }
     interface Listener{
         (...values: any[]) : void;
