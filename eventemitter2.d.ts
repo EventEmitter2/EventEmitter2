@@ -31,7 +31,7 @@ declare module eventemitter2 {
     }
 
     interface Static {
-        (options: eventemitter2.ConstructorOptions): eventemitter2.emitter
+        new(options?: eventemitter2.ConstructorOptions): eventemitter2.emitter
     }
     interface emitter {
         emit(event: string| string[],...values: any[]);
