@@ -24,6 +24,7 @@
   },
   "files": [
     "lib/eventemitter2.js",
-    "index.js"
+    "index.js",
+    "eventemitter2.d.ts"
   ]
 }
