@@ -6,22 +6,22 @@ declare module eventemitter2 {
          * @default false
          * @description set this to `true` to use wildcards.
          */
-        wildcard: boolean,
+        wildcard?: boolean,
         /**
          * @default '.'
          * @description the delimiter used to segment namespaces.
          */
-        delimiter: string, 
+        delimiter?: string, 
         /**
          * @default true
          * @description set this to `true` if you want to emit the newListener events.
          */
-        newListener: boolean, 
+        newListener?: boolean, 
         /**
          * @default 10
          * @description the maximum amount of listeners that can be assigned to an event.
          */
-        maxListeners: number
+        maxListeners?: number
     }
     interface Listener{
         (...values: any[]) : void;
@@ -31,7 +31,7 @@ declare module eventemitter2 {
     }
 
     interface Static {
-        (options: eventemitter2.ConstructorOptions): eventemitter2.emitter
+        new(options?: eventemitter2.ConstructorOptions): eventemitter2.emitter
     }
     interface emitter {
         emit(event: string| string[],...values: any[]);
@@ -56,8 +56,5 @@ declare module eventemitter2 {
     }
 } 
 
-declare module "eventemitter2" {
-    export = {
-        EventEmitter2 : eventemitter2
-    };
-}
+
+export {eventemitter2 as EventEmitter2 };
