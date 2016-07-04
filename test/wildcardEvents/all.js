@@ -197,7 +197,7 @@ module.exports = basicEvents({
     test.done();
 
   },
-  '10. should be able to listen on any event' : function (test) {
+  '10. should be able to listen on any event with 3 arguments' : function (test) {
 
     var emitter = new EventEmitter2({
       wildcard: true,
@@ -219,7 +219,30 @@ module.exports = basicEvents({
 
   },
 
-  '11. No warning should be raised if we set maxListener to be greater before adding' : function (test) {
+  '11. should be able to listen on any event with 4 arguments' : function (test) {
+
+    var emitter = new EventEmitter2({
+      wildcard: true,
+      verbose: true
+    });
+
+    var fn = function (event, foo, bar, baz) {
+      test.equal(this.event, 'test23.ns5.ns5')
+      test.equal(event, 'test23.ns5.ns5')
+      test.equal(foo, 'foo');
+      test.equal(bar, 1);
+      test.equal(baz, 'baz');
+      test.ok(true, 'raised test23.ns5.ns5');
+    }
+
+    emitter.onAny(fn);
+    emitter.emit('test23.ns5.ns5', 'foo', 1, 'baz');
+    test.expect(6);
+    test.done();
+
+  },
+
+  '12. No warning should be raised if we set maxListener to be greater before adding' : function (test) {
 
     var emitter = new EventEmitter2({
       wildcard: true,
