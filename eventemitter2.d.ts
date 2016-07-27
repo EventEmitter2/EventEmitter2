@@ -11,12 +11,12 @@ declare module eventemitter2 {
          * @default '.'
          * @description the delimiter used to segment namespaces.
          */
-        delimiter?: string, 
+        delimiter?: string,
         /**
          * @default true
          * @description set this to `true` if you want to emit the newListener events.
          */
-        newListener?: boolean, 
+        newListener?: boolean,
         /**
          * @default 10
          * @description the maximum amount of listeners that can be assigned to an event.
@@ -35,7 +35,7 @@ declare module eventemitter2 {
     }
     interface emitter {
         emit(event: string| string[],...values: any[]);
-        emitAsync(event: string): Promise<any[]>;
+        emitAsync(event: string| string[],...values: any[]): Promise<any[]>;
         addListener(event: string, listener: Listener);
         on(event: string, listener: Listener);
         once(event: string, listener: Listener);
@@ -54,7 +54,7 @@ declare module eventemitter2 {
         then(onFulfilled:(response: ReturnType) => any, onRejected:(response: any) => any): Promise<any>;
         catch(onRejected:(response: any) => any): Promise<any>;
     }
-} 
+}
 
 
 export {eventemitter2 as EventEmitter2 };
