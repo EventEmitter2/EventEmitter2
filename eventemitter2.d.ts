@@ -34,19 +34,19 @@ declare module eventemitter2 {
         new(options?: eventemitter2.ConstructorOptions): eventemitter2.emitter
     }
     interface emitter {
-        emit(event: string| string[],...values: any[]);
-        emitAsync(event: string| string[],...values: any[]): Promise<any[]>;
-        addListener(event: string, listener: Listener);
-        on(event: string, listener: Listener);
-        once(event: string, listener: Listener);
-        many(event: string, timesToListen: number, listener: Listener);
-        many(events: string[], listener: Listener);
-        onAny(listener: EventAndListener);
-        offAny(listener: Listener);
-        removeListener(event: string, listener: Listener);
-        off(event: string, listener: Listener);
-        removeAllListeners(evetns?: string[]);
-        setMaxListeners(n: number);
+        emit(event: string| string[],...values: any[]): boolean;
+        emitAsync(event: string): Promise<any[]>;
+        addListener(event: string, listener: Listener): emitter;
+        on(event: string, listener: Listener): emitter;
+        once(event: string, listener: Listener): emitter;
+        many(event: string, timesToListen: number, listener: Listener): emitter;
+        many(events: string[], listener: Listener): emitter;
+        onAny(listener: EventAndListener): emitter;
+        offAny(listener: Listener): emitter;
+        removeListener(event: string, listener: Listener): emitter;
+        off(event: string, listener: Listener): emitter;
+        removeAllListeners(evetns?: string[]): emitter;
+        setMaxListeners(n: number): void;
         listeners(event: string): ()=>{}[] // TODO: not in documentation by Willian
         listenersAny():           ()=>{}[] // TODO: not in documentation by Willian
     }
@@ -55,6 +55,5 @@ declare module eventemitter2 {
         catch(onRejected:(response: any) => any): Promise<any>;
     }
 }
-
 
 export {eventemitter2 as EventEmitter2 };
