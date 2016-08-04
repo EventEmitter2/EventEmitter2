@@ -194,5 +194,29 @@ module.exports = simpleEvents({
     test.expect(2);
     test.done();
 
+  },
+
+  '11. listenerCount should return the number of listeners': function (test) {
+
+
+    var emitter = new EventEmitter2({ verbose: true });
+
+    test.equal(emitter.listenerCount('test1'), 0, 'Before adding listeners listenerCount is 0')
+
+    emitter.on('test1', function () {
+      test.ok(true, 'The event was raised');
+    });
+
+    test.equal(emitter.listenerCount('test1'), 1, 'After adding a listener listenerCount is 1')
+
+    emitter.on('test1', function () {
+      test.ok(true, 'The event was raised');
+    });
+
+    test.equal(emitter.listeners('test1').length, 2, 'And then there were 2');
+
+    test.expect(3);
+    test.done();
+
   }
 });
