@@ -77,6 +77,9 @@ Fastest is EventEmitter2
     });
 ```
 
+# Installing
+
+`npm install --save eventemitter2`.
 
 # API
 
