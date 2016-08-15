@@ -80,6 +80,8 @@ Fastest is EventEmitter2
 
 # API
 
+Install EventEmitter2 via `npm eventemitter2`.
+
 When an `EventEmitter` instance experiences an error, the typical action is
 to emit an `error` event. Error events are treated as a special case.
 If there is no listener for it, then the default action is to print a stack
