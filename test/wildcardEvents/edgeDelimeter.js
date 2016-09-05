@@ -1,5 +1,7 @@
 var simpleEvents = require('nodeunit').testCase;
 
+var EventEmitter2;
+
 if(typeof require !== 'undefined') {
   EventEmitter2 = require('../../lib/eventemitter2').EventEmitter2;
 } else {
