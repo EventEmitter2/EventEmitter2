@@ -96,7 +96,6 @@ module.exports = simpleEvents({
     test.expect(2);
     test.done();
   },
-
   'setMaxListener5. if we set maxListener to be 0 should add endlessly' : function (test) {
 
     var emitter = new EventEmitter2;
@@ -118,18 +117,45 @@ module.exports = simpleEvents({
     test.expect(2);
     test.done();
   },
-  'maxListeners parameter. Passing maxListeners as a parameter should override default.' : function (test) {
+  'setMaxListener6. if we set maxListener to be 1 should warn for 2 listeners' : function (test) {
+
+    var emitter = new EventEmitter2;
+    var type = 'ns1';
+
+    emitter.setMaxListeners(1);
+
+    emitter.on(type, function () {});
+    emitter.on(type, function () {});
+
+    test.ok(emitter._events[type].warned, 'should have been set');
+
+    test.done();
+  },
+  'maxListeners parameter 1. Passing maxListeners as a parameter should override default.' : function (test) {
 
     var emitter = new EventEmitter2({
       maxListeners: 2
     });
 
-    console.log(emitter, test.equal, test.ok);
     emitter.on('a', function () {});
     emitter.on('a', function () {});
     emitter.on('a', function () {});
     test.ok(emitter._events.a.warned,
       '.on() should warn when maxListeners is exceeded.');
+    test.done();
+  },
+  'maxListeners parameter 2. Passing maxListeners with value 0 as a parameter should override default.' : function (test) {
+
+    var emitter = new EventEmitter2({
+      maxListeners: 0
+    });
+    var type = 'ns1';
+
+    for (var i = 0; i < 12 ; i++) {
+      emitter.on(type, function () {});
+    }
+
+    test.ok(!emitter._events[type].warned, 'should not have been set');
     test.done();
   }
 });
