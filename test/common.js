@@ -64,8 +64,6 @@ process.on('exit', function() {
                       console,
                       Buffer,
                       process,
-                      testFullSpec_param_found,
-                      TAP_Global_Harness,
                       global.ArrayBuffer!==undefined?ArrayBuffer:null,
                       global.Int8Array!==undefined?Int8Array:null,
                       global.Uint8Array!==undefined?Uint8Array:null,
@@ -77,7 +75,6 @@ process.on('exit', function() {
                       global.Float64Array!==undefined?Float64Array:null,
                       global.DataView!==undefined?DataView:null,
                       global.Uint8ClampedArray!==undefined?Uint8ClampedArray:null,
-                      AssertionError,
                       global
                       ];
 
@@ -99,8 +96,6 @@ process.on('exit', function() {
     knownGlobals.push(DTRACE_HTTP_CLIENT_REQUEST);
     knownGlobals.push(DTRACE_NET_STREAM_END);
     knownGlobals.push(DTRACE_NET_SERVER_CONNECTION);
-    knownGlobals.push(DTRACE_NET_SOCKET_READ);
-    knownGlobals.push(DTRACE_NET_SOCKET_WRITE);
   }
 
 	if(global.COUNTER_NET_SERVER_CONNECTION){
