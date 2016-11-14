@@ -22,6 +22,11 @@ declare module eventemitter2 {
          * @description the maximum amount of listeners that can be assigned to an event.
          */
         maxListeners?: number
+        /**
+         * @default false
+         * @description show event name in memory leak message when more than maximum amount of listeners is assigned, default false
+         */
+        verboseMemoryLeak?: boolean;
     }
     interface Listener{
         (...values: any[]) : void;

@@ -49,7 +49,12 @@ Fastest is EventEmitter2
       //
       // the maximum amount of listeners that can be assigned to an event, default 10.
       //
-      maxListeners: 20
+      maxListeners: 20,
+      
+      //
+      // show event name in memory leak message when more than maximum amount of listeners is assigned, default false
+      //
+      verboseMemoryLeak: false
     });
 ```
 
