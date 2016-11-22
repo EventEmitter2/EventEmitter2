@@ -40,7 +40,7 @@ declare module eventemitter2 {
     }
     interface emitter {
         emit(event: string| string[],...values: any[]): boolean;
-        emitAsync(event: string): Promise<any[]>;
+        emitAsync(event: string| string[],...values: any[]): Promise<any[]>;
         addListener(event: string, listener: Listener): emitter;
         on(event: string, listener: Listener): emitter;
         once(event: string, listener: Listener): emitter;
