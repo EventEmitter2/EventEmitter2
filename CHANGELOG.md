@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 For changes before version 2.2.0, please see the commit history
 
+## [2.2.1] - 2016-11-24
+### Added
+- Added missing parameters for emitAsync in typescript definition. @stanleytakamatsu
+
 ## [2.2.0] - 2016-11-14
 ### Added
 - option to emit name of event that causes memory leak warning. @kwiateusz
