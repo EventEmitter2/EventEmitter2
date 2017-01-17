@@ -1,7 +1,7 @@
 declare let eventemitter2: eventemitter2.Static
 
 declare module eventemitter2 {
-    type evetns = string[];
+    type eventNS = string[];
     interface ConstructorOptions {
         /**
          * @default false
@@ -51,7 +51,7 @@ declare module eventemitter2 {
         offAny(listener: Listener): emitter;
         removeListener(event: string, listener: Listener): emitter;
         off(event: string, listener: Listener): emitter;
-        removeAllListeners(event?: string | evetns): emitter;
+        removeAllListeners(event?: string | eventNS): emitter;
         setMaxListeners(n: number): void;
         listeners(event: string): ()=>{}[] // TODO: not in documentation by Willian
         listenersAny():           ()=>{}[] // TODO: not in documentation by Willian
