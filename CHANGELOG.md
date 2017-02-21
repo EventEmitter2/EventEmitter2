@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 For changes before version 2.2.0, please see the commit history
 
+## [3.0.1] - 2017-02-21
+### Changed
+- Changed Typescript defintion to take array of strings for event name. @thisboyiscrazy
+
 ## [3.0.0] - 2017-01-23
 ### Changed
 - Typescript definition now uses `EventEmitter2` instead of `EventEmitter2.eitter`. @gitawego
