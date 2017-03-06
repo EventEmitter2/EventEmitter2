@@ -62,8 +62,28 @@ module.exports = simpleEvents({
       test.done();
     });
   },
+  '3. Receive two results from single event with once.': function (test) {
+    var emitter = new EventEmitter2({ verbose: true });
 
-  '3. Return value is always promise': function (test) {
+    emitter.once('foo',function() {
+      return new Promise(function(resolve){
+        resolve(1);
+      });
+    });
+    emitter.on('foo',function() {
+      return new Promise(function(resolve){
+        resolve(2);
+      });
+    });
+
+    emitter.emitAsync('foo')
+    .then(function(results){
+      test.equal(results[0], 1)
+      test.equal(results[1], 2)
+      test.done();
+    });
+  },
+  '4. Return value is always promise': function (test) {
     var emitter = new EventEmitter2({ verbose: true });
 
     emitter.on('foo', function() {
