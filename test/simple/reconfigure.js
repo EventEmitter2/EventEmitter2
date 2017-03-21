@@ -24,7 +24,7 @@ module.exports = simpleEvents({
 
     emitter.removeAllListeners();
 
-    test.equal(emitter._events.maxListeners, config.maxListeners, 'should be ' + config.maxListeners);
+    test.equal(emitter._maxListeners, config.maxListeners, 'should be ' + config.maxListeners);
 
     test.equal(emitter._conf.maxListeners, config.maxListeners, 'should be ' + config.maxListeners);
     test.equal(emitter._conf.delimiter, config.delimiter, 'should be ' + config.delimiter);
@@ -44,7 +44,7 @@ module.exports = simpleEvents({
 
     emitter.removeAllListeners();
 
-    test.equal(emitter._events.maxListeners, amount, 'should be ' + amount);
+    test.equal(emitter._maxListeners, amount, 'should be ' + amount);
 
     test.equal(emitter._conf.maxListeners, amount, 'should be ' + amount);
 
