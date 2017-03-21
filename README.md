@@ -328,3 +328,15 @@ Only this method doesn't work [IE](http://caniuse.com/#search=promise).
       console.log(results); // [3,2,1,0,undefined]
     });
 ```
+
+### emitter.eventNames()
+
+Returns an array listing the events for which the emitter has registered listeners. The values in the array will be strings.
+
+```javascript
+    emitter.on('foo', () => {});
+    emitter.on('bar', () => {});
+
+    console.log(emitter.eventNames());
+    // Prints: [ 'foo', 'bar' ]
+```
