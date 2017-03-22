@@ -30,7 +30,7 @@ export interface Listener {
     (...values: any[]): void;
 }
 export interface EventAndListener {
-    (event: string, ...values: any[]): void;
+    (event: string | string[], ...values: any[]): void;
 }
 
 export declare class EventEmitter2 {
