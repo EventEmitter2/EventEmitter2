@@ -146,12 +146,33 @@ Adds a listener to the end of the listeners array for the specified event.
     });
 ```
 
+### emitter.prependListener(event, listener)
+
+Adds a listener to the beginning of the listeners array for the specified event.
+
+```javascript
+    server.prependListener('data', function(value1, value2, value3, ...) {
+      console.log('The event was raised!');
+    });
+```
+
+
 ### emitter.onAny(listener)
 
 Adds a listener that will be fired when any event is emitted. The event name is passed as the first argument to the callback.
 
 ```javascript
     server.onAny(function(event, value) {
+      console.log('All events trigger this.');
+    });
+```
+
+### emitter.prependAny(listener)
+
+Adds a listener that will be fired when any event is emitted. The event name is passed as the first argument to the callback. The listener is added to the beginning of the listeners array
+
+```javascript
+    server.prependAny(function(event, value) {
       console.log('All events trigger this.');
     });
 ```
@@ -177,6 +198,18 @@ only the first time the event is fired, after which it is removed.
     });
 ```
 
+#### emitter.prependOnceListener(event, listener)
+
+Adds a **one time** listener for the event. The listener is invoked 
+only the first time the event is fired, after which it is removed.
+The listener is added to the beginning of the listeners array
+
+```javascript
+    server.prependOnceListener('get', function (value) {
+      console.log('Ah, we have our first value!');
+    });
+```
+
 ### emitter.many(event, timesToListen, listener)
 
 Adds a listener that will execute **n times** for the event before being
@@ -188,6 +221,20 @@ fired, after which it is removed.
       console.log('This event will be listened to exactly four times.');
     });
 ```
+
+### emitter.prependMany(event, timesToListen, listener)
+
+Adds a listener that will execute **n times** for the event before being
+removed. The listener is invoked only the first **n times** the event is 
+fired, after which it is removed.
+The listener is added to the beginning of the listeners array.
+
+```javascript
+    server.many('get', 4, function (value) {
+      console.log('This event will be listened to exactly four times.');
+    });
+```
+
 
 
 ### emitter.removeListener(event, listener)
@@ -280,4 +327,16 @@ Only this method doesn't work [IE](http://caniuse.com/#search=promise).
     .then(function(results){
       console.log(results); // [3,2,1,0,undefined]
     });
+```
+
+### emitter.eventNames()
+
+Returns an array listing the events for which the emitter has registered listeners. The values in the array will be strings.
+
+```javascript
+    emitter.on('foo', () => {});
+    emitter.on('bar', () => {});
+
+    console.log(emitter.eventNames());
+    // Prints: [ 'foo', 'bar' ]
 ```
