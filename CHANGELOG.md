@@ -6,6 +6,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 For changes before version 2.2.0, please see the commit history
 
+## [4.0.0] - 2017-03-22
+### Fixed
+- Fix for EventAndListener in typescript definition. @thisboyiscrazy
+
+### Added
+- New Node 6 APIs such as `prependListener` and `eventNames`. @sebakerckhof
+
 ## [3.0.2] - 2017-03-06
 ### Fixed
 - Fixed `emitAsync` when using `once`. @Moeriki
