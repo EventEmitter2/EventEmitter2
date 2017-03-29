@@ -157,5 +157,29 @@ module.exports = simpleEvents({
 
     test.ok(!emitter._events[type].warned, 'should not have been set');
     test.done();
+  },
+
+  'should use process.emitWarning if available' : function (test) {
+
+    // Don't run this test if `process.emitWarning` is not available
+    if(typeof process === 'undefined' || !process.emitWarning) {
+      test.done();
+      return;
+    }
+
+    test.expect(2);
+
+    var emitter = new EventEmitter2;
+
+    process.once('warning', function(warning) {
+      test.equal(warning.name, 'MaxListenersExceededWarning');
+      test.equal(warning.count, 11);
+      test.done();
+    });
+
+    for (var i = 0; i < 11 ; i++) {
+      emitter.on('foobar2', function () {
+      });
+    }
   }
 });
