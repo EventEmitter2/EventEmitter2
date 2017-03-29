@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 For changes before version 2.2.0, please see the commit history
 
+## [4.1.1] - 2017-03-29
+### Added
+- Use process.emitWarning if it is available (new Node.js) @SimenB
+
 ## [4.0.0] - 2017-03-22
 ### Fixed
 - Fix for EventAndListener in typescript definition. @thisboyiscrazy
