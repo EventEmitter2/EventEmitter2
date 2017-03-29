@@ -54,7 +54,12 @@ Fastest is EventEmitter2
       //
       // show event name in memory leak message when more than maximum amount of listeners is assigned, default false
       //
-      verboseMemoryLeak: false
+      verboseMemoryLeak: false,
+
+      //
+      // use a custom logger, defaulting to using `console`
+      //
+      loggingObject: { error: function(message) { console.log('This is custom ' + message); } }
     });
 ```
 
