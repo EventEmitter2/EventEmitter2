@@ -52,6 +52,6 @@ export declare class EventEmitter2 {
     removeAllListeners(event?: string | eventNS): this;
     setMaxListeners(n: number): void;
     eventNames(): string[];
-    listeners(event: string | string[]): () => {}[] // TODO: not in documentation by Willian
-    listenersAny(): () => {}[] // TODO: not in documentation by Willian
+    listeners(event: string | string[]): Listener[] // TODO: not in documentation by Willian
+    listenersAny(): Listener[] // TODO: not in documentation by Willian
 }
