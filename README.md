@@ -117,6 +117,10 @@ subsequent emits such as the following would be observed...
    emitter.emit(['foo', 'bar']);
 ```
 
+**NOTE:** An event name may use more than one wildcard. For example, 
+`foo.*.bar.*` is a valid event name, and would match events such as
+`foo.x.bar.y`, or `['foo', 'bazz', 'bar', 'test']` 
+
 # Multi-level Wildcards
 A double wildcard (the string `**`) matches any number of levels (zero or more) of events. So if for example `'foo.**'` is passed to the `on` method, the following events would be observed:
 
