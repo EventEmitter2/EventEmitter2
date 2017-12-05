@@ -28,63 +28,65 @@ Fastest is EventEmitter2
  - The EventEmitter2 constructor takes an optional configuration object.
  
 ```javascript
-    var EventEmitter2 = require('eventemitter2').EventEmitter2;
-    var server = new EventEmitter2({
+var EventEmitter2 = require('eventemitter2').EventEmitter2;
+var server = new EventEmitter2({
 
-      //
-      // set this to `true` to use wildcards. It defaults to `false`.
-      //
-      wildcard: true,
+  //
+  // set this to `true` to use wildcards. It defaults to `false`.
+  //
+  wildcard: true,
 
-      //
-      // the delimiter used to segment namespaces, defaults to `.`.
-      //
-      delimiter: '::', 
-      
-      //
-      // set this to `true` if you want to emit the newListener event. The default value is `true`.
-      //
-      newListener: false, 
+  //
+  // the delimiter used to segment namespaces, defaults to `.`.
+  //
+  delimiter: '::', 
+  
+  //
+  // set this to `true` if you want to emit the newListener event. The default value is `true`.
+  //
+  newListener: false, 
 
-      //
-      // the maximum amount of listeners that can be assigned to an event, default 10.
-      //
-      maxListeners: 20,
-      
-      //
-      // show event name in memory leak message when more than maximum amount of listeners is assigned, default false
-      //
-      verboseMemoryLeak: false
-    });
+  //
+  // the maximum amount of listeners that can be assigned to an event, default 10.
+  //
+  maxListeners: 20,
+  
+  //
+  // show event name in memory leak message when more than maximum amount of listeners is assigned, default false
+  //
+  verboseMemoryLeak: false
+});
 ```
 
  - Getting the actual event that fired.
 
 ```javascript
-    server.on('foo.*', function(value1, value2) {
-      console.log(this.event, value1, value2);
-    });
+server.on('foo.*', function(value1, value2) {
+  console.log(this.event, value1, value2);
+});
 ```
 
  - Fire an event N times and then remove it, an extension of the `once` concept.
 
 ```javascript
-    server.many('foo', 4, function() {
-      console.log('hello');
-    });
+server.many('foo', 4, function() {
+  console.log('hello');
+});
 ```
 
  - Pass in a namespaced event as an array rather than a delimited string.
 
 ```javascript
-    server.many(['foo', 'bar', 'bazz'], 4, function() {
-      console.log('hello');
-    });
+server.many(['foo', 'bar', 'bazz'], 4, function() {
+  console.log('hello');
+});
 ```
 
 # Installing
 
-`npm install --save eventemitter2`.
+```console
+$ npm install --save eventemitter2
+```
 
 # API
 
@@ -113,8 +115,8 @@ If either of the above described events were passed to the `on` method,
 subsequent emits such as the following would be observed...
 
 ```javascript
-   emitter.emit('foo.bazz');
-   emitter.emit(['foo', 'bar']);
+emitter.emit('foo.bazz');
+emitter.emit(['foo', 'bar']);
 ```
 
 **NOTE:** An event name may use more than one wildcard. For example, 
@@ -125,9 +127,9 @@ subsequent emits such as the following would be observed...
 A double wildcard (the string `**`) matches any number of levels (zero or more) of events. So if for example `'foo.**'` is passed to the `on` method, the following events would be observed:
 
 ````javascript
-    emitter.emit('foo');
-    emitter.emit('foo.bar');
-    emitter.emit('foo.bar.baz');
+emitter.emit('foo');
+emitter.emit('foo.bar');
+emitter.emit('foo.bar.baz');
 ````
 
 On the other hand, if the single-wildcard event name was passed to the on method, the callback would only observe the second of these events.
@@ -139,15 +141,15 @@ On the other hand, if the single-wildcard event name was passed to the on method
 Adds a listener to the end of the listeners array for the specified event.
 
 ```javascript
-    server.on('data', function(value1, value2, value3, ...) {
-      console.log('The event was raised!');
-    });
+server.on('data', function(value1, value2, value3, ...) {
+  console.log('The event was raised!');
+});
 ```
 
 ```javascript
-    server.on('data', function(value) {
-      console.log('The event was raised!');
-    });
+server.on('data', function(value) {
+  console.log('The event was raised!');
+});
 ```
 
 ### emitter.prependListener(event, listener)
@@ -155,9 +157,9 @@ Adds a listener to the end of the listeners array for the specified event.
 Adds a listener to the beginning of the listeners array for the specified event.
 
 ```javascript
-    server.prependListener('data', function(value1, value2, value3, ...) {
-      console.log('The event was raised!');
-    });
+server.prependListener('data', function(value1, value2, value3, ...) {
+  console.log('The event was raised!');
+});
 ```
 
 
@@ -166,9 +168,9 @@ Adds a listener to the beginning of the listeners array for the specified event.
 Adds a listener that will be fired when any event is emitted. The event name is passed as the first argument to the callback.
 
 ```javascript
-    server.onAny(function(event, value) {
-      console.log('All events trigger this.');
-    });
+server.onAny(function(event, value) {
+  console.log('All events trigger this.');
+});
 ```
 
 ### emitter.prependAny(listener)
@@ -176,9 +178,9 @@ Adds a listener that will be fired when any event is emitted. The event name is 
 Adds a listener that will be fired when any event is emitted. The event name is passed as the first argument to the callback. The listener is added to the beginning of the listeners array
 
 ```javascript
-    server.prependAny(function(event, value) {
-      console.log('All events trigger this.');
-    });
+server.prependAny(function(event, value) {
+  console.log('All events trigger this.');
+});
 ```
 
 ### emitter.offAny(listener)
@@ -186,9 +188,9 @@ Adds a listener that will be fired when any event is emitted. The event name is 
 Removes the listener that will be fired when any event is emitted.
 
 ```javascript
-    server.offAny(function(value) {
-      console.log('The event was raised!');
-    });
+server.offAny(function(value) {
+  console.log('The event was raised!');
+});
 ```
 
 #### emitter.once(event, listener)
@@ -197,9 +199,9 @@ Adds a **one time** listener for the event. The listener is invoked
 only the first time the event is fired, after which it is removed.
 
 ```javascript
-    server.once('get', function (value) {
-      console.log('Ah, we have our first value!');
-    });
+server.once('get', function (value) {
+  console.log('Ah, we have our first value!');
+});
 ```
 
 #### emitter.prependOnceListener(event, listener)
@@ -209,9 +211,9 @@ only the first time the event is fired, after which it is removed.
 The listener is added to the beginning of the listeners array
 
 ```javascript
-    server.prependOnceListener('get', function (value) {
-      console.log('Ah, we have our first value!');
-    });
+server.prependOnceListener('get', function (value) {
+  console.log('Ah, we have our first value!');
+});
 ```
 
 ### emitter.many(event, timesToListen, listener)
@@ -221,9 +223,9 @@ removed. The listener is invoked only the first **n times** the event is
 fired, after which it is removed.
 
 ```javascript
-    server.many('get', 4, function (value) {
-      console.log('This event will be listened to exactly four times.');
-    });
+server.many('get', 4, function (value) {
+  console.log('This event will be listened to exactly four times.');
+});
 ```
 
 ### emitter.prependMany(event, timesToListen, listener)
@@ -234,9 +236,9 @@ fired, after which it is removed.
 The listener is added to the beginning of the listeners array.
 
 ```javascript
-    server.many('get', 4, function (value) {
-      console.log('This event will be listened to exactly four times.');
-    });
+server.many('get', 4, function (value) {
+  console.log('This event will be listened to exactly four times.');
+});
 ```
 
 
@@ -248,12 +250,12 @@ Remove a listener from the listener array for the specified event.
 **Caution**: Calling this method changes the array indices in the listener array behind the listener.
 
 ```javascript
-    var callback = function(value) {
-      console.log('someone connected!');
-    };
-    server.on('get', callback);
-    // ...
-    server.removeListener('get', callback);
+var callback = function(value) {
+  console.log('someone connected!');
+};
+server.on('get', callback);
+// ...
+server.removeListener('get', callback);
 ```
 
 
@@ -276,10 +278,10 @@ Returns an array of listeners for the specified event. This array can be
 manipulated, e.g. to remove listeners.
 
 ```javascript
-    server.on('get', function(value) {
-      console.log('someone connected!');
-    });
-    console.log(server.listeners('get')); // [ [Function] ]
+server.on('get', function(value) {
+  console.log('someone connected!');
+});
+console.log(server.listeners('get')); // [ [Function] ]
 ```
 
 ### emitter.listenersAny()
@@ -288,10 +290,10 @@ Returns an array of listeners that are listening for any event that is
 specified. This array can be manipulated, e.g. to remove listeners.
 
 ```javascript
-    server.onAny(function(value) {
-      console.log('someone connected!');
-    });
-    console.log(server.listenersAny()[0]); // [ [Function] ]
+server.onAny(function(value) {
+  console.log('someone connected!');
+});
+console.log(server.listenersAny()[0]); // [ [Function] ]
 ```
 
 ### emitter.emit(event, [arg1], [arg2], [...])
@@ -305,32 +307,32 @@ Return the results of the listeners via [Promise.all](https://developer.mozilla.
 Only this method doesn't work [IE](http://caniuse.com/#search=promise).
 
 ```javascript
-    emitter.on('get',function(i) {
-      return new Promise(function(resolve){
-        setTimeout(function(){
-          resolve(i+3);
-        },50);
-      });
-    });
-    emitter.on('get',function(i) {
-      return new Promise(function(resolve){
-        resolve(i+2)
-      });
-    });
-    emitter.on('get',function(i) {
-      return Promise.resolve(i+1);
-    });
-    emitter.on('get',function(i) {
-      return i+0;
-    });
-    emitter.on('get',function(i) {
-      // noop
-    });
-    
-    emitter.emitAsync('get',0)
-    .then(function(results){
-      console.log(results); // [3,2,1,0,undefined]
-    });
+emitter.on('get',function(i) {
+  return new Promise(function(resolve){
+    setTimeout(function(){
+      resolve(i+3);
+    },50);
+  });
+});
+emitter.on('get',function(i) {
+  return new Promise(function(resolve){
+    resolve(i+2)
+  });
+});
+emitter.on('get',function(i) {
+  return Promise.resolve(i+1);
+});
+emitter.on('get',function(i) {
+  return i+0;
+});
+emitter.on('get',function(i) {
+  // noop
+});
+
+emitter.emitAsync('get',0)
+.then(function(results){
+  console.log(results); // [3,2,1,0,undefined]
+});
 ```
 
 ### emitter.eventNames()
@@ -338,9 +340,9 @@ Only this method doesn't work [IE](http://caniuse.com/#search=promise).
 Returns an array listing the events for which the emitter has registered listeners. The values in the array will be strings.
 
 ```javascript
-    emitter.on('foo', () => {});
-    emitter.on('bar', () => {});
+emitter.on('foo', () => {});
+emitter.on('bar', () => {});
 
-    console.log(emitter.eventNames());
-    // Prints: [ 'foo', 'bar' ]
+console.log(emitter.eventNames());
+// Prints: [ 'foo', 'bar' ]
 ```
