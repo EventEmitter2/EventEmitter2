@@ -55,75 +55,77 @@ exports.indirectInstanceOf = function(obj, cls) {
 // Turn this off if the test should not check for global leaks.
 exports.globalCheck = true;
 
-process.on('exit', function() {
-  if (!exports.globalCheck) return;
-  var knownGlobals = [setTimeout,
-                      setInterval,
-                      clearTimeout,
-                      clearInterval,
-                      console,
-                      Buffer,
-                      process,
-                      global.ArrayBuffer!==undefined?ArrayBuffer:null,
-                      global.Int8Array!==undefined?Int8Array:null,
-                      global.Uint8Array!==undefined?Uint8Array:null,
-                      global.Int16Array!==undefined?Int16Array:null,
-                      global.Uint16Array!==undefined?Uint16Array:null,
-                      global.Int32Array!==undefined?Int32Array:null,
-                      global.Uint32Array!==undefined?Uint32Array:null,
-                      global.Float32Array!==undefined?Float32Array:null,
-                      global.Float64Array!==undefined?Float64Array:null,
-                      global.DataView!==undefined?DataView:null,
-                      global.Uint8ClampedArray!==undefined?Uint8ClampedArray:null,
-                      global
-                      ];
+if (process.env.CHECK_GLOBAL_LEAKS) {
+  process.on('exit', function() {
+    if (!exports.globalCheck) return;
+    var knownGlobals = [setTimeout,
+                        setInterval,
+                        clearTimeout,
+                        clearInterval,
+                        console,
+                        Buffer,
+                        process,
+                        global.ArrayBuffer!==undefined?ArrayBuffer:null,
+                        global.Int8Array!==undefined?Int8Array:null,
+                        global.Uint8Array!==undefined?Uint8Array:null,
+                        global.Int16Array!==undefined?Int16Array:null,
+                        global.Uint16Array!==undefined?Uint16Array:null,
+                        global.Int32Array!==undefined?Int32Array:null,
+                        global.Uint32Array!==undefined?Uint32Array:null,
+                        global.Float32Array!==undefined?Float32Array:null,
+                        global.Float64Array!==undefined?Float64Array:null,
+                        global.DataView!==undefined?DataView:null,
+                        global.Uint8ClampedArray!==undefined?Uint8ClampedArray:null,
+                        global
+                        ];
 
-  if (global.setImmediate) {
-    knownGlobals.push(setImmediate, clearImmediate);
-  }
-  if (global.errno) {
-    knownGlobals.push(errno);
-  }
+    if (global.setImmediate) {
+      knownGlobals.push(setImmediate, clearImmediate);
+    }
+    if (global.errno) {
+      knownGlobals.push(errno);
+    }
 
-  if (global.gc) {
-    knownGlobals.push(gc);
-  }
+    if (global.gc) {
+      knownGlobals.push(gc);
+    }
 
-  if (global.DTRACE_HTTP_SERVER_RESPONSE) {
-    knownGlobals.push(DTRACE_HTTP_SERVER_RESPONSE);
-    knownGlobals.push(DTRACE_HTTP_SERVER_REQUEST);
-    knownGlobals.push(DTRACE_HTTP_CLIENT_RESPONSE);
-    knownGlobals.push(DTRACE_HTTP_CLIENT_REQUEST);
-    knownGlobals.push(DTRACE_NET_STREAM_END);
-    knownGlobals.push(DTRACE_NET_SERVER_CONNECTION);
-  }
+    if (global.DTRACE_HTTP_SERVER_RESPONSE) {
+      knownGlobals.push(DTRACE_HTTP_SERVER_RESPONSE);
+      knownGlobals.push(DTRACE_HTTP_SERVER_REQUEST);
+      knownGlobals.push(DTRACE_HTTP_CLIENT_RESPONSE);
+      knownGlobals.push(DTRACE_HTTP_CLIENT_REQUEST);
+      knownGlobals.push(DTRACE_NET_STREAM_END);
+      knownGlobals.push(DTRACE_NET_SERVER_CONNECTION);
+    }
 
-	if(global.COUNTER_NET_SERVER_CONNECTION){
-    knownGlobals.push(COUNTER_NET_SERVER_CONNECTION);
-    knownGlobals.push(COUNTER_NET_SERVER_CONNECTION_CLOSE);
-    knownGlobals.push(COUNTER_HTTP_SERVER_REQUEST);
-    knownGlobals.push(COUNTER_HTTP_SERVER_RESPONSE);
-		knownGlobals.push(COUNTER_HTTP_CLIENT_REQUEST);
-    knownGlobals.push(COUNTER_HTTP_CLIENT_RESPONSE);
-  }
+    if(global.COUNTER_NET_SERVER_CONNECTION){
+      knownGlobals.push(COUNTER_NET_SERVER_CONNECTION);
+      knownGlobals.push(COUNTER_NET_SERVER_CONNECTION_CLOSE);
+      knownGlobals.push(COUNTER_HTTP_SERVER_REQUEST);
+      knownGlobals.push(COUNTER_HTTP_SERVER_RESPONSE);
+      knownGlobals.push(COUNTER_HTTP_CLIENT_REQUEST);
+      knownGlobals.push(COUNTER_HTTP_CLIENT_RESPONSE);
+    }
 
 
-  for (var x in global) {
-    var found = false;
+    for (var x in global) {
+      var found = false;
 
-    for (var y in knownGlobals) {
-      if (global[x] === knownGlobals[y]) {
-        found = true;
-        break;
+      for (var y in knownGlobals) {
+        if (global[x] === knownGlobals[y]) {
+          found = true;
+          break;
+        }
+      }
+
+      if (!found) {
+        console.error('Unknown global: %s', x);
+        assert.ok(false, 'Unknown global founded');
       }
     }
-
-    if (!found) {
-      console.error('Unknown global: %s', x);
-      assert.ok(false, 'Unknown global founded');
-    }
-  }
-});
+  });
+}
 
 
 // This function allows one two run an HTTP test agaist both HTTPS and
