@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 For changes before version 2.2.0, please see the commit history
 
+## [5.0.1] - 2018-01-09
+
+### Fixed
+- Allow `removeAllListeners` to recieve `undefined` as an argument. @majames
+
 ## [4.1.2] - 2017-07-12
 ### Added
 - Correct listeners and listenersAny typings @cartant
