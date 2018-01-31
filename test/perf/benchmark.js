@@ -47,7 +47,7 @@ suite
     console.log(String(event.target));
   })
   .on('complete', function() {
-    console.log('\nFastest is ' + this.filter('fastest').pluck('name'));
+    console.log('\nFastest is ' + this.filter('fastest').map('name'));
   })
 
   .run(true);
