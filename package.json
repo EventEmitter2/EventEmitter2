@@ -27,7 +27,7 @@
   "scripts": {
     "test": "nodeunit test/simple/ test/wildcardEvents/",
     "coverage": "nyc --check-coverage npm run test",
-    "benchmark": "node --reporter test/perf/benchmark.js"
+    "benchmark": "node test/perf/benchmark.js"
   },
   "files": [
     "lib/eventemitter2.js",
