@@ -11,12 +11,12 @@ export interface ConstructorOptions {
      */
     delimiter?: string,
     /**
-     * @default true
+     * @default false
      * @description set this to `true` if you want to emit the newListener events.
      */
     newListener?: boolean,
     /**
-     * @default true
+     * @default false
      * @description set this to `true` if you want to emit the removeListener events.
      */
     removeListener?: boolean,
