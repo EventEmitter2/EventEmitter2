@@ -42,12 +42,12 @@ var server = new EventEmitter2({
   delimiter: '::', 
   
   //
-  // set this to `true` if you want to emit the newListener event. The default value is `true`.
+  // set this to `true` if you want to emit the newListener event. The default value is `false`.
   //
   newListener: false, 
   
   //
-  // set this to `true` if you want to emit the removeListener event. The default value is `true`.
+  // set this to `true` if you want to emit the removeListener event. The default value is `false`.
   //
   removeListener: false, 
 
