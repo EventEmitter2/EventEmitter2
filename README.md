@@ -45,6 +45,11 @@ var server = new EventEmitter2({
   // set this to `true` if you want to emit the newListener event. The default value is `true`.
   //
   newListener: false, 
+  
+  //
+  // set this to `true` if you want to emit the removeListener event. The default value is `true`.
+  //
+  removeListener: false, 
 
   //
   // the maximum amount of listeners that can be assigned to an event, default 10.
