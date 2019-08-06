@@ -16,6 +16,11 @@ export interface ConstructorOptions {
      */
     newListener?: boolean,
     /**
+     * @default true
+     * @description set this to `true` if you want to emit the removeListener events.
+     */
+    removeListener?: boolean,
+    /**
      * @default 10
      * @description the maximum amount of listeners that can be assigned to an event.
      */
