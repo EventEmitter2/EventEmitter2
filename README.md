@@ -340,8 +340,8 @@ emitter.emitAsync('get',0)
 Returns a thenable object (promise interface) that resolves when a specific event occurs
 
 ````javascript
-emitter.waitFor('event').then(function (value) { 
-    console.log(value); // 'bar'
+emitter.waitFor('event').then(function (data) { 
+    console.log(data); // ['bar']
 });
 
 emitter.emit('event', 'bar');
