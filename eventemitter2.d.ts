@@ -38,6 +38,25 @@ export interface EventAndListener {
     (event: string | string[], ...values: any[]): void;
 }
 
+export interface WaitForOptions {
+    /**
+     * @default 0
+     */
+    timeout: number,
+    /**
+     * @default null
+     */
+    filter: { (...values: any[]): boolean },
+    /**
+     * @default false
+     */
+    handleError: boolean
+}
+
+export interface WaitForThenable<T> extends Promise<T>{
+    cancel(reason: string): undefined
+}
+
 export declare class EventEmitter2 {
     constructor(options?: ConstructorOptions)
     emit(event: string | string[], ...values: any[]): boolean;
@@ -59,4 +78,5 @@ export declare class EventEmitter2 {
     eventNames(): string[];
     listeners(event: string | string[]): Listener[] // TODO: not in documentation by Willian
     listenersAny(): Listener[] // TODO: not in documentation by Willian
+    waitFor(event: string, options?: WaitForOptions): WaitForThenable<any>
 }
