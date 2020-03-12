@@ -54,7 +54,12 @@ var server = new EventEmitter2({
   //
   // show event name in memory leak message when more than maximum amount of listeners is assigned, default false
   //
-  verboseMemoryLeak: false
+  verboseMemoryLeak: false,
+
+  //
+  // disable throwing uncaughtException if an error event is emitted and it has no listeners
+  //
+  ignoreErrors: false
 });
 ```
 
