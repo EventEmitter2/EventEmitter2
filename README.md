@@ -375,7 +375,7 @@ thenable.cancel(); //stop listening the event and reject the promise
 ````
 
 ````javascript
-mitter.waitFor('event', {
+emitter.waitFor('event', {
     handleError: true
 }).then(null, function(error){
     console.log(error); //Error: custom error
