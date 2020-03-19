@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 For changes before version 2.2.0, please see the commit history
 
+## [6.1.0] - 2020-03-19
+
+### Added
+- `ignoreErrors` errors option in constructor @DigitalBrainJS
+
 ## [5.0.1] - 2018-01-09
 
 ### Fixed
