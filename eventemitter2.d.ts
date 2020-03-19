@@ -24,7 +24,12 @@ export interface ConstructorOptions {
      * @default false
      * @description show event name in memory leak message when more than maximum amount of listeners is assigned, default false
      */
-    verboseMemoryLeak?: boolean;
+    verboseMemoryLeak?: boolean
+    /**
+     * @default false
+     * @description disable throwing uncaughtException if an error event is emitted and it has no listeners
+     */
+    ignoreErrors?: boolean
 }
 export interface Listener {
     (...values: any[]): void;
