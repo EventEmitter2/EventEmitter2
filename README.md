@@ -345,6 +345,54 @@ emitter.emitAsync('get',0)
 });
 ```
 
+### emitter.waitFor(event, [options])
+
+Returns a thenable object (promise interface) that resolves when a specific event occurs
+
+````javascript
+emitter.waitFor('event').then(function (data) { 
+    console.log(data); // ['bar']
+});
+
+emitter.emit('event', 'bar');
+````
+
+````javascript
+emitter.waitFor('event', { 
+    // handle first event data argument as an error (err, ...data)
+    handleError: false,
+    // the timeout for resolving the promise before it is rejected with an error (Error: timeout).
+    timeout: 0, 
+    //filter function to determine acceptable values for resolving the promise.
+    filter: function(arg0, arg1){ 
+        return arg0==='foo' && arg1==='bar'
+    }   
+}).then(function(data){
+    console.log(data); // ['foo', 'bar']
+});
+
+emitter.emit('event', 'foo', 'bar')
+````
+
+````javascript
+var thenable= emitter.waitFor('event');
+
+thenable.then(null, function(error){
+    console.log(error); //Error: canceled
+});
+
+thenable.cancel(); //stop listening the event and reject the promise
+````
+
+````javascript
+emitter.waitFor('event', {
+    handleError: true
+}).then(null, function(error){
+    console.log(error); //Error: custom error
+});
+
+emitter.emit('event', new Error('custom error')); // reject the promise
+````
 ### emitter.eventNames()
 
 Returns an array listing the events for which the emitter has registered listeners. The values in the array will be strings.
