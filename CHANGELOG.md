@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 For changes before version 2.2.0, please see the commit history
 
+## [6.2.0] - 2020-03-20
+
+### Added
+- `waitFor` method to wait for events using promises @DigitalBrainJS
+
 ## [6.1.0] - 2020-03-19
 
 ### Added
