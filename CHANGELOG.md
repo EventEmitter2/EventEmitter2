@@ -6,9 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 For changes before version 2.2.0, please see the commit history
 
-## [5.1.0] - 2020-03-21
+## [6.1.0] - 2020-03-19
+
 ### Added
-- waitFor method to handle events as a promise @DigitalBrainJS
+- `ignoreErrors` errors option in constructor @DigitalBrainJS
 
 ## [5.0.1] - 2018-01-09
 

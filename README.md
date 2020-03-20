@@ -42,9 +42,14 @@ var server = new EventEmitter2({
   delimiter: '::', 
   
   //
-  // set this to `true` if you want to emit the newListener event. The default value is `true`.
+  // set this to `true` if you want to emit the newListener event. The default value is `false`.
   //
   newListener: false, 
+  
+  //
+  // set this to `true` if you want to emit the removeListener event. The default value is `false`.
+  //
+  removeListener: false, 
 
   //
   // the maximum amount of listeners that can be assigned to an event, default 10.
@@ -54,7 +59,12 @@ var server = new EventEmitter2({
   //
   // show event name in memory leak message when more than maximum amount of listeners is assigned, default false
   //
-  verboseMemoryLeak: false
+  verboseMemoryLeak: false,
+
+  //
+  // disable throwing uncaughtException if an error event is emitted and it has no listeners
+  //
+  ignoreErrors: false
 });
 ```
 

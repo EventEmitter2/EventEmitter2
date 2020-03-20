@@ -11,10 +11,15 @@ export interface ConstructorOptions {
      */
     delimiter?: string,
     /**
-     * @default true
+     * @default false
      * @description set this to `true` if you want to emit the newListener events.
      */
     newListener?: boolean,
+    /**
+     * @default false
+     * @description set this to `true` if you want to emit the removeListener events.
+     */
+    removeListener?: boolean,
     /**
      * @default 10
      * @description the maximum amount of listeners that can be assigned to an event.
@@ -24,7 +29,12 @@ export interface ConstructorOptions {
      * @default false
      * @description show event name in memory leak message when more than maximum amount of listeners is assigned, default false
      */
-    verboseMemoryLeak?: boolean;
+    verboseMemoryLeak?: boolean
+    /**
+     * @default false
+     * @description disable throwing uncaughtException if an error event is emitted and it has no listeners
+     */
+    ignoreErrors?: boolean
 }
 export interface Listener {
     (...values: any[]): void;
