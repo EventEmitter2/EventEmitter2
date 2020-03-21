@@ -6,9 +6,20 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 For changes before version 2.2.0, please see the commit history
 
-## [5.1.0] - 2020-03-21
+## [6.2.1] - 2020-03-20
+
+### Fixed
+- #153 - global scope is no longer defaulted to the `window` variable, now supports workers. @DigitalBrainJS
+
+## [6.2.0] - 2020-03-20
+
 ### Added
-- waitFor method to handle events as a promise @DigitalBrainJS
+- `waitFor` method to wait for events using promises @DigitalBrainJS
+
+## [6.1.0] - 2020-03-19
+
+### Added
+- `ignoreErrors` errors option in constructor @DigitalBrainJS
 
 ## [5.0.1] - 2018-01-09
 

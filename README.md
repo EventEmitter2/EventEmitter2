@@ -42,9 +42,14 @@ var server = new EventEmitter2({
   delimiter: '::', 
   
   //
-  // set this to `true` if you want to emit the newListener event. The default value is `true`.
+  // set this to `true` if you want to emit the newListener event. The default value is `false`.
   //
   newListener: false, 
+  
+  //
+  // set this to `true` if you want to emit the removeListener event. The default value is `false`.
+  //
+  removeListener: false, 
 
   //
   // the maximum amount of listeners that can be assigned to an event, default 10.
@@ -380,7 +385,7 @@ thenable.cancel(); //stop listening the event and reject the promise
 ````
 
 ````javascript
-mitter.waitFor('event', {
+emitter.waitFor('event', {
     handleError: true
 }).then(null, function(error){
     console.log(error); //Error: custom error
