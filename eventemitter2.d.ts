@@ -43,6 +43,8 @@ export interface EventAndListener {
     (event: string | string[], ...values: any[]): void;
 }
 
+interface WaitForFilter { (...values: any[]): boolean }
+
 export interface WaitForOptions {
     /**
      * @default 0
@@ -51,14 +53,22 @@ export interface WaitForOptions {
     /**
      * @default null
      */
-    filter: { (...values: any[]): boolean },
+    filter: WaitForFilter,
     /**
      * @default false
      */
-    handleError: boolean
+    handleError: boolean,
+    /**
+     * @default Promise
+     */
+    Promise: Function,
+    /**
+     * @default false
+     */
+    overload: boolean
 }
 
-export interface WaitForThenable<T> extends Promise<T>{
+export interface CancelablePromise<T> extends Promise<T>{
     cancel(reason: string): undefined
 }
 
@@ -74,10 +84,8 @@ export interface OnceOptions {
     /**
      * @default false
      */
-    overload: boolean,
+    overload: boolean
 }
-
-
 
 export declare class EventEmitter2 {
     constructor(options?: ConstructorOptions)
@@ -100,6 +108,8 @@ export declare class EventEmitter2 {
     eventNames(): string[];
     listeners(event: string | string[]): Listener[] // TODO: not in documentation by Willian
     listenersAny(): Listener[] // TODO: not in documentation by Willian
-    waitFor(event: string, options?: WaitForOptions): WaitForThenable<any>
-    static once(emitter: EventEmitter2, event: string | symbol, options?: OnceOptions): Promise<any[]>
+    waitFor(event: string, timeout?: number): CancelablePromise<any[]>
+    waitFor(event: string, filter?: WaitForFilter): CancelablePromise<any[]>
+    waitFor(event: string, options?: WaitForOptions): CancelablePromise<any[]>
+    static once(emitter: EventEmitter2, event: string | symbol, options?: OnceOptions): CancelablePromise<any[]>
 }

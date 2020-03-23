@@ -346,6 +346,8 @@ emitter.emitAsync('get',0)
 ```
 
 ### emitter.waitFor(event, [options])
+### emitter.waitFor(event, [timeout])
+### emitter.waitFor(event, [filter])
 
 Returns a thenable object (promise interface) that resolves when a specific event occurs
 
@@ -366,7 +368,9 @@ emitter.waitFor('event', {
     //filter function to determine acceptable values for resolving the promise.
     filter: function(arg0, arg1){ 
         return arg0==='foo' && arg1==='bar'
-    }   
+    },
+    Promise: Promise, // Promise constructor to use,
+    overload: false // overload cancellation api in a case of external Promise class
 }).then(function(data){
     console.log(data); // ['foo', 'bar']
 });
@@ -406,6 +410,12 @@ console.log(emitter.eventNames());
 ```
 
 ### EventEmitter2.once(emitter, name, [options])
+Creates a cancellable Promise that is fulfilled when the EventEmitter emits the given event or that is rejected
+when the EventEmitter emits 'error'. 
+The Promise will resolve with an array of all the arguments emitted to the given event.
+This method is intentionally generic and works with the web platform EventTarget interface,
+which has no special 'error' event semantics and does not listen to the 'error' event.
+
 Basic example:
 ````javascript
 var emitter= new EventEmitter2();
