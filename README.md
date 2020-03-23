@@ -379,13 +379,13 @@ emitter.emit('event', 'foo', 'bar')
 ````
 
 ````javascript
-var thenable= emitter.waitFor('event');
+var promise= emitter.waitFor('event');
 
-thenable.then(null, function(error){
+promise.then(null, function(error){
     console.log(error); //Error: canceled
 });
 
-thenable.cancel(); //stop listening the event and reject the promise
+promise.cancel(); //stop listening the event and reject the promise
 ````
 
 ````javascript
