@@ -404,3 +404,73 @@ emitter.on('bar', () => {});
 console.log(emitter.eventNames());
 // Prints: [ 'foo', 'bar' ]
 ```
+
+### EventEmitter2.once(emitter, name, [options])
+Basic example:
+````javascript
+var emitter= new EventEmitter2();
+
+EventEmitter2.once(emitter, 'event', {
+    timeout: 0,
+    Promise: Promise, // a custom Promise constructor
+    overload: false // overload promise cancellation api if exists with library implementation
+}).then(function(data){
+    console.log(data); // [1, 2, 3]
+});
+
+emitter.emit('event', 1, 2, 3);
+````
+With timeout option:
+````javascript
+EventEmitter2.once(emitter, 'event', {
+    timeout: 1000
+}).then(null, function(err){
+    console.log(err); // Error: timeout
+});
+````
+The library promise cancellation API:
+````javascript
+promise= EventEmitter2.once(emitter, 'event');
+// notice: the cancel method exists only in the first promise chain
+promise.then(null, function(err){
+    console.log(err); // Error: canceled
+});
+
+promise.cancel();
+````
+Using the custom Promise class (**[bluebird.js](https://www.npmjs.com/package/bluebird)**):
+````javascript
+var BBPromise = require("bluebird");
+
+EventEmitter2.once(emitter, 'event', {
+    Promise: BBPromise
+}).then(function(data){
+    console.log(data); // [4, 5, 6]
+});
+
+emitter.emit('event', 4, 5, 6);
+````
+
+````javascript
+var BBPromise = require("bluebird");
+
+BBPromise.config({
+    // if false or options.overload enabled, the library cancellation API will be used
+    cancellation: true 
+});
+
+var promise= EventEmitter2.once(emitter, 'event', {
+    Promise: BBPromise,
+    overload: false // use bluebird cancellation API
+}).then(function(data){
+    // notice: never executed due to BlueBird cancellation logic
+}, function(err){
+    // notice: never executed due to BlueBird cancellation logic
+});
+
+promise.cancel();
+
+emitter.emit('event', 'never handled');
+````
+
+

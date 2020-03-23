@@ -62,6 +62,23 @@ export interface WaitForThenable<T> extends Promise<T>{
     cancel(reason: string): undefined
 }
 
+export interface OnceOptions {
+    /**
+     * @default 0
+     */
+    timeout: number,
+    /**
+     * @default Promise
+     */
+    Promise: Function,
+    /**
+     * @default false
+     */
+    overload: boolean,
+}
+
+
+
 export declare class EventEmitter2 {
     constructor(options?: ConstructorOptions)
     emit(event: string | string[], ...values: any[]): boolean;
@@ -84,4 +101,5 @@ export declare class EventEmitter2 {
     listeners(event: string | string[]): Listener[] // TODO: not in documentation by Willian
     listenersAny(): Listener[] // TODO: not in documentation by Willian
     waitFor(event: string, options?: WaitForOptions): WaitForThenable<any>
+    static once(emitter: EventEmitter2, event: string | symbol, options?: OnceOptions): Promise<any[]>
 }
