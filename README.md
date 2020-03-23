@@ -10,9 +10,12 @@ EventEmitter2 is an implementation of the EventEmitter module found in Node.js. 
 # DESCRIPTION
 
 ### FEATURES
- - Namespaces/Wildcards.
- - Times To Listen (TTL), extends the `once` concept with `many`.
- - Browser environment compatibility.
+ - Namespaces/Wildcards
+ - Times To Listen (TTL), extends the `once` concept with [`many`](#emittermanyevent-timestolisten-listener)
+ - The [emitAsync](#emitteremitasyncevent-arg1-arg2-) method to return the results of the listeners via Promise.all
+ - Feature-rich [waitFor](#emitterwaitforevent-options) method to wait for events using promises
+ - Extended version of the [events.once](#eventemitter2onceemitter-name-options) method from the [node events API](https://nodejs.org/api/events.html#events_events_once_emitter_name)
+ - Browser & Workers environment compatibility
  - Demonstrates good performance in benchmarks
 
 ```
