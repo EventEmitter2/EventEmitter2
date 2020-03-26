@@ -106,7 +106,7 @@ export declare class EventEmitter2 {
     removeAllListeners(event?: string | eventNS): this;
     setMaxListeners(n: number): void;
     eventNames(): string[];
-    listeners(event: string | string[]): Listener[] // TODO: not in documentation by Willian
+    listeners(event: string | string[]): Listener[]
     listenersAny(): Listener[] // TODO: not in documentation by Willian
     waitFor(event: string, timeout?: number): CancelablePromise<any[]>
     waitFor(event: string, filter?: WaitForFilter): CancelablePromise<any[]>
