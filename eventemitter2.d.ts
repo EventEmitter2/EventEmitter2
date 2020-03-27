@@ -105,6 +105,7 @@ export declare class EventEmitter2 {
     off(event: string, listener: Listener): this;
     removeAllListeners(event?: string | eventNS): this;
     setMaxListeners(n: number): void;
+    getMaxListeners(): number;
     eventNames(): string[];
     listeners(event: string | string[]): Listener[]
     listenersAny(): Listener[] // TODO: not in documentation by Willian
@@ -112,4 +113,5 @@ export declare class EventEmitter2 {
     waitFor(event: string, filter?: WaitForFilter): CancelablePromise<any[]>
     waitFor(event: string, options?: WaitForOptions): CancelablePromise<any[]>
     static once(emitter: EventEmitter2, event: string | symbol, options?: OnceOptions): CancelablePromise<any[]>
+    static defaultMaxListeners: number;
 }
