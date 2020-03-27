@@ -282,6 +282,11 @@ Obviously not all Emitters should be limited to 10. This function allows
 that to be increased. Set to zero for unlimited.
 
 
+### emitter.getMaxListeners()
+
+Returns the current max listener value for the EventEmitter which is either set by emitter.setMaxListeners(n) or defaults to EventEmitter2.defaultMaxListeners
+
+
 ### emitter.listeners(event)
 
 Returns an array of listeners for the specified event. This array can be 
@@ -404,3 +409,11 @@ emitter.on('bar', () => {});
 console.log(emitter.eventNames());
 // Prints: [ 'foo', 'bar' ]
 ```
+
+### emitter.listeners(eventName)
+
+Returns the array of listeners for the event named eventName.
+
+### EventEmitter2.defaultMaxListeners
+
+Sets default max listeners count globally for all instances, including those created before the change is made.
