@@ -11,9 +11,12 @@ EventEmitter2 is an implementation of the EventEmitter module found in Node.js. 
 # DESCRIPTION
 
 ### FEATURES
- - Namespaces/Wildcards.
- - Times To Listen (TTL), extends the `once` concept with `many`.
- - Browser environment compatibility.
+ - Namespaces/Wildcards
+ - Times To Listen (TTL), extends the `once` concept with [`many`](#emittermanyevent-timestolisten-listener)
+ - The [emitAsync](#emitteremitasyncevent-arg1-arg2-) method to return the results of the listeners via Promise.all
+ - Feature-rich [waitFor](#emitterwaitforevent-options) method to wait for events using promises
+ - Extended version of the [events.once](#eventemitter2onceemitter-name-options) method from the [node events API](https://nodejs.org/api/events.html#events_events_once_emitter_name)
+ - Browser & Workers environment compatibility
  - Demonstrates good performance in benchmarks
 
 ```
@@ -283,6 +286,11 @@ Obviously not all Emitters should be limited to 10. This function allows
 that to be increased. Set to zero for unlimited.
 
 
+### emitter.getMaxListeners()
+
+Returns the current max listener value for the EventEmitter which is either set by emitter.setMaxListeners(n) or defaults to EventEmitter2.defaultMaxListeners
+
+
 ### emitter.listeners(event)
 
 Returns an array of listeners for the specified event. This array can be 
@@ -347,6 +355,8 @@ emitter.emitAsync('get',0)
 ```
 
 ### emitter.waitFor(event, [options])
+### emitter.waitFor(event, [timeout])
+### emitter.waitFor(event, [filter])
 
 Returns a thenable object (promise interface) that resolves when a specific event occurs
 
@@ -367,7 +377,9 @@ emitter.waitFor('event', {
     //filter function to determine acceptable values for resolving the promise.
     filter: function(arg0, arg1){ 
         return arg0==='foo' && arg1==='bar'
-    }   
+    },
+    Promise: Promise, // Promise constructor to use,
+    overload: false // overload cancellation api in a case of external Promise class
 }).then(function(data){
     console.log(data); // ['foo', 'bar']
 });
@@ -376,13 +388,13 @@ emitter.emit('event', 'foo', 'bar')
 ````
 
 ````javascript
-var thenable= emitter.waitFor('event');
+var promise= emitter.waitFor('event');
 
-thenable.then(null, function(error){
+promise.then(null, function(error){
     console.log(error); //Error: canceled
 });
 
-thenable.cancel(); //stop listening the event and reject the promise
+promise.cancel(); //stop listening the event and reject the promise
 ````
 
 ````javascript
@@ -405,3 +417,86 @@ emitter.on('bar', () => {});
 console.log(emitter.eventNames());
 // Prints: [ 'foo', 'bar' ]
 ```
+
+### EventEmitter2.once(emitter, name, [options])
+Creates a cancellable Promise that is fulfilled when the EventEmitter emits the given event or that is rejected
+when the EventEmitter emits 'error'. 
+The Promise will resolve with an array of all the arguments emitted to the given event.
+This method is intentionally generic and works with the web platform EventTarget interface,
+which has no special 'error' event semantics and does not listen to the 'error' event.
+
+Basic example:
+````javascript
+var emitter= new EventEmitter2();
+
+EventEmitter2.once(emitter, 'event', {
+    timeout: 0,
+    Promise: Promise, // a custom Promise constructor
+    overload: false // overload promise cancellation api if exists with library implementation
+}).then(function(data){
+    console.log(data); // [1, 2, 3]
+});
+
+emitter.emit('event', 1, 2, 3);
+````
+With timeout option:
+````javascript
+EventEmitter2.once(emitter, 'event', {
+    timeout: 1000
+}).then(null, function(err){
+    console.log(err); // Error: timeout
+});
+````
+The library promise cancellation API:
+````javascript
+promise= EventEmitter2.once(emitter, 'event');
+// notice: the cancel method exists only in the first promise chain
+promise.then(null, function(err){
+    console.log(err); // Error: canceled
+});
+
+promise.cancel();
+````
+Using the custom Promise class (**[bluebird.js](https://www.npmjs.com/package/bluebird)**):
+````javascript
+var BBPromise = require("bluebird");
+
+EventEmitter2.once(emitter, 'event', {
+    Promise: BBPromise
+}).then(function(data){
+    console.log(data); // [4, 5, 6]
+});
+
+emitter.emit('event', 4, 5, 6);
+````
+
+````javascript
+var BBPromise = require("bluebird");
+
+BBPromise.config({
+    // if false or options.overload enabled, the library cancellation API will be used
+    cancellation: true 
+});
+
+var promise= EventEmitter2.once(emitter, 'event', {
+    Promise: BBPromise,
+    overload: false // use bluebird cancellation API
+}).then(function(data){
+    // notice: never executed due to BlueBird cancellation logic
+}, function(err){
+    // notice: never executed due to BlueBird cancellation logic
+});
+
+promise.cancel();
+
+emitter.emit('event', 'never handled');
+````
+
+
+### emitter.listeners(eventName)
+
+Returns the array of listeners for the event named eventName.
+
+### EventEmitter2.defaultMaxListeners
+
+Sets default max listeners count globally for all instances, including those created before the change is made.

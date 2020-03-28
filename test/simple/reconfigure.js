@@ -50,6 +50,34 @@ module.exports = simpleEvents({
 
     test.expect(2);
     test.done();
+  },
+
+  'getMaxListeners': function (test) {
+    var emitter = new EventEmitter2(),
+        amount = 10; //default amount
+
+    test.equal(emitter.getMaxListeners(), amount, 'should be ' + amount);
+
+    amount= 99;
+
+    emitter.setMaxListeners(amount);
+
+    test.equal(emitter.getMaxListeners(), amount, 'should be ' + amount);
+
+    test.done();
+  },
+
+  'defaultMaxListeners': function (test) {
+    var defaultAmount = 10,
+        amount = defaultAmount;
+
+    test.equal(EventEmitter2.defaultMaxListeners, amount, 'should be ' + amount);
+    amount = 99;
+    EventEmitter2.defaultMaxListeners = amount;
+    test.equal(EventEmitter2.defaultMaxListeners, amount, 'should be ' + amount);
+    EventEmitter2.defaultMaxListeners = defaultAmount; // rollback
+
+    test.done();
   }
 
 });

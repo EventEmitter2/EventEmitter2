@@ -43,6 +43,8 @@ export interface EventAndListener {
     (event: string | string[], ...values: any[]): void;
 }
 
+interface WaitForFilter { (...values: any[]): boolean }
+
 export interface WaitForOptions {
     /**
      * @default 0
@@ -51,15 +53,38 @@ export interface WaitForOptions {
     /**
      * @default null
      */
-    filter: { (...values: any[]): boolean },
+    filter: WaitForFilter,
     /**
      * @default false
      */
-    handleError: boolean
+    handleError: boolean,
+    /**
+     * @default Promise
+     */
+    Promise: Function,
+    /**
+     * @default false
+     */
+    overload: boolean
 }
 
-export interface WaitForThenable<T> extends Promise<T>{
+export interface CancelablePromise<T> extends Promise<T>{
     cancel(reason: string): undefined
+}
+
+export interface OnceOptions {
+    /**
+     * @default 0
+     */
+    timeout: number,
+    /**
+     * @default Promise
+     */
+    Promise: Function,
+    /**
+     * @default false
+     */
+    overload: boolean
 }
 
 export declare class EventEmitter2 {
@@ -80,8 +105,13 @@ export declare class EventEmitter2 {
     off(event: string, listener: Listener): this;
     removeAllListeners(event?: string | eventNS): this;
     setMaxListeners(n: number): void;
+    getMaxListeners(): number;
     eventNames(): string[];
-    listeners(event: string | string[]): Listener[] // TODO: not in documentation by Willian
+    listeners(event: string | string[]): Listener[]
     listenersAny(): Listener[] // TODO: not in documentation by Willian
-    waitFor(event: string, options?: WaitForOptions): WaitForThenable<any>
+    waitFor(event: string, timeout?: number): CancelablePromise<any[]>
+    waitFor(event: string, filter?: WaitForFilter): CancelablePromise<any[]>
+    waitFor(event: string, options?: WaitForOptions): CancelablePromise<any[]>
+    static once(emitter: EventEmitter2, event: string | symbol, options?: OnceOptions): CancelablePromise<any[]>
+    static defaultMaxListeners: number;
 }
