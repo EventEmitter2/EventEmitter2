@@ -80,8 +80,10 @@ export declare class EventEmitter2 {
     off(event: string, listener: Listener): this;
     removeAllListeners(event?: string | eventNS): this;
     setMaxListeners(n: number): void;
+    getMaxListeners(): number;
     eventNames(): string[];
     listeners(event: string | string[]): Listener[] // TODO: not in documentation by Willian
     listenersAny(): Listener[] // TODO: not in documentation by Willian
     waitFor(event: string, options?: WaitForOptions): WaitForThenable<any>
+    static defaultMaxListeners: number;
 }
