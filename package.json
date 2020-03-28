@@ -49,7 +49,7 @@
   "nyc": {
     "lines": 83,
     "functions": 84,
-    "branches": 79,
+    "branches": 75,
     "statements": 83,
     "watermarks": {
       "lines": [
