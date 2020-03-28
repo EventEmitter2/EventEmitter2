@@ -26,6 +26,9 @@ function importTests(root, filter) {
             const test = tests[testName];
             const type = typeof test;
             if (type === 'object') {
+                if (!type) {
+                    return;
+                }
                 describe(testName, function () {
                     _import(test);
                 })
