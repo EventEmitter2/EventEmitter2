@@ -19,14 +19,19 @@
   "license": "MIT",
   "repository": "git://github.com/hij1nx/EventEmitter2.git",
   "devDependencies": {
-    "benchmark": ">= 0.2.2",
+    "benchmark": "^2.1.4",
+    "coveralls": "^3.0.11",
+    "mocha": "^7.1.1",
     "nodeunit": "*",
-    "nyc": "^11.4.1"
+    "nyc": "^15.0.0"
   },
   "main": "./lib/eventemitter2.js",
   "scripts": {
-    "test": "nodeunit test/simple/ test/wildcardEvents/",
-    "coverage": "nyc --check-coverage npm run test",
+    "test": "mocha ./test/loader.js --exit --timeout=3000",
+    "test:legacy": "nodeunit test/simple/ test/wildcardEvents/",
+    "test:coverage": "nyc --check-coverage npm run test",
+    "coverage:report": "nyc report --reporter=html --reporter=text",
+    "coveralls": "nyc report --reporter=text-lcov | coveralls",
     "benchmark": "node test/perf/benchmark.js"
   },
   "files": [
@@ -61,6 +66,9 @@
         95
       ]
     },
+    "include": [
+      "lib/**/*.js"
+    ],
     "reporter": [
       "lcov",
       "text-summary"
