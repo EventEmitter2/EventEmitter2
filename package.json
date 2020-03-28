@@ -33,7 +33,9 @@
     "test:coverage": "nyc --check-coverage npm run test",
     "coverage:report": "nyc report --reporter=html --reporter=text",
     "coveralls": "nyc report --reporter=text-lcov | coveralls",
-    "benchmark": "node test/perf/benchmark.js"
+    "benchmark": "node test/perf/benchmark.js",
+    "prepublishOnly": "npm run test:coverage",
+    "postversion": "git push && git push --tags"
   },
   "files": [
     "lib/eventemitter2.js",
