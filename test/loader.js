@@ -52,12 +52,13 @@ function importTests(root, filter) {
                             }
                             err ? done(err) : done();
                         },
-                        equal: wrap(assert.equal),
-                        ok: wrap(assert.ok),
-                        throws: wrap(assert.throws),
                         expect: function (count) {
                             expectedCount = count;
                         }
+                    });
+                    Object.keys(assert).forEach(function(prop){
+                       const value= assert[prop];
+                       typeof value==='function' && (testObj[prop]= wrap(value));
                     });
                     test.call(this, testObj);
                 };
