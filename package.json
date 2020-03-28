@@ -20,6 +20,7 @@
   "repository": "git://github.com/hij1nx/EventEmitter2.git",
   "devDependencies": {
     "benchmark": ">= 0.2.2",
+    "bluebird": "^3.7.2",
     "nodeunit": "*",
     "nyc": "^11.4.1"
   },
