@@ -60,7 +60,7 @@ function importTests(root, filter) {
                        const value= assert[prop];
                        typeof value==='function' && (testObj[prop]= wrap(value));
                     });
-                    test.call(this, testObj);
+                    return test.call(this, testObj);
                 };
                 it(testName, test.length ? executor : function () {
                     return executor.call(this, null);
