@@ -6,7 +6,16 @@
     "event",
     "events",
     "emitter",
-    "eventemitter"
+    "eventemitter",
+    "addEventListener",
+    "addListener",
+    "pub/sub",
+    "emit",
+    "emits",
+    "on",
+    "once",
+    "publish",
+    "subscribe"
   ],
   "author": "hij1nx <paolo@async.ly> http://twitter.com/hij1nx",
   "contributors": [
