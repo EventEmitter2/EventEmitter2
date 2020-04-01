@@ -1,0 +1,10 @@
+sudo: false
+language: node_js
+node_js:
+    - "8"
+    - "10"
+env:
+    - NODE_ENV=TEST
+script:
+    - npm run test:coverage
+after_success: npm run coveralls
