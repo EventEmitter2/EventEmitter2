@@ -56,10 +56,10 @@
     "definition": "./eventemitter2.d.ts"
   },
   "nyc": {
-    "lines": 83,
-    "functions": 84,
+    "lines": 80,
+    "functions": 80,
     "branches": 75,
-    "statements": 83,
+    "statements": 80,
     "watermarks": {
       "lines": [
         80,
