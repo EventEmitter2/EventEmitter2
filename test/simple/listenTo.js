@@ -15,8 +15,6 @@ module.exports = {
         var ee = new EventEmitter();
         var ee2 = new EventEmitter2();
 
-        EventEmitter.once();
-
         ee2.listenTo(ee, 'test');
 
         ee2.on('test', function () {
