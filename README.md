@@ -109,7 +109,7 @@ $ npm install --save eventemitter2
 ### instance:
 - [emit(event: string | string[], ...values: any[]): boolean](#emitteremitevent-arg1-arg2-);
 
-- [emitAsync(event: string | string[], ...values: any[]): Promise<any[]>](#emitteremitasyncevent-arg1-arg2-);
+- [emitAsync(event: string | string[], ...values: any[]): Promise<any[]>](#emitteremitasyncevent-arg1-arg2-)
 
 - [addListener(event: string, listener: Listener): this](#emitteraddlistenerevent-listener)
 
