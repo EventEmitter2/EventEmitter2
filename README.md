@@ -564,7 +564,7 @@ emitter.emit('event', 'never handled');
 ### listenTo(targetEmitter, events: Object, options?)
 
 Listens to the events emitted by an external emitter and propagate them through itself.
-Target could be any type that implements methods for subscribing and unsubscribing to its events. 
+The target object could be of any type that implements methods for subscribing and unsubscribing to its events. 
 By default this method attempts to use `addListener`/`removeListener`, `on`/`off` and `addEventListener`/`removeEventListener` pairs,
 but you able to define own hooks `on(event, handler)` and `off(event, handler)` in the options object to use
 custom subscription API. In these hooks `this` refers to the target object.
