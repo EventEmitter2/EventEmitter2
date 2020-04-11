@@ -87,6 +87,22 @@ export interface OnceOptions {
     overload: boolean
 }
 
+export interface ListenToOptions {
+    on?: { (event: string, handler: Function): void },
+    off?: { (event: string, handler: Function): void },
+    reducers: Function | Object
+}
+
+export interface GeneralEventEmitter{
+    addListener: Function,
+    removeListener: Function
+}
+
+export interface GeneralEventEmitter{
+    addEventListener: Function,
+    removeEventListener: Function
+}
+
 export declare class EventEmitter2 {
     constructor(options?: ConstructorOptions)
     emit(event: string | string[], ...values: any[]): boolean;
@@ -107,11 +123,16 @@ export declare class EventEmitter2 {
     setMaxListeners(n: number): void;
     getMaxListeners(): number;
     eventNames(): string[];
-    listeners(event: string | string[]): Listener[]
+    listeners(event: string | string[]): Listener[];
     listenersAny(): Listener[] // TODO: not in documentation by Willian
-    waitFor(event: string, timeout?: number): CancelablePromise<any[]>
-    waitFor(event: string, filter?: WaitForFilter): CancelablePromise<any[]>
-    waitFor(event: string, options?: WaitForOptions): CancelablePromise<any[]>
-    static once(emitter: EventEmitter2, event: string | symbol, options?: OnceOptions): CancelablePromise<any[]>
+    waitFor(event: string, timeout?: number): CancelablePromise<any[]>;
+    waitFor(event: string, filter?: WaitForFilter): CancelablePromise<any[]>;
+    waitFor(event: string, options?: WaitForOptions): CancelablePromise<any[]>;
+    listenTo(target: GeneralEventEmitter, events: String, options?: ListenToOptions): this;
+    listenTo(target: GeneralEventEmitter, events: String[], options?: ListenToOptions): this;
+    listenTo(target: GeneralEventEmitter, events: Object, options?: ListenToOptions): this;
+    stopListening(target?: GeneralEventEmitter, event?: String): Boolean;
+    hasListeners(event?: String): Boolean
+    static once(emitter: EventEmitter2, event: string | symbol, options?: OnceOptions): CancelablePromise<any[]>;
     static defaultMaxListeners: number;
 }
