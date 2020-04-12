@@ -214,5 +214,29 @@ module.exports = {
         ee.emit('test2');
 
         assert.equal(counter1, 2);
+    },
+
+    '9. should detach the listener from the target when the last listener was removed from the emitter': function () {
+        var ee = new EventEmitter();
+        var ee2 = new EventEmitter2({
+            newListener: true,
+            removeListener: true
+        });
+
+        ee2.listenTo(ee, {
+            'foo': 'bar'
+        });
+
+        assert.equal(ee.listenerCount('foo'), 0);
+
+        var handler= function(){};
+
+        ee2.on('bar', handler);
+
+        assert.equal(ee.listenerCount('foo'), 1);
+
+        ee2.off('bar', handler);
+
+        assert.equal(ee.listenerCount('foo'), 0);
     }
 };
