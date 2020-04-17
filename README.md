@@ -75,10 +75,19 @@ var server = new EventEmitter2({
  - Getting the actual event that fired.
 
 ```javascript
-server.on('foo.*', function(value1, value2) {
-  console.log(this.event, value1, value2);
+server.on('foo.*', function() {
+  console.log(this.event); 
 });
+
+server.emit('foo.bar'); // foo.bar
+server.emit(['foo', 'bar']); // foo.bar
+
+server.emit(Symbol()); // Symbol()
+server.emit(['foo', Symbol()]); // ['foo', Symbol())
 ```
+**Note**: Generally this.event is normalized to a string ('event', 'event.test'),
+except the cases when event is a symbol or namespace contains a symbol. 
+In these cases this.event remains as is (symbol and array). 
 
  - Fire an event N times and then remove it, an extension of the `once` concept.
 
