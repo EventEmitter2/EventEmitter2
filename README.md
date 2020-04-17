@@ -107,23 +107,23 @@ $ npm install --save eventemitter2
 ## class EventEmitter2
 
 ### instance:
-- [emit(event: string | string[], ...values: any[]): boolean](#emitteremitevent-arg1-arg2-);
+- [emit(event: event | eventNS, ...values: any[]): boolean](#emitteremitevent-arg1-arg2-);
 
-- [emitAsync(event: string | string[], ...values: any[]): Promise<any[]>](#emitteremitasyncevent-arg1-arg2-)
+- [emitAsync(event: event | eventNS, ...values: any[]): Promise<any[]>](#emitteremitasyncevent-arg1-arg2-)
 
-- [addListener(event: string, listener: Listener): this](#emitteraddlistenerevent-listener)
+- [addListener(event: event | eventNS, listener: Listener): this](#emitteraddlistenerevent-listener)
 
-- [on(event: string | string[], listener: Listener): this](#emitteraddlistenerevent-listener)
+- [on(event: event | eventNS, listener: Listener): this](#emitteraddlistenerevent-listener)
 
-- [prependListener(event: string | string[], listener: Listener): this](#emitterprependlistenerevent-listener)
+- [prependListener(event: event | eventNS, listener: Listener): this](#emitterprependlistenerevent-listener)
 
-- [once(event: string | string[], listener: Listener): this](#emitteronceevent-listener)
+- [once(event: event | eventNS, listener: Listener): this](#emitteronceevent-listener)
 
-- [prependOnceListener(event: string | string[], listener: Listener): this](#emitterprependoncelistenerevent-listener)
+- [prependOnceListener(event: event | eventNS, listener: Listener): this](#emitterprependoncelistenerevent-listener)
 
-- [many(event: string | string[], timesToListen: number, listener: Listener): this](#emittermanyevent-timestolisten-listener)
+- [many(event: event | eventNS, timesToListen: number, listener: Listener): this](#emittermanyevent-timestolisten-listener)
 
-- [prependMany(event: string | string[], timesToListen: number, listener: Listener): this](#emitterprependanylistener)
+- [prependMany(event: event | eventNS, timesToListen: number, listener: Listener): this](#emitterprependanylistener)
 
 - [onAny(listener: EventAndListener): this](#emitteronanylistener)
 
@@ -131,11 +131,11 @@ $ npm install --save eventemitter2
 
 - [offAny(listener: Listener): this](#emitteroffanylistener)
 
-- [removeListener(event: string | string[], listener: Listener): this](#emitterremovelistenerevent-listener)
+- [removeListener(event: event | eventNS, listener: Listener): this](#emitterremovelistenerevent-listener)
 
-- [off(event: string, listener: Listener): this](#emitteroffevent-listener)
+- [off(event: event | eventNS, listener: Listener): this](#emitteroffevent-listener)
 
-- [removeAllListeners(event?: string | eventNS): this](#emitterremovealllistenersevent)
+- [removeAllListeners(event?: event | eventNS): this](#emitterremovealllistenersevent)
 
 - [setMaxListeners(n: number): void](#emittersetmaxlistenersn)
 
@@ -143,31 +143,37 @@ $ npm install --save eventemitter2
 
 - [eventNames(): string[]](#emittereventnames)
 
-- [listeners(event: string | string[]): Listener[]](#emitterlistenersevent)
+- [listeners(event: event | eventNS): Listener[]](#emitterlistenersevent)
 
 - [listenersAny(): Listener[]](#emitterlistenersany)
 
-- [waitFor(event: string, timeout?: number): CancelablePromise<any[]>](#emitterwaitforevent-timeout)
+- [waitFor(event: event | eventNS, timeout?: number): CancelablePromise<any[]>](#emitterwaitforevent-timeout)
 
-- [waitFor(event: string, filter?: WaitForFilter): CancelablePromise<any[]>](#emitterwaitforevent-filter)
+- [waitFor(event: event | eventNS, filter?: WaitForFilter): CancelablePromise<any[]>](#emitterwaitforevent-filter)
 
-- [waitFor(event: string, options?: WaitForOptions): CancelablePromise<any[]>](#emitterwaitforevent-options)
+- [waitFor(event: event | eventNS, options?: WaitForOptions): CancelablePromise<any[]>](#emitterwaitforevent-options)
 
-- [listenTo(target: GeneralEventEmitter, event: String, options?: ListenToOptions): this](#listentotargetemitter-events-string-options)
+- [listenTo(target: GeneralEventEmitter, event: event | eventNS, options?: ListenToOptions): this](#listentotargetemitter-events-string-options)
 
-- [listenTo(target: GeneralEventEmitter, events: String[], options?: ListenToOptions): this](#listentotargetemitter-events-string-options)
+- [listenTo(target: GeneralEventEmitter, events: (event | eventNS)[], options?: ListenToOptions): this](#listentotargetemitter-events-string-options)
 
 - [listenTo(target: GeneralEventEmitter, events: Object, options?: ListenToOptions): this](#listentotargetemitter-events-string-options)
 
-- [stopListening(target?: GeneralEventEmitter, event?: String): Boolean](#stoplisteningtarget-object-event-string-boolean)
+- [stopListening(target?: GeneralEventEmitter, event?: event | eventNS): Boolean](#stoplisteningtarget-object-event-string-boolean)
 
-- [hasListeners(event?: String): Boolean](#haslistenerseventstringboolean)
+- [hasListeners(event?: event | eventNS): Boolean](#haslistenerseventstringboolean)
 
 ### static:
 
 - [static once(emitter: EventEmitter2, event: string | symbol, options?: OnceOptions): CancelablePromise<any[]>](#eventemitter2onceemitter-name-options)
 
 - [static defaultMaxListeners: number](#eventemitter2defaultmaxlisteners)
+### inner
+- `Event`: string | symbol
+- `EventNS`: Event | Event []
+
+The `event` argument specified in the API declaration can be a string or symbol for a simple event emitter
+and a string|symbol|Array(string|symbol) in a case of a wildcard emitter; 
 
 When an `EventEmitter` instance experiences an error, the typical action is
 to emit an `error` event. Error events are treated as a special case.
@@ -194,8 +200,11 @@ If either of the above described events were passed to the `on` method,
 subsequent emits such as the following would be observed...
 
 ```javascript
+emitter.emit(Symbol());
+emitter.emit('foo');
 emitter.emit('foo.bazz');
 emitter.emit(['foo', 'bar']);
+emitter.emit(['foo', Symbol()]);
 ```
 
 **NOTE:** An event name may use more than one wildcard. For example, 
@@ -209,6 +218,7 @@ A double wildcard (the string `**`) matches any number of levels (zero or more) 
 emitter.emit('foo');
 emitter.emit('foo.bar');
 emitter.emit('foo.bar.baz');
+emitter.emit(['foo', Symbol(), 'baz');
 ````
 
 On the other hand, if the single-wildcard event name was passed to the on method, the callback would only observe the second of these events.
@@ -381,7 +391,6 @@ console.log(server.listenersAny()[0]); // [ [Function] ]
 ```
 
 ### emitter.emit(event, [arg1], [arg2], [...])
-
 Execute each of the listeners that may be listening for the specified event 
 name in order with the list of arguments.
 
