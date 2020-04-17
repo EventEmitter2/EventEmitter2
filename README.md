@@ -157,7 +157,7 @@ $ npm install --save eventemitter2
 
 - [listenTo(target: GeneralEventEmitter, events: (event | eventNS)[], options?: ListenToOptions): this](#listentotargetemitter-events-string-options)
 
-- [listenTo(target: GeneralEventEmitter, events: Object, options?: ListenToOptions): this](#listentotargetemitter-events-string-options)
+- [listenTo(target: GeneralEventEmitter, events: Object<event | eventNS, Function>, options?: ListenToOptions): this](#listentotargetemitter-events-string-options)
 
 - [stopListening(target?: GeneralEventEmitter, event?: event | eventNS): Boolean](#stoplisteningtarget-object-event-string-boolean)
 
@@ -282,7 +282,7 @@ server.offAny(function(value) {
 });
 ```
 
-#### emitter.once(event, listener)
+#### emitter.once(event | eventNS, listener)
 
 Adds a **one time** listener for the event. The listener is invoked 
 only the first time the event is fired, after which it is removed.
@@ -293,7 +293,7 @@ server.once('get', function (value) {
 });
 ```
 
-#### emitter.prependOnceListener(event, listener)
+#### emitter.prependOnceListener(event | eventNS, listener)
 
 Adds a **one time** listener for the event. The listener is invoked 
 only the first time the event is fired, after which it is removed.
@@ -305,7 +305,7 @@ server.prependOnceListener('get', function (value) {
 });
 ```
 
-### emitter.many(event, timesToListen, listener)
+### emitter.many(event | eventNS, timesToListen, listener)
 
 Adds a listener that will execute **n times** for the event before being
 removed. The listener is invoked only the first **n times** the event is 
@@ -317,7 +317,7 @@ server.many('get', 4, function (value) {
 });
 ```
 
-### emitter.prependMany(event, timesToListen, listener)
+### emitter.prependMany(event | eventNS, timesToListen, listener)
 
 Adds a listener that will execute **n times** for the event before being
 removed. The listener is invoked only the first **n times** the event is 
@@ -332,8 +332,8 @@ server.many('get', 4, function (value) {
 
 
 
-### emitter.removeListener(event, listener)
-### emitter.off(event, listener)
+### emitter.removeListener(event | eventNS, listener)
+### emitter.off(event | eventNS, listener)
 
 Remove a listener from the listener array for the specified event. 
 **Caution**: Calling this method changes the array indices in the listener array behind the listener.
@@ -348,7 +348,7 @@ server.removeListener('get', callback);
 ```
 
 
-### emitter.removeAllListeners([event])
+### emitter.removeAllListeners([event | eventNS])
 
 Removes all listeners, or those of the specified event.
 
@@ -366,7 +366,7 @@ that to be increased. Set to zero for unlimited.
 Returns the current max listener value for the EventEmitter which is either set by emitter.setMaxListeners(n) or defaults to EventEmitter2.defaultMaxListeners
 
 
-### emitter.listeners(event)
+### emitter.listeners(event | eventNS)
 
 Returns an array of listeners for the specified event. This array can be 
 manipulated, e.g. to remove listeners.
@@ -390,11 +390,11 @@ server.onAny(function(value) {
 console.log(server.listenersAny()[0]); // [ [Function] ]
 ```
 
-### emitter.emit(event, [arg1], [arg2], [...])
+### emitter.emit(event | eventNS, [arg1], [arg2], [...])
 Execute each of the listeners that may be listening for the specified event 
 name in order with the list of arguments.
 
-### emitter.emitAsync(event, [arg1], [arg2], [...])
+### emitter.emitAsync(event | eventNS, [arg1], [arg2], [...])
 
 Return the results of the listeners via [Promise.all](https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Promise/all).
 Only this method doesn't work [IE](http://caniuse.com/#search=promise).
@@ -428,9 +428,9 @@ emitter.emitAsync('get',0)
 });
 ```
 
-### emitter.waitFor(event, [options])
-### emitter.waitFor(event, [timeout])
-### emitter.waitFor(event, [filter])
+### emitter.waitFor(event | eventNS, [options])
+### emitter.waitFor(event | eventNS, [timeout])
+### emitter.waitFor(event | eventNS, [filter])
 
 Returns a thenable object (promise interface) that resolves when a specific event occurs
 
@@ -492,7 +492,7 @@ console.log(emitter.eventNames());
 // Prints: [ 'foo', 'bar' ]
 ```
 
-### EventEmitter2.once(emitter, name, [options])
+### EventEmitter2.once(emitter, event | eventNS, [options])
 Creates a cancellable Promise that is fulfilled when the EventEmitter emits the given event or that is rejected
 when the EventEmitter emits 'error'. 
 The Promise will resolve with an array of all the arguments emitted to the given event.
@@ -566,11 +566,11 @@ promise.cancel();
 emitter.emit('event', 'never handled');
 ````
 
-### listenTo(targetEmitter, events: String, options?)
+### listenTo(targetEmitter, events: event | eventNS, options?)
 
-### listenTo(targetEmitter, events: String[], options?)
+### listenTo(targetEmitter, events: (event | eventNS)[], options?)
 
-### listenTo(targetEmitter, events: Object, options?)
+### listenTo(targetEmitter, events: Object<event | eventNS, Function>, options?)
 
 Listens to the events emitted by an external emitter and propagate them through itself.
 The target object could be of any type that implements methods for subscribing and unsubscribing to its events. 
@@ -628,15 +628,15 @@ setTimeout(function(){
 }, 30000);
 ````
 
-### stopListening(target?: Object, event?: String): Boolean
+### stopListening(target?: Object, event | eventNS?: String): Boolean
 
 Stops listening the targets. Returns true if some listener was removed.
 
-### hasListeners(event?:String):Boolean
+### hasListeners(event | eventNS?:String):Boolean
 
 Checks whether emitter has any listeners.
 
-### emitter.listeners(eventName)
+### emitter.listeners(event | eventNS)
 
 Returns the array of listeners for the event named eventName.
 
