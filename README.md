@@ -22,10 +22,15 @@ EventEmitter2 is an implementation of the EventEmitter module found in Node.js. 
  - Demonstrates good performance in benchmarks
 
 ```
-EventEmitterHeatUp x 3,728,965 ops/sec \302\2610.68% (60 runs sampled)
-EventEmitter x 2,822,904 ops/sec \302\2610.74% (63 runs sampled)
-EventEmitter2 x 7,251,227 ops/sec \302\2610.55% (58 runs sampled)
-EventEmitter2 (wild) x 3,220,268 ops/sec \302\2610.44% (65 runs sampled)
+Platform: win32, x64, 15267MB
+Node version: v13.11.0
+Cpu: 4 x AMD Ryzen 3 2200U with Radeon Vega Mobile Gfx @ 2495MHz
+----------------------------------------------------------------
+EventEmitterHeatUp x 3,017,814 ops/sec ±3.37% (68 runs sampled)
+EventEmitter x 3,357,197 ops/sec ±4.66% (62 runs sampled)
+EventEmitter2 x 11,378,225 ops/sec ±3.99% (62 runs sampled)
+EventEmitter2 (wild) x 4,799,373 ops/sec ±4.01% (66 runs sampled)
+EventEmitter3 x 10,007,114 ops/sec ±3.94% (69 runs sampled)
 Fastest is EventEmitter2
 ```
 
