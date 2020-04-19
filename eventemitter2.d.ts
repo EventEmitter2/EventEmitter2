@@ -137,7 +137,7 @@ export declare class EventEmitter2 {
     listenTo(target: GeneralEventEmitter, events: event | eventNS, options?: ListenToOptions): this;
     listenTo(target: GeneralEventEmitter, events: (event | eventNS)[], options?: ListenToOptions): this;
     listenTo(target: GeneralEventEmitter, events: Object, options?: ListenToOptions): this;
-    stopListening(target?: GeneralEventEmitter, event | eventNS?: String): Boolean;
+    stopListening(target?: GeneralEventEmitter, event?: event | eventNS): Boolean;
     hasListeners(event?: String): Boolean
     static once(emitter: EventEmitter2, event: event | eventNS, options?: OnceOptions): CancelablePromise<any[]>;
     static defaultMaxListeners: number;
