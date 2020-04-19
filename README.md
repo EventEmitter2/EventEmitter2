@@ -639,7 +639,7 @@ setTimeout(function(){
 }, 30000);
 ````
 
-### stopListening(target?: Object, event | eventNS?: String): Boolean
+### stopListening(target?: Object, event: event | eventNS): Boolean
 
 Stops listening the targets. Returns true if some listener was removed.
 
