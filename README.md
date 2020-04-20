@@ -115,12 +115,16 @@ server.many(['foo', 'bar', 'bazz'], 4, function() {
 # Installing
 
 ```console
-$ npm install --save eventemitter2
+$ npm install eventemitter2
 ```
 
 # API
 
-## class EventEmitter2
+### Types definition
+- `Event`: string | symbol
+- `EventNS`: string | Event []
+
+## Class EventEmitter2
 
 ### instance:
 - [emit(event: event | eventNS, ...values: any[]): boolean](#emitteremitevent-arg1-arg2-);
@@ -184,9 +188,6 @@ $ npm install --save eventemitter2
 - [static once(emitter: EventEmitter2, event: string | symbol, options?: OnceOptions): CancelablePromise<any[]>](#eventemitter2onceemitter-name-options)
 
 - [static defaultMaxListeners: number](#eventemitter2defaultmaxlisteners)
-### inner
-- `Event`: string | symbol
-- `EventNS`: Event | Event []
 
 The `event` argument specified in the API declaration can be a string or symbol for a simple event emitter
 and a string|symbol|Array(string|symbol) in a case of a wildcard emitter; 

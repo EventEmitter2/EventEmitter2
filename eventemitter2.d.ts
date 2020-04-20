@@ -1,5 +1,5 @@
-export type eventNS = (symbol|string)[];
 export type event = (symbol|string);
+export type eventNS = string|event[];
 
 export interface ConstructorOptions {
     /**
