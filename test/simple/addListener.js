@@ -277,5 +277,24 @@ module.exports = simpleEvents({
       assert.equal(ee.listenerCount(), 0);
       done();
     });
-  }
+  },
+
+    '14. should support wrapping once listener to an async listener': function (done) {
+        var ee = new EventEmitter2();
+        var counter = 0;
+        var f = function (x) {
+            assert.equal(x, 123);
+            counter++;
+        };
+        ee.once('test', f, false);
+        assert.equal(ee.listenerCount(), 1);
+        ee.emit('test', 123);
+        assert.equal(counter, 0, 'the event was emitted synchronously');
+        setTimeout(function () {
+            assert.equal(counter, 1);
+            ee.off('test', f);
+            assert.equal(ee.listenerCount(), 0);
+            done();
+        }, 10);
+    }
 });
