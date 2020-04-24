@@ -270,9 +270,9 @@ or process.nextTick depending on the `nextTick` option.
 This option will be activated by default if its value is `undefined`
 and the listener function is an `asynchronous function` (whose constructor name is `AsyncFunction`). 
 
-If the options argument is `true` it will be considered as `{promisify: true}`
+**Note:** If the options argument is `true` it will be considered as `{promisify: true}`
 
-If the options argument is `false` it will be considered as `{async: true}`
+**Note:** If the options argument is `false` it will be considered as `{async: true}`
 
 ```javascript
 var EventEmitter2= require('eventemitter2');
