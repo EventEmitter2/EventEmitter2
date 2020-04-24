@@ -96,11 +96,6 @@ export interface ListenToOptions {
 }
 
 export interface GeneralEventEmitter{
-    addListener: Function,
-    removeListener: Function
-}
-
-export interface GeneralEventEmitter{
     addEventListener: Function,
     removeEventListener: Function
 }
@@ -125,15 +120,12 @@ export declare class EventEmitter2 {
     setMaxListeners(n: number): void;
     getMaxListeners(): number;
     eventNames(): string[];
-    listeners(event: event | eventNS): Listener[]
-    listenersAny(): Listener[] // TODO: not in documentation by Willian
+    listenerCount(event?: event | eventNS): number
+    listeners(event?: event | eventNS): Listener[]
+    listenersAny(): Listener[]
     waitFor(event: event | eventNS, timeout?: number): CancelablePromise<any[]>
     waitFor(event: event | eventNS, filter?: WaitForFilter): CancelablePromise<any[]>
     waitFor(event: event | eventNS, options?: WaitForOptions): CancelablePromise<any[]>
-    static once(emitter: EventEmitter2, event: event | eventNS, options?: OnceOptions): CancelablePromise<any[]>
-    waitFor(event: event | eventNS, timeout?: number): CancelablePromise<any[]>;
-    waitFor(event: event | eventNS, filter?: WaitForFilter): CancelablePromise<any[]>;
-    waitFor(event: event | eventNS, options?: WaitForOptions): CancelablePromise<any[]>;
     listenTo(target: GeneralEventEmitter, events: event | eventNS, options?: ListenToOptions): this;
     listenTo(target: GeneralEventEmitter, events: (event | eventNS)[], options?: ListenToOptions): this;
     listenTo(target: GeneralEventEmitter, events: Object, options?: ListenToOptions): this;
