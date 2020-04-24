@@ -1,3 +1,4 @@
+var assert= require('assert');
 var simpleEvents = require('nodeunit').testCase;
 var file = '../../lib/eventemitter2';
 var EventEmitter2;
@@ -129,14 +130,14 @@ module.exports = simpleEvents({
     var eventBeingTestedFor, expectedArgument;
     var f = function (event, argument) {
       test.ok(true, 'the event was fired');
-      test.ok(eventBeingTestedFor === event, 'the event is '+event)
+      test.ok(eventBeingTestedFor === event, 'the event is '+event);
       test.ok(expectedArgument === argument, 'the argument is '+argument)
     };
 
     emitter.onAny(f);
     emitter.emit(eventBeingTestedFor = 'test23.ns5.ns5', expectedArgument = 'someData'); //1
     emitter.offAny(f);
-    expectedArgument = undefined
+    expectedArgument = undefined;
     emitter.emit(eventBeingTestedFor = 'test21'); //0
     emitter.onAny(f);
     emitter.onAny(f);
@@ -201,13 +202,13 @@ module.exports = simpleEvents({
 
     var emitter = new EventEmitter2({ verbose: true });
 
-    test.equal(emitter.listenerCount('test1'), 0, 'Before adding listeners listenerCount is 0')
+    test.equal(emitter.listenerCount('test1'), 0, 'Before adding listeners listenerCount is 0');
 
     emitter.on('test1', function () {
       test.ok(true, 'The event was raised');
     });
 
-    test.equal(emitter.listenerCount('test1'), 1, 'After adding a listener listenerCount is 1')
+    test.equal(emitter.listenerCount('test1'), 1, 'After adding a listener listenerCount is 1');
 
     emitter.on('test1', function () {
       test.ok(true, 'The event was raised');
@@ -218,5 +219,63 @@ module.exports = simpleEvents({
     test.expect(3);
     test.done();
 
+  },
+
+  '12. should support wrapping handler to an async listener': function (done) {
+    var ee= new EventEmitter2();
+    var counter= 0;
+    var f= function(x){
+      assert.equal(x, 123);
+      counter++;
+    };
+    ee.on('test', f, false);
+    assert.equal(ee.listenerCount(), 1);
+    ee.emit('test', 123);
+    assert.equal(counter, 0, 'the event was emitted synchronously');
+    setTimeout(function(){
+      assert.equal(counter, 1);
+      ee.off('test', f);
+      assert.equal(ee.listenerCount(), 0);
+      done();
+    }, 10);
+  },
+
+  '13. should support wrapping handler to a promised listener using setImmediate': function (done) {
+    var ee= new EventEmitter2();
+    var counter= 0;
+    var f= function(x){
+      assert.equal(x, 123);
+      counter++;
+      return x + 1;
+    };
+
+    ee.on('test', f, {promisify: true});
+
+    ee.emitAsync('test', 123).then(function(arg){
+      assert.equal(counter, 1);
+      assert.equal(arg, 124);
+      done();
+    }, done);
+
+    assert.equal(counter, 0,'the event was emitted synchronously');
+  },
+
+  '13. should support wrapping handler to an async listener using nextTick': function (done) {
+    var ee= new EventEmitter2();
+    var counter= 0;
+    var f= function(x){
+      assert.equal(x, 123);
+      counter++;
+    };
+    ee.on('test', f, {nextTick: true});
+    assert.equal(ee.listenerCount(), 1);
+    ee.emit('test', 123);
+    assert.equal(counter, 0, 'the event was emitted synchronously');
+    process.nextTick(function(){
+      assert.equal(counter, 1);
+      ee.off('test', f);
+      assert.equal(ee.listenerCount(), 0);
+      done();
+    });
   }
 });

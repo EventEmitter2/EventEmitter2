@@ -131,19 +131,19 @@ $ npm install eventemitter2
 
 - [emitAsync(event: event | eventNS, ...values: any[]): Promise<any[]>](#emitteremitasyncevent-arg1-arg2-)
 
-- [addListener(event: event | eventNS, listener: Listener): this](#emitteraddlistenerevent-listener)
+- [addListener(event: event | eventNS, listener: Listener, boolean|options?: object): this](#emitteraddlistenerevent-listener)
 
-- [on(event: event | eventNS, listener: Listener): this](#emitteraddlistenerevent-listener)
+- [on(event: event | eventNS, listener: Listener, boolean|options?: object): this](#emitteraddlistenerevent-listener)
 
-- [prependListener(event: event | eventNS, listener: Listener): this](#emitterprependlistenerevent-listener)
+- [prependListener(event: event | eventNS, listener: Listener, boolean|options?: object): this](#emitterprependlistenerevent-listener)
 
-- [once(event: event | eventNS, listener: Listener): this](#emitteronceevent-listener)
+- [once(event: event | eventNS, listener: Listener, boolean|options?: object): this](#emitteronceevent-listener)
 
-- [prependOnceListener(event: event | eventNS, listener: Listener): this](#emitterprependoncelistenerevent-listener)
+- [prependOnceListener(event: event | eventNS, listener: Listener, boolean|options?: object): this](#emitterprependoncelistenerevent-listener)
 
-- [many(event: event | eventNS, timesToListen: number, listener: Listener): this](#emittermanyevent-timestolisten-listener)
+- [many(event: event | eventNS, timesToListen: number, listener: Listener, boolean|options?: object): this](#emittermanyevent-timestolisten-listener)
 
-- [prependMany(event: event | eventNS, timesToListen: number, listener: Listener): this](#emitterprependanylistener)
+- [prependMany(event: event | eventNS, timesToListen: number, listener: Listener, boolean|options?: object): this](#emitterprependanylistener)
 
 - [onAny(listener: EventAndListener): this](#emitteronanylistener)
 
@@ -241,8 +241,8 @@ emitter.emit(['foo', Symbol(), 'baz');
 On the other hand, if the single-wildcard event name was passed to the on method, the callback would only observe the second of these events.
 
 
-### emitter.addListener(event, listener)
-### emitter.on(event, listener)
+### emitter.addListener(event, listener, options?: object|boolean)
+### emitter.on(event, listener, options?: object|boolean)
 
 Adds a listener to the end of the listeners array for the specified event.
 
@@ -251,14 +251,34 @@ server.on('data', function(value1, value2, value3, ...) {
   console.log('The event was raised!');
 });
 ```
-
 ```javascript
 server.on('data', function(value) {
   console.log('The event was raised!');
 });
 ```
 
-### emitter.prependListener(event, listener)
+**Options:**
+
+- `async:boolean= false`- invoke the listener in async mode using setImmediate (or setTimeout if not available)
+or process.nextTick depending on the `nextTick` option.
+
+- `nextTick:boolean= false`- use process.nextTick instead of setImmediate to invoke the listener asynchronously. 
+
+- `promisify:boolean= false`- additionally wraps the listener to a Promise for later invocation using `emitAsync` method.
+This option will be activated by default if its value is `undefined`
+and the listener function is an `asynchronous function` (whose constructor name is `AsyncFunction`). 
+
+if the options arguments is `true` it will be considered as `{promisify: true}`
+
+if the options arguments is `false` it will be considered as `{async: true}`
+
+```javascript
+server.on('data', function(value) {
+  console.log('The event was raised!');
+}, {async: true});
+```
+
+### emitter.prependListener(event, listener, options?)
 
 Adds a listener to the beginning of the listeners array for the specified event.
 
@@ -268,6 +288,9 @@ server.prependListener('data', function(value1, value2, value3, ...) {
 });
 ```
 
+**options:**
+
+`options?`: See the [addListener options](#emitteronevent-listener-options)
 
 ### emitter.onAny(listener)
 
@@ -299,7 +322,7 @@ server.offAny(function(value) {
 });
 ```
 
-#### emitter.once(event | eventNS, listener)
+#### emitter.once(event | eventNS, listener, options?)
 
 Adds a **one time** listener for the event. The listener is invoked 
 only the first time the event is fired, after which it is removed.
@@ -310,7 +333,11 @@ server.once('get', function (value) {
 });
 ```
 
-#### emitter.prependOnceListener(event | eventNS, listener)
+**options:**
+
+`options?`: See the [addListener options](#emitteronevent-listener-options)
+
+#### emitter.prependOnceListener(event | eventNS, listener, options?)
 
 Adds a **one time** listener for the event. The listener is invoked 
 only the first time the event is fired, after which it is removed.
@@ -322,7 +349,11 @@ server.prependOnceListener('get', function (value) {
 });
 ```
 
-### emitter.many(event | eventNS, timesToListen, listener)
+**options:**
+
+`options?`: See the [addListener options](#emitteronevent-listener-options)
+
+### emitter.many(event | eventNS, timesToListen, listener, options?)
 
 Adds a listener that will execute **n times** for the event before being
 removed. The listener is invoked only the first **n times** the event is 
@@ -334,7 +365,11 @@ server.many('get', 4, function (value) {
 });
 ```
 
-### emitter.prependMany(event | eventNS, timesToListen, listener)
+**options:**
+
+`options?`: See the [addListener options](#emitteronevent-listener-options)
+
+### emitter.prependMany(event | eventNS, timesToListen, listener, options?)
 
 Adds a listener that will execute **n times** for the event before being
 removed. The listener is invoked only the first **n times** the event is 
@@ -347,7 +382,9 @@ server.many('get', 4, function (value) {
 });
 ```
 
+**options:**
 
+`options?`: See the [addListener options](#emitteronevent-listener-options)
 
 ### emitter.removeListener(event | eventNS, listener)
 ### emitter.off(event | eventNS, listener)

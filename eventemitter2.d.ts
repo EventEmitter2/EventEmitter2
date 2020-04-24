@@ -105,17 +105,23 @@ export interface GeneralEventEmitter{
     removeEventListener: Function
 }
 
+export interface OnOptions {
+    async?: boolean,
+    promisify?: boolean,
+    nextTick?: boolean
+}
+
 export declare class EventEmitter2 {
     constructor(options?: ConstructorOptions)
     emit(event: event | eventNS, ...values: any[]): boolean;
     emitAsync(event: event | eventNS, ...values: any[]): Promise<any[]>;
     addListener(event: event | eventNS, listener: Listener): this;
-    on(event: event | eventNS, listener: Listener): this;
-    prependListener(event: event | eventNS, listener: Listener): this;
-    once(event: event | eventNS, listener: Listener): this;
-    prependOnceListener(event: event | eventNS, listener: Listener): this;
-    many(event: event | eventNS, timesToListen: number, listener: Listener): this;
-    prependMany(event: event | eventNS, timesToListen: number, listener: Listener): this;
+    on(event: event | eventNS, listener: Listener, options?: boolean|OnOptions): this;
+    prependListener(event: event | eventNS, listener: Listener, options?: boolean|OnOptions): this;
+    once(event: event | eventNS, listener: Listener, options?: true|OnOptions): this;
+    prependOnceListener(event: event | eventNS, listener: Listener, options?: boolean|OnOptions): this;
+    many(event: event | eventNS, timesToListen: number, listener: Listener, options?: boolean|OnOptions): this;
+    prependMany(event: event | eventNS, timesToListen: number, listener: Listener, options?: boolean|OnOptions): this;
     onAny(listener: EventAndListener): this;
     prependAny(listener: EventAndListener): this;
     offAny(listener: Listener): this;
@@ -125,15 +131,12 @@ export declare class EventEmitter2 {
     setMaxListeners(n: number): void;
     getMaxListeners(): number;
     eventNames(): string[];
-    listeners(event: event | eventNS): Listener[]
-    listenersAny(): Listener[] // TODO: not in documentation by Willian
+    listenerCount(event?: event | eventNS): number
+    listeners(event?: event | eventNS): Listener[]
+    listenersAny(): Listener[]
     waitFor(event: event | eventNS, timeout?: number): CancelablePromise<any[]>
     waitFor(event: event | eventNS, filter?: WaitForFilter): CancelablePromise<any[]>
     waitFor(event: event | eventNS, options?: WaitForOptions): CancelablePromise<any[]>
-    static once(emitter: EventEmitter2, event: event | eventNS, options?: OnceOptions): CancelablePromise<any[]>
-    waitFor(event: event | eventNS, timeout?: number): CancelablePromise<any[]>;
-    waitFor(event: event | eventNS, filter?: WaitForFilter): CancelablePromise<any[]>;
-    waitFor(event: event | eventNS, options?: WaitForOptions): CancelablePromise<any[]>;
     listenTo(target: GeneralEventEmitter, events: event | eventNS, options?: ListenToOptions): this;
     listenTo(target: GeneralEventEmitter, events: (event | eventNS)[], options?: ListenToOptions): this;
     listenTo(target: GeneralEventEmitter, events: Object, options?: ListenToOptions): this;
