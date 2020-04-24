@@ -96,11 +96,6 @@ export interface ListenToOptions {
 }
 
 export interface GeneralEventEmitter{
-    addListener: Function,
-    removeListener: Function
-}
-
-export interface GeneralEventEmitter{
     addEventListener: Function,
     removeEventListener: Function
 }
