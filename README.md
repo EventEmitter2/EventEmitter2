@@ -13,6 +13,7 @@ EventEmitter2 is an implementation of the EventEmitter module found in Node.js. 
 ### FEATURES
  - Namespaces/Wildcards
  - Times To Listen (TTL), extends the `once` concept with [`many`](#emittermanyevent-timestolisten-listener)
+ - [Async listeners](#emitteronevent-listener-options-objectboolean) (using setImmediate|setTimeout|nextTick) with promise|async function support
  - The [emitAsync](#emitteremitasyncevent-arg1-arg2-) method to return the results of the listeners via Promise.all
  - Feature-rich [waitFor](#emitterwaitforevent-options) method to wait for events using promises
  - [listenTo](#listentotargetemitter-events-event--eventns-options) & [stopListening](#stoplisteningtarget-object-event--eventns-string-boolean) methods
@@ -24,13 +25,14 @@ EventEmitter2 is an implementation of the EventEmitter module found in Node.js. 
 ```
 Platform: win32, x64, 15267MB
 Node version: v13.11.0
-Cpu: 4 x AMD Ryzen 3 2200U with Radeon Vega Mobile Gfx @ 2495MHz
+CPU: 4 x AMD Ryzen 3 2200U with Radeon Vega Mobile Gfx @ 2495MHz
 ----------------------------------------------------------------
-EventEmitterHeatUp x 3,017,814 ops/sec ±3.37% (68 runs sampled)
-EventEmitter x 3,357,197 ops/sec ±4.66% (62 runs sampled)
-EventEmitter2 x 11,378,225 ops/sec ±3.99% (62 runs sampled)
-EventEmitter2 (wild) x 4,799,373 ops/sec ±4.01% (66 runs sampled)
-EventEmitter3 x 10,007,114 ops/sec ±3.94% (69 runs sampled)
+EventEmitterHeatUp x 3,167,076 ops/sec ±3.17% (59 runs sampled)
+EventEmitter x 3,190,460 ops/sec ±3.20% (66 runs sampled)
+EventEmitter2 x 11,278,456 ops/sec ±4.26% (60 runs sampled)
+EventEmitter2 (wild) x 4,620,369 ops/sec ±4.46% (61 runs sampled)
+EventEmitter3 x 10,309,717 ops/sec ±3.89% (64 runs sampled)
+
 Fastest is EventEmitter2
 ```
 
@@ -273,10 +275,54 @@ if the options arguments is `true` it will be considered as `{promisify: true}`
 if the options arguments is `false` it will be considered as `{async: true}`
 
 ```javascript
-server.on('data', function(value) {
-  console.log('The event was raised!');
+var EventEmitter2= require('eventemitter2');
+var emitter= new EventEmitter2();
+
+emitter.on('event', function(){
+    console.log('The event was raised!');
 }, {async: true});
+
+emitter.emit('event');
+console.log('emitted');
 ```
+Since the `async` option was set the output from the code above is as follows:
+````
+emitted
+The event was raised!
+````
+
+If the listener is an async function or function which returns a promise, use the `promisify` option as follows:
+
+```javascript
+emitter.on('event', function(){
+    console.log('The event was raised!');
+    return new Promise(function(resolve){
+       console.log('listener resolved');
+       setTimeout(resolve, 1000);
+    });
+}, {promisify: true});
+
+emitter.emitAsync('event').then(function(){
+    console.log('all listeners were resolved!');
+});
+
+console.log('emitted');
+````
+Output:
+````
+emitted
+The event was raised!
+listener resolved
+all listeners were resolved!
+````
+If the `promisify` option is false (default value) the output of the same code is as follows:
+````
+The event was raised!
+listener resolved
+emitted
+all listeners were resolved!
+````
+
 
 ### emitter.prependListener(event, listener, options?)
 
