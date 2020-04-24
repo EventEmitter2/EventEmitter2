@@ -270,9 +270,9 @@ or process.nextTick depending on the `nextTick` option.
 This option will be activated by default if its value is `undefined`
 and the listener function is an `asynchronous function` (whose constructor name is `AsyncFunction`). 
 
-if the options argument is `true` it will be considered as `{promisify: true}`
+If the options argument is `true` it will be considered as `{promisify: true}`
 
-if the options argument is `false` it will be considered as `{async: true}`
+If the options argument is `false` it will be considered as `{async: true}`
 
 ```javascript
 var EventEmitter2= require('eventemitter2');
@@ -294,6 +294,9 @@ The event was raised!
 If the listener is an async function or function which returns a promise, use the `promisify` option as follows:
 
 ```javascript
+var EventEmitter2= require('eventemitter2');
+var emitter= new EventEmitter2();
+
 emitter.on('event', function(){
     console.log('The event was raised!');
     return new Promise(function(resolve){
