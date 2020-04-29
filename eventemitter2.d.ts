@@ -133,7 +133,7 @@ export declare class EventEmitter2 {
     waitFor(event: event | eventNS, filter?: WaitForFilter): CancelablePromise<any[]>
     waitFor(event: event | eventNS, options?: WaitForOptions): CancelablePromise<any[]>
     listenTo(target: GeneralEventEmitter, events: event | eventNS, options?: ListenToOptions): this;
-    listenTo(target: GeneralEventEmitter, events: (event | eventNS)[], options?: ListenToOptions): this;
+    listenTo(target: GeneralEventEmitter, events: event[], options?: ListenToOptions): this;
     listenTo(target: GeneralEventEmitter, events: Object, options?: ListenToOptions): this;
     stopListening(target?: GeneralEventEmitter, event?: event | eventNS): Boolean;
     hasListeners(event?: String): Boolean
