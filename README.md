@@ -121,29 +121,29 @@ $ npm install eventemitter2
 
 - [emitAsync(event: event | eventNS, ...values: any[]): Promise<any[]>](#emitteremitasyncevent--eventns-arg1-arg2-)
 
-- [addListener(event: event | eventNS, listener: Listener, boolean|options?: object): this](#emitteraddlistenerevent-listener-options-objectboolean)
+- [addListener(event: event | eventNS, listener: ListenerFn, boolean|options?: object): this|Listener](#emitteraddlistenerevent-listener-options-objectboolean)
 
-- [on(event: event | eventNS, listener: Listener, boolean|options?: object): this](#emitteraddlistenerevent-listener-options-objectboolean)
+- [on(event: event | eventNS, listener: ListenerFn, boolean|options?: object): this|Listener](#emitteraddlistenerevent-listener-options-objectboolean)
 
-- [once(event: event | eventNS, listener: Listener, boolean|options?: object): this](#emitteronceevent--eventns-listener-options)
+- [once(event: event | eventNS, listener: ListenerFn, boolean|options?: object): this|Listener](#emitteronceevent--eventns-listener-options)
 
-- [many(event: event | eventNS, timesToListen: number, listener: Listener, boolean|options?: object): this](#emittermanyevent--eventns-timestolisten-listener-options)
+- [many(event: event | eventNS, timesToListen: number, listener: ListenerFn, boolean|options?: object): this|Listener](#emittermanyevent--eventns-timestolisten-listener-options)
 
-- [prependMany(event: event | eventNS, timesToListen: number, listener: Listener, boolean|options?: object): this](#emitterprependanylistener)
+- [prependMany(event: event | eventNS, timesToListen: number, listener: ListenerFn, boolean|options?: object): this|Listener](#emitterprependanylistener)
 
-- [prependOnceListener(event: event | eventNS, listener: Listener, boolean|options?: object): this](#emitterprependoncelistenerevent--eventns-listener-options)
+- [prependOnceListener(event: event | eventNS, listener: ListenerFn, boolean|options?: object): this|Listener](#emitterprependoncelistenerevent--eventns-listener-options)
 
-- [prependListener(event: event | eventNS, listener: Listener, boolean|options?: object): this](#emitterprependlistenerevent-listener-options)
+- [prependListener(event: event | eventNS, listener: ListenerFn, boolean|options?: object): this|Listener](#emitterprependlistenerevent-listener-options)
 
 - [prependAny(listener: EventAndListener): this](#emitterprependanylistener)
 
 - [onAny(listener: EventAndListener): this](#emitteronanylistener)
 
-- [offAny(listener: Listener): this](#emitteroffanylistener)
+- [offAny(listener: ListenerFn): this](#emitteroffanylistener)
 
-- [removeListener(event: event | eventNS, listener: Listener): this](#emitterremovelistenerevent--eventns-listener)
+- [removeListener(event: event | eventNS, listener: ListenerFn): this](#emitterremovelistenerevent--eventns-listener)
 
-- [off(event: event | eventNS, listener: Listener): this](#emitteroffevent--eventns-listener)
+- [off(event: event | eventNS, listener: ListenerFn): this](#emitteroffevent--eventns-listener)
 
 - [removeAllListeners(event?: event | eventNS): this](#emitterremovealllistenersevent--eventns)
 
@@ -153,9 +153,9 @@ $ npm install eventemitter2
 
 - [eventNames(): string[]](#emittereventnames)
 
-- [listeners(event: event | eventNS): Listener[]](#emitterlistenersevent--eventns)
+- [listeners(event: event | eventNS): ListenerFn[]](#emitterlistenersevent--eventns)
 
-- [listenersAny(): Listener[]](#emitterlistenersany)
+- [listenersAny(): ListenerFn[]](#emitterlistenersany)
 
 - [hasListeners(event?: event | eventNS): Boolean](#haslistenersevent--eventnsstringboolean)
 

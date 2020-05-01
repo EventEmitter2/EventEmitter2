@@ -118,7 +118,7 @@ export declare class EventEmitter2 {
     constructor(options?: ConstructorOptions)
     emit(event: event | eventNS, ...values: any[]): boolean;
     emitAsync(event: event | eventNS, ...values: any[]): Promise<any[]>;
-    addListener(event: event | eventNS, listener: ListenerFn): this;
+    addListener(event: event | eventNS, listener: ListenerFn): this|Listener;
     on(event: event | eventNS, listener: ListenerFn, options?: boolean|OnOptions): this|Listener;
     prependListener(event: event | eventNS, listener: ListenerFn, options?: boolean|OnOptions): this|Listener;
     once(event: event | eventNS, listener: ListenerFn, options?: true|OnOptions): this|Listener;
