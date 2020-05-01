@@ -15,6 +15,8 @@ EventEmitter2 is an implementation of the EventEmitter module found in Node.js. 
  - Times To Listen (TTL), extends the `once` concept with [`many`](#emittermanyevent--eventns-timestolisten-listener-options)
  - [Async listeners](#emitteronevent-listener-options-objectboolean) (using setImmediate|setTimeout|nextTick) with promise|async function support
  - The [emitAsync](#emitteremitasyncevent--eventns-arg1-arg2-) method to return the results of the listeners via Promise.all
+ - Subscription methods ([on](#emitteronevent-listener-options-objectboolean), once, many, ...) can return a 
+ [listener](#listener) object that makes it easy to remove the subscription when needed - just call the listener.off() method.
  - Feature-rich [waitFor](#emitterwaitforevent--eventns-options) method to wait for events using promises
  - [listenTo](#listentotargetemitter-events-event--eventns-options) & [stopListening](#stoplisteningtarget-object-event-event--eventns-boolean) methods
  for listening to an external event emitter and propagate its events through itself using optional reducers/filters 
@@ -123,19 +125,19 @@ $ npm install eventemitter2
 
 - [on(event: event | eventNS, listener: Listener, boolean|options?: object): this](#emitteraddlistenerevent-listener-options-objectboolean)
 
-- [prependListener(event: event | eventNS, listener: Listener, boolean|options?: object): this](#emitterprependlistenerevent-listener-options)
-
 - [once(event: event | eventNS, listener: Listener, boolean|options?: object): this](#emitteronceevent--eventns-listener-options)
-
-- [prependOnceListener(event: event | eventNS, listener: Listener, boolean|options?: object): this](#emitterprependoncelistenerevent--eventns-listener-options)
 
 - [many(event: event | eventNS, timesToListen: number, listener: Listener, boolean|options?: object): this](#emittermanyevent--eventns-timestolisten-listener-options)
 
 - [prependMany(event: event | eventNS, timesToListen: number, listener: Listener, boolean|options?: object): this](#emitterprependanylistener)
 
-- [onAny(listener: EventAndListener): this](#emitteronanylistener)
+- [prependOnceListener(event: event | eventNS, listener: Listener, boolean|options?: object): this](#emitterprependoncelistenerevent--eventns-listener-options)
+
+- [prependListener(event: event | eventNS, listener: Listener, boolean|options?: object): this](#emitterprependlistenerevent-listener-options)
 
 - [prependAny(listener: EventAndListener): this](#emitterprependanylistener)
+
+- [onAny(listener: EventAndListener): this](#emitteronanylistener)
 
 - [offAny(listener: Listener): this](#emitteroffanylistener)
 
@@ -155,6 +157,8 @@ $ npm install eventemitter2
 
 - [listenersAny(): Listener[]](#emitterlistenersany)
 
+- [hasListeners(event?: event | eventNS): Boolean](#haslistenersevent--eventnsstringboolean)
+
 - [waitFor(event: event | eventNS, timeout?: number): CancelablePromise<any[]>](#emitterwaitforevent--eventns-timeout)
 
 - [waitFor(event: event | eventNS, filter?: WaitForFilter): CancelablePromise<any[]>](#emitterwaitforevent--eventns-filter)
@@ -168,8 +172,6 @@ $ npm install eventemitter2
 - [listenTo(target: GeneralEventEmitter, events: Object<event | eventNS, Function>, options?: ListenToOptions): this](#listentotargetemitter-events-objectevent--eventns-function-options)
 
 - [stopListening(target?: GeneralEventEmitter, event?: event | eventNS): Boolean](#stoplisteningtarget-object-event-event--eventns-boolean)
-
-- [hasListeners(event?: event | eventNS): Boolean](#haslistenersevent--eventnsstringboolean)
 
 ### static:
 
@@ -255,6 +257,25 @@ or process.nextTick depending on the `nextTick` option.
 - `promisify:boolean= false`- additionally wraps the listener to a Promise for later invocation using `emitAsync` method.
 This option will be activated by default if its value is `undefined`
 and the listener function is an `asynchronous function` (whose constructor name is `AsyncFunction`). 
+
+- `objectify:boolean= false`- activates returning a [listener](#listener) object instead of 'this' by the subscription method.
+
+#### listener
+The listener object has the following properties:
+- `emitter: EventEmitter2` - reference to the event emitter instance
+- `event: event|eventNS` - subscription event
+- `listener: Function` - reference to the listener
+- `off(): Function`- removes the listener (voids the subscription)
+
+````javascript
+var listener= emitter.on('event', function(){
+  console.log('hello!');
+}, {objectify: true});
+
+emitter.emit('event');
+
+listener.off();
+````
 
 **Note:** If the options argument is `true` it will be considered as `{promisify: true}`
 

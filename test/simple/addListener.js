@@ -279,22 +279,80 @@ module.exports = simpleEvents({
     });
   },
 
-    '14. should support wrapping once listener to an async listener': function (done) {
-        var ee = new EventEmitter2();
-        var counter = 0;
-        var f = function (x) {
-            assert.equal(x, 123);
-            counter++;
-        };
-        ee.once('test', f, false);
-        assert.equal(ee.listenerCount(), 1);
-        ee.emit('test', 123);
-        assert.equal(counter, 0, 'the event was emitted synchronously');
-        setTimeout(function () {
-            assert.equal(counter, 1);
-            ee.off('test', f);
-            assert.equal(ee.listenerCount(), 0);
-            done();
-        }, 10);
-    }
+  '14. should support wrapping once listener to an async listener': function (done) {
+    var ee = new EventEmitter2();
+    var counter = 0;
+    var f = function (x) {
+      assert.equal(x, 123);
+      counter++;
+    };
+    ee.once('test', f, false);
+    assert.equal(ee.listenerCount(), 1);
+    ee.emit('test', 123);
+    assert.equal(counter, 0, 'the event was emitted synchronously');
+    setTimeout(function () {
+      assert.equal(counter, 1);
+      ee.off('test', f);
+      assert.equal(ee.listenerCount(), 0);
+      done();
+    }, 10);
+  },
+
+  '15. should support returning a listener object if the objectify options is set': function () {
+    var ee = new EventEmitter2();
+    var counter = 0;
+    var handler = function (x) {
+      assert.equal(x, 123);
+      counter++;
+    };
+
+    var listener= ee.on('test', handler, {
+      objectify: true
+    });
+
+    assert.equal(typeof listener, 'object');
+    assert.equal(listener.constructor.name, 'Listener');
+    assert.equal(typeof listener.off, 'function');
+    assert.equal(listener.emitter, ee);
+    assert.equal(listener.event, 'test');
+    assert.equal(listener.listener, handler);
+
+    assert.equal(counter, 0);
+
+    ee.emit('test', 123);
+    assert.equal(counter, 1);
+
+    listener.off();
+
+    ee.emit('test', 123);
+    assert.equal(counter, 1);
+  },
+
+  '16. should support returning a listener object using the `once` method if the objectify options is set': function () {
+    var ee = new EventEmitter2();
+    var counter = 0;
+    var handler = function (x) {
+      assert.equal(x, 123);
+      counter++;
+    };
+
+    var listener= ee.once('test', handler, {
+      objectify: true
+    });
+
+    assert.equal(typeof listener, 'object');
+    assert.equal(listener.constructor.name, 'Listener');
+    assert.equal(typeof listener.off, 'function');
+    assert.equal(listener.emitter, ee);
+    assert.equal(listener.event, 'test');
+    assert.equal(listener.listener._origin, handler);
+
+    assert.equal(counter, 0);
+
+    listener.off();
+
+    ee.emit('test', 123);
+
+    assert.equal(counter, 0);
+  }
 });
