@@ -119,7 +119,7 @@ export declare class EventEmitter2 {
     removeAllListeners(event?: event | eventNS): this;
     setMaxListeners(n: number): void;
     getMaxListeners(): number;
-    eventNames(): string[];
+    eventNames(nsAsArray?: boolean): (event|eventNS)[];
     listenerCount(event?: event | eventNS): number
     listeners(event?: event | eventNS): Listener[]
     listenersAny(): Listener[]
