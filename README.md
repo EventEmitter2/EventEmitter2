@@ -36,11 +36,10 @@ Fastest is EventEmitter2
 
 ### Differences (Non-breaking, compatible with existing EventEmitter)
 
- - The EventEmitter2 constructor takes an optional configuration object.
- 
+ - The EventEmitter2 constructor takes an optional configuration object with the following default values:
 ```javascript
-var EventEmitter2 = require('eventemitter2').EventEmitter2;
-var server = new EventEmitter2({
+var EventEmitter2 = require('eventemitter2');
+var emitter = new EventEmitter2({
 
   // set this to `true` to use wildcards
   wildcard: false,
