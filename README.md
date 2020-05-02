@@ -40,11 +40,10 @@ Fastest is EventEmitter2
 
 ### Differences (Non-breaking, compatible with existing EventEmitter)
 
- - The EventEmitter2 constructor takes an optional configuration object.
- 
+ - The EventEmitter2 constructor takes an optional configuration object with the following default values:
 ```javascript
-var EventEmitter2 = require('eventemitter2').EventEmitter2;
-var server = new EventEmitter2({
+var EventEmitter2 = require('eventemitter2');
+var emitter = new EventEmitter2({
 
   // set this to `true` to use wildcards
   wildcard: false,
@@ -151,7 +150,7 @@ $ npm install eventemitter2
 
 - [getMaxListeners(): number](#emittergetmaxlisteners)
 
-- [eventNames(): string[]](#emittereventnames)
+- [eventNames(nsAsArray?: boolean): string[]](#emittereventnamesnsasarray)
 
 - [listeners(event: event | eventNS): ListenerFn[]](#emitterlistenersevent--eventns)
 
@@ -590,11 +589,11 @@ emitter.waitFor('event', {
 
 emitter.emit('event', new Error('custom error')); // reject the promise
 ````
-### emitter.eventNames()
+### emitter.eventNames(nsAsArray)
 
 Returns an array listing the events for which the emitter has registered listeners. The values in the array will be strings.
-
 ```javascript
+var emitter= new EventEmitter2();
 emitter.on('foo', () => {});
 emitter.on('bar', () => {});
 
@@ -674,6 +673,24 @@ Checks whether emitter has any listeners.
 ### emitter.listeners(event | eventNS)
 
 Returns the array of listeners for the event named eventName.
+In wildcard mode this method returns namespaces as strings:
+````javascript
+var emitter= new EventEmitter2({
+    wildcard: true
+});
+emitter.on('a.b.c', function(){});
+emitter.on(['z', 'x', 'c'], function(){});
+console.log(emitter.eventNames()) // [ 'z.x.c', 'a.b.c' ]
+````
+If some namespace contains a Symbol member or the `nsAsArray` option is set the method will return namespace as an array of its members;
+````javascript
+var emitter= new EventEmitter2({
+    wildcard: true
+});
+emitter.on('a.b.c', function(){});
+emitter.on(['z', 'x', Symbol()], function(){});
+console.log(emitter.eventNames()) // [ [ 'z', 'x', Symbol() ], 'a.b.c' ]
+````
 
 ### EventEmitter2.once(emitter, event | eventNS, [options])
 Creates a cancellable Promise that is fulfilled when the EventEmitter emits the given event or that is rejected
