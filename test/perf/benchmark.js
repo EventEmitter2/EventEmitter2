@@ -33,8 +33,8 @@ os.cpus().forEach(function(cpu){
   }
 });
 
-console.log('Cpu:' + Object.entries(cpus).map(function([cpu, count]){
-  return [' ', count, ' x ', cpu].join('');
+console.log('CPU:' + Object.entries(cpus).map(function(data){
+  return [' ', data[1], ' x ', data[0]].join('');
 }).join('\n'));
 
 console.log('----------------------------------------------------------------');
