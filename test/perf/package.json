@@ -1,0 +1,8 @@
+{
+  "name": "benchmarks",
+  "version": "0.0.0",
+  "dependencies": {
+    "benchmark": "2.1.x",
+    "eventemitter3": "latest"
+  }
+}

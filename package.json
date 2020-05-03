@@ -29,11 +29,11 @@
   "repository": "git://github.com/hij1nx/EventEmitter2.git",
   "devDependencies": {
     "benchmark": "^2.1.4",
+    "bluebird": "^3.7.2",
     "coveralls": "^3.0.11",
     "mocha": "^7.1.1",
     "nodeunit": "*",
-    "nyc": "^15.0.0",
-    "bluebird": "^3.7.2"
+    "nyc": "^15.0.0"
   },
   "main": "./lib/eventemitter2.js",
   "scripts": {
@@ -56,10 +56,10 @@
     "definition": "./eventemitter2.d.ts"
   },
   "nyc": {
-    "lines": 83,
-    "functions": 84,
+    "lines": 80,
+    "functions": 80,
     "branches": 75,
-    "statements": 83,
+    "statements": 80,
     "watermarks": {
       "lines": [
         80,
