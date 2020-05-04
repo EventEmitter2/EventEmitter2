@@ -73,7 +73,7 @@ module.exports = {
         assert.equal(isEmitted, true);
     },
 
-    '4. should support stop listening method': function () {
+    '4. should support stopListeningTo method': function () {
         var counter= 0;
         var ee = new EventEmitter();
         var ee2 = new EventEmitter2();
@@ -89,7 +89,7 @@ module.exports = {
         ee.emit('test');
         ee.emit('test');
 
-        ee2.stopListening(ee);
+        ee2.stopListeningTo(ee);
 
         ee.emit('test');
 

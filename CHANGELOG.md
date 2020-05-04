@@ -10,18 +10,18 @@ For changes before version 2.2.0, please see the commit history
 
 ### Added
 
-- Symbol events support for simple and wildcard emitters #201
-- `emitter.hasListeners` method #251
-- `emitter.listenTo` & `emitter.stopListening` methods for listening to an external event emitter of any kind and propagate its events through itself using optional reducers/filters
-- async listeners for invoking handlers using setImmediate|setTimeout|nextTick (see `async`, `promisify` and `nextTicks` options for subscription methods)
-- Ability for subscription methods to return a listener object to simplify subscription management (see the `objectify` option)
-- micro optimizations for performance reasons
+- Symbol events support for simple and wildcard emitters #201 @DigitalBrainJS
+- `emitter.hasListeners` method #251 @DigitalBrainJS
+- `emitter.listenTo` & `emitter.stopListeningTo` methods for listening to an external event emitter of any kind and propagate its events through itself using optional reducers/filters @DigitalBrainJS
+- async listeners for invoking handlers using setImmediate|setTimeout|nextTick (see `async`, `promisify` and `nextTicks` options for subscription methods) @DigitalBrainJS
+- Ability for subscription methods to return a listener object to simplify subscription management (see the `objectify` option) @DigitalBrainJS
+- micro optimizations for performance reasons @DigitalBrainJS
 
 ### Fixed
 
-- Event name/reference normalization for the `this.event` property #162
-- Bug with data arguments for `Any` listeners #254
-- `emitter.eventNames` now supports wildcard emitters #214
+- Event name/reference normalization for the `this.event` property #162 @DigitalBrainJS
+- Bug with data arguments for `Any` listeners #254 @DigitalBrainJS
+- `emitter.eventNames` now supports wildcard emitters #214 @DigitalBrainJS
 
 ## [6.3.0] - 2020-03-28
 

@@ -24,7 +24,7 @@ If you like this project please show your support with a [GitHub :star:](https:/
  - Subscription methods ([on](#emitteronevent-listener-options-objectboolean), [once](#emitterprependoncelistenerevent--eventns-listener-options), [many](#emittermanyevent--eventns-timestolisten-listener-options), ...) can return a 
  [listener](#listener) object that makes it easy to remove the subscription when needed - just call the listener.off() method.
  - Feature-rich [waitFor](#emitterwaitforevent--eventns-options) method to wait for events using promises
- - [listenTo](#listentotargetemitter-events-event--eventns-options) & [stopListening](#stoplisteningtarget-object-event-event--eventns-boolean) methods
+ - [listenTo](#listentotargetemitter-events-objectevent--eventns-function-options) & [stopListeningTo](#stoplisteningtotarget-object-event-event--eventns-boolean) methods
  for listening to an external event emitter of any kind and propagate its events through itself using optional reducers/filters 
  - Extended version of the [events.once](#eventemitter2onceemitter-event--eventns-options) method from the [node events API](https://nodejs.org/api/events.html#events_events_once_emitter_name)
  - Browser & Workers environment compatibility
@@ -77,15 +77,15 @@ var emitter = new EventEmitter2({
  - Getting the actual event that fired.
 
 ```javascript
-server.on('foo.*', function() {
-  console.log(this.event); 
+emitter.on('foo.*', function(value1, value2) {
+  console.log(this.event, value1, value2);
 });
 
-server.emit('foo.bar'); // foo.bar
-server.emit(['foo', 'bar']); // foo.bar
+emitter.emit('foo.bar', 1, 2); // 'foo.bar' 1 2
+emitter.emit(['foo', 'bar'], 3, 4); // 'foo.bar' 3 4
 
-server.emit(Symbol()); // Symbol()
-server.emit(['foo', Symbol()]); // ['foo', Symbol())
+emitter.emit(Symbol(), 5, 6); // Symbol() 5 6
+emitter.emit(['foo', Symbol(), 7, 8]); // ['foo', Symbol()] 7 8
 ```
 **Note**: Generally this.event is normalized to a string ('event', 'event.test'),
 except the cases when event is a symbol or namespace contains a symbol. 
@@ -178,7 +178,7 @@ Or you can use unpkg.com CDN to import this [module](https://unpkg.com/eventemit
 
 - [listenTo(target: GeneralEventEmitter, events: Object<event | eventNS, Function>, options?: ListenToOptions): this](#listentotargetemitter-events-objectevent--eventns-function-options)
 
-- [stopListening(target?: GeneralEventEmitter, event?: event | eventNS): Boolean](#stoplisteningtarget-object-event-event--eventns-boolean)
+- [stopListeningTo(target?: GeneralEventEmitter, event?: event | eventNS): Boolean](#stoplisteningtarget-object-event-event--eventns-boolean)
 
 ### static:
 
@@ -666,11 +666,11 @@ emitter.on('localConnection', function(socket){
 });
 
 setTimeout(function(){
-    emitter.stopListening(server);
+    emitter.stopListeningTo(server);
 }, 30000);
 ````
 
-### stopListening(target?: Object, event: event | eventNS): Boolean
+### stopListeningTo(target?: Object, event: event | eventNS): Boolean
 
 Stops listening the targets. Returns true if some listener was removed.
 
