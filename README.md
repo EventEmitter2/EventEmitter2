@@ -113,7 +113,7 @@ server.many(['foo', 'bar', 'bazz'], 4, function() {
 $ npm install eventemitter2
 ```
 
-Or you can use unpkg.com CDN to import this [module](https://unpkg.com/eventemitter2) directly from the browser 
+Or you can use unpkg.com CDN to import this [module](https://unpkg.com/eventemitter2) as a script directly from the browser 
 
 # API
 
