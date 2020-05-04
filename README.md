@@ -6,20 +6,26 @@
 
 # SYNOPSIS
 
-EventEmitter2 is an implementation of the EventEmitter module found in Node.js. In addition to having a better benchmark performance than EventEmitter and being browser-compatible, it also extends the interface of EventEmitter with additional non-breaking features.
+EventEmitter2 is an implementation of the EventEmitter module found in Node.js. 
+In addition to having a better benchmark performance than EventEmitter and being browser-compatible, 
+it also extends the interface of EventEmitter with many additional non-breaking features.
+
+If you like this project please show your support with a [GitHub :star:](https://github.com/EventEmitter2/EventEmitter2/stargazers)!
 
 # DESCRIPTION
 
 ### FEATURES
+ - ES5 compatible UMD module, that supports node.js, browser and workers of any kind
  - Namespaces/Wildcards
+ - [Any](#emitteronanylistener) listeners
  - Times To Listen (TTL), extends the `once` concept with [`many`](#emittermanyevent--eventns-timestolisten-listener-options)
  - [Async listeners](#emitteronevent-listener-options-objectboolean) (using setImmediate|setTimeout|nextTick) with promise|async function support
  - The [emitAsync](#emitteremitasyncevent--eventns-arg1-arg2-) method to return the results of the listeners via Promise.all
- - Subscription methods ([on](#emitteronevent-listener-options-objectboolean), once, many, ...) can return a 
+ - Subscription methods ([on](#emitteronevent-listener-options-objectboolean), [once](#emitterprependoncelistenerevent--eventns-listener-options), [many](#emittermanyevent--eventns-timestolisten-listener-options), ...) can return a 
  [listener](#listener) object that makes it easy to remove the subscription when needed - just call the listener.off() method.
  - Feature-rich [waitFor](#emitterwaitforevent--eventns-options) method to wait for events using promises
  - [listenTo](#listentotargetemitter-events-event--eventns-options) & [stopListening](#stoplisteningtarget-object-event-event--eventns-boolean) methods
- for listening to an external event emitter and propagate its events through itself using optional reducers/filters 
+ for listening to an external event emitter of any kind and propagate its events through itself using optional reducers/filters 
  - Extended version of the [events.once](#eventemitter2onceemitter-event--eventns-options) method from the [node events API](https://nodejs.org/api/events.html#events_events_once_emitter_name)
  - Browser & Workers environment compatibility
  - Demonstrates good performance in benchmarks
