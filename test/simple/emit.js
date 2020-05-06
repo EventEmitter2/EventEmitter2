@@ -154,5 +154,18 @@ module.exports = simpleEvents({
     test.done();
   },
 
+  '8. Emit event with more than 2 arguments': function (test) {
+    var emitter = new EventEmitter2({ verbose: true });
+
+    emitter.on('test', function(x,y,z){
+      test.equal(x, 1);
+      test.equal(y, 2);
+      test.equal(z, 3);
+    });
+
+    emitter.emit('test', 1, 2, 3);
+    test.expect(3);
+    test.done();
+  }
 });
 

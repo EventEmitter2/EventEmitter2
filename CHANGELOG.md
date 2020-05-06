@@ -6,11 +6,28 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 For changes before version 2.2.0, please see the commit history
 
+## [6.4.0] - 2020-05-04
+
+### Added
+
+- Symbol events support for simple and wildcard emitters #201 @DigitalBrainJS
+- `emitter.hasListeners` method #251 @DigitalBrainJS
+- `emitter.listenTo` & `emitter.stopListeningTo` methods for listening to an external event emitter of any kind and propagate its events through itself using optional reducers/filters @DigitalBrainJS
+- async listeners for invoking handlers using setImmediate|setTimeout|nextTick (see `async`, `promisify` and `nextTicks` options for subscription methods) @DigitalBrainJS
+- Ability for subscription methods to return a listener object to simplify subscription management (see the `objectify` option) @DigitalBrainJS
+- micro optimizations for performance reasons @DigitalBrainJS
+
+### Fixed
+
+- Event name/reference normalization for the `this.event` property #162 @DigitalBrainJS
+- Bug with data arguments for `Any` listeners #254 @DigitalBrainJS
+- `emitter.eventNames` now supports wildcard emitters #214 @DigitalBrainJS
+
 ## [6.3.0] - 2020-03-28
 
 ### Added
 - emitter.getMaxListeners() & EventEmitter2.defaultMaxListeners() @DigitalBrainJS
-- EventEmitter2.once for feature pairity with EventEmitter.once @DigitalBrainJS
+- EventEmitter2.once for feature parity with EventEmitter.once @DigitalBrainJS
 
 ## [6.2.1] - 2020-03-20
 
