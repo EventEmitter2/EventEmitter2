@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.com/EventEmitter2/EventEmitter2.svg?branch=master)](https://travis-ci.com/EventEmitter2/EventEmitter2)
+[![Build Status](https://travis-ci.org/EventEmitter2/EventEmitter2.svg?branch=master)](https://travis-ci.org/EventEmitter2/EventEmitter2)
 [![Coverage Status](https://coveralls.io/repos/github/EventEmitter2/EventEmitter2/badge.svg?branch=master)](https://coveralls.io/github/EventEmitter2/EventEmitter2?branch=master)
 [![NPM version](https://badge.fury.io/js/eventemitter2.svg)](http://badge.fury.io/js/eventemitter2)
 [![Dependency Status](https://img.shields.io/david/asyncly/eventemitter2.svg)](https://david-dm.org/asyncly/eventemitter2)
