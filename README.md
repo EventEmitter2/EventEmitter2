@@ -679,18 +679,18 @@ An example of using a wildcard emitter in a browser:
         wildcard: true
     });
 
-    ee.listenTo(document.querySelector('#test'), {
-        'click': 'div.click',
-        'mouseup': 'div.mouseup',
-        'mousedown': 'div.mousedown'
+    ee.listenTo(document, {
+        'click': 'document.click',
+        'mouseup': 'document.mouseup',
+        'mousedown': 'document.mousedown'
     });
 
-    ee.on('div.*', function(evt){
+    ee.on('document.*', function(evt){
         console.log('listenTo: '+ evt.type);
     });
 
     setTimeout(function(){
-      ee.stopListeningTo(document.querySelector('#test'));
+      ee.stopListeningTo(document);
     }, 30000);
 ````
 
