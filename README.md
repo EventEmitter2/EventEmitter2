@@ -44,6 +44,10 @@ EventEmitter3 x 10,309,717 ops/sec ±3.89% (64 runs sampled)
 Fastest is EventEmitter2
 ```
 
+### What's new
+
+To find out what's new in the latest release see the project [CHANGELOG](https://github.com/EventEmitter2/EventEmitter2/blob/master/CHANGELOG.md)
+
 ### Differences (Non-breaking, compatible with existing EventEmitter)
 
  - The EventEmitter2 constructor takes an optional configuration object with the following default values:
