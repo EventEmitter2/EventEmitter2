@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.com/EventEmitter2/EventEmitter2.svg?branch=master)](https://travis-ci.com/EventEmitter2/EventEmitter2)
+[![Build Status](https://travis-ci.org/EventEmitter2/EventEmitter2.svg?branch=master)](https://travis-ci.org/EventEmitter2/EventEmitter2)
 [![Coverage Status](https://coveralls.io/repos/github/EventEmitter2/EventEmitter2/badge.svg?branch=master)](https://coveralls.io/github/EventEmitter2/EventEmitter2?branch=master)
 [![NPM version](https://badge.fury.io/js/eventemitter2.svg)](http://badge.fury.io/js/eventemitter2)
 [![Dependency Status](https://img.shields.io/david/asyncly/eventemitter2.svg)](https://david-dm.org/asyncly/eventemitter2)
@@ -43,6 +43,10 @@ EventEmitter3 x 10,309,717 ops/sec ±3.89% (64 runs sampled)
 
 Fastest is EventEmitter2
 ```
+
+### What's new
+
+To find out what's new in the latest release see the project [CHANGELOG](https://github.com/EventEmitter2/EventEmitter2/blob/master/CHANGELOG.md)
 
 ### Differences (Non-breaking, compatible with existing EventEmitter)
 
@@ -668,6 +672,26 @@ emitter.on('localConnection', function(socket){
 setTimeout(function(){
     emitter.stopListeningTo(server);
 }, 30000);
+````
+An example of using a wildcard emitter in a browser:
+````javascript
+    const ee= new EventEmitter2({
+        wildcard: true
+    });
+
+    ee.listenTo(document.querySelector('#test'), {
+        'click': 'div.click',
+        'mouseup': 'div.mouseup',
+        'mousedown': 'div.mousedown'
+    });
+
+    ee.on('div.*', function(evt){
+        console.log('listenTo: '+ evt.type);
+    });
+
+    setTimeout(function(){
+      ee.stopListeningTo(document.querySelector('#test'));
+    }, 30000);
 ````
 
 ### stopListeningTo(target?: Object, event: event | eventNS): Boolean
