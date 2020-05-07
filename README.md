@@ -669,6 +669,26 @@ setTimeout(function(){
     emitter.stopListeningTo(server);
 }, 30000);
 ````
+An example of using a wildcard emitter in a browser:
+````javascript
+    const ee= new EventEmitter2({
+        wildcard: true
+    });
+
+    ee.listenTo(document.querySelector('#test'), {
+        'click': 'div.click',
+        'mouseup': 'div.mouseup',
+        'mousedown': 'div.mousedown'
+    });
+
+    ee.on('div.*', function(evt){
+        console.log('listenTo: '+ evt.type);
+    });
+
+    setTimeout(function(){
+      ee.stopListeningTo(document.querySelector('#test'));
+    }, 30000);
+````
 
 ### stopListeningTo(target?: Object, event: event | eventNS): Boolean
 
