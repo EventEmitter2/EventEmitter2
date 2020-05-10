@@ -35,11 +35,14 @@ Platform: win32, x64, 15267MB
 Node version: v13.11.0
 CPU: 4 x AMD Ryzen 3 2200U with Radeon Vega Mobile Gfx @ 2495MHz
 ----------------------------------------------------------------
-EventEmitterHeatUp x 3,167,076 ops/sec ±3.17% (59 runs sampled)
-EventEmitter x 3,190,460 ops/sec ±3.20% (66 runs sampled)
-EventEmitter2 x 11,278,456 ops/sec ±4.26% (60 runs sampled)
-EventEmitter2 (wild) x 4,620,369 ops/sec ±4.46% (61 runs sampled)
-EventEmitter3 x 10,309,717 ops/sec ±3.89% (64 runs sampled)
+EventEmitterHeatUp x 2,897,056 ops/sec ±3.86% (67 runs sampled)
+EventEmitter x 3,232,934 ops/sec ±3.50% (65 runs sampled)
+EventEmitter2 x 12,261,042 ops/sec ±4.72% (59 runs sampled)
+EventEmitter2 (wild) x 242,751 ops/sec ±5.15% (68 runs sampled)
+EventEmitter2 (wild) using plain events x 358,916 ops/sec ±2.58% (78 runs sampled)
+EventEmitter2 (wild) emitting ns x 1,837,323 ops/sec ±3.50% (72 runs sampled)
+EventEmitter2 (wild) emitting a plain event x 2,743,707 ops/sec ±4.08% (65 runs sampled)
+EventEmitter3 x 10,380,258 ops/sec ±3.93% (67 runs sampled)
 
 Fastest is EventEmitter2
 ```
@@ -675,23 +678,23 @@ setTimeout(function(){
 ````
 An example of using a wildcard emitter in a browser:
 ````javascript
-    const ee= new EventEmitter2({
-        wildcard: true
-    });
+const ee= new EventEmitter2({
+   wildcard: true
+});
 
-    ee.listenTo(document.querySelector('#test'), {
-        'click': 'div.click',
-        'mouseup': 'div.mouseup',
-        'mousedown': 'div.mousedown'
-    });
+ee.listenTo(document.querySelector('#test'), {
+   'click': 'div.click',
+   'mouseup': 'div.mouseup',
+   'mousedown': 'div.mousedown'
+});
 
-    ee.on('div.*', function(evt){
-        console.log('listenTo: '+ evt.type);
-    });
+ee.on('div.*', function(evt){
+    console.log('listenTo: '+ evt.type);
+});
 
-    setTimeout(function(){
-      ee.stopListeningTo(document.querySelector('#test'));
-    }, 30000);
+setTimeout(function(){
+    ee.stopListeningTo(document.querySelector('#test'));
+}, 30000);
 ````
 
 ### stopListeningTo(target?: Object, event: event | eventNS): Boolean
