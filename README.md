@@ -49,7 +49,7 @@ Fastest is EventEmitter2
 
 ### What's new
 
-To find out what's new in the latest release see the project [CHANGELOG](https://github.com/EventEmitter2/EventEmitter2/blob/master/CHANGELOG.md)
+To find out what's new see the project [CHANGELOG](https://github.com/EventEmitter2/EventEmitter2/blob/master/CHANGELOG.md)
 
 ### Differences (Non-breaking, compatible with existing EventEmitter)
 
@@ -101,7 +101,7 @@ In these cases this.event remains as is (symbol and array).
  - Fire an event N times and then remove it, an extension of the `once` concept.
 
 ```javascript
-server.many('foo', 4, function() {
+emitter.many('foo', 4, function() {
   console.log('hello');
 });
 ```
@@ -109,7 +109,7 @@ server.many('foo', 4, function() {
  - Pass in a namespaced event as an array rather than a delimited string.
 
 ```javascript
-server.many(['foo', 'bar', 'bazz'], 4, function() {
+emitter.many(['foo', 'bar', 'bazz'], 4, function() {
   console.log('hello');
 });
 ```
@@ -251,12 +251,12 @@ On the other hand, if the single-wildcard event name was passed to the on method
 Adds a listener to the end of the listeners array for the specified event.
 
 ```javascript
-server.on('data', function(value1, value2, value3, ...) {
+emitter.on('data', function(value1, value2, value3, ...) {
   console.log('The event was raised!');
 });
 ```
 ```javascript
-server.on('data', function(value) {
+emitter.on('data', function(value) {
   console.log('The event was raised!');
 });
 ```
@@ -353,7 +353,7 @@ all listeners were resolved!
 Adds a listener to the beginning of the listeners array for the specified event.
 
 ```javascript
-server.prependListener('data', function(value1, value2, value3, ...) {
+emitter.prependListener('data', function(value1, value2, value3, ...) {
   console.log('The event was raised!');
 });
 ```
@@ -367,7 +367,7 @@ server.prependListener('data', function(value1, value2, value3, ...) {
 Adds a listener that will be fired when any event is emitted. The event name is passed as the first argument to the callback.
 
 ```javascript
-server.onAny(function(event, value) {
+emitter.onAny(function(event, value) {
   console.log('All events trigger this.');
 });
 ```
@@ -377,7 +377,7 @@ server.onAny(function(event, value) {
 Adds a listener that will be fired when any event is emitted. The event name is passed as the first argument to the callback. The listener is added to the beginning of the listeners array
 
 ```javascript
-server.prependAny(function(event, value) {
+emitter.prependAny(function(event, value) {
   console.log('All events trigger this.');
 });
 ```
@@ -387,7 +387,7 @@ server.prependAny(function(event, value) {
 Removes the listener that will be fired when any event is emitted.
 
 ```javascript
-server.offAny(function(value) {
+emitter.offAny(function(value) {
   console.log('The event was raised!');
 });
 ```
@@ -398,7 +398,7 @@ Adds a **one time** listener for the event. The listener is invoked
 only the first time the event is fired, after which it is removed.
 
 ```javascript
-server.once('get', function (value) {
+emitter.once('get', function (value) {
   console.log('Ah, we have our first value!');
 });
 ```
@@ -414,7 +414,7 @@ only the first time the event is fired, after which it is removed.
 The listener is added to the beginning of the listeners array
 
 ```javascript
-server.prependOnceListener('get', function (value) {
+emitter.prependOnceListener('get', function (value) {
   console.log('Ah, we have our first value!');
 });
 ```
@@ -430,7 +430,7 @@ removed. The listener is invoked only the first **n times** the event is
 fired, after which it is removed.
 
 ```javascript
-server.many('get', 4, function (value) {
+emitter.many('get', 4, function (value) {
   console.log('This event will be listened to exactly four times.');
 });
 ```
@@ -447,7 +447,7 @@ fired, after which it is removed.
 The listener is added to the beginning of the listeners array.
 
 ```javascript
-server.many('get', 4, function (value) {
+emitter.many('get', 4, function (value) {
   console.log('This event will be listened to exactly four times.');
 });
 ```
@@ -466,9 +466,9 @@ Remove a listener from the listener array for the specified event.
 var callback = function(value) {
   console.log('someone connected!');
 };
-server.on('get', callback);
+emitter.on('get', callback);
 // ...
-server.removeListener('get', callback);
+emitter.removeListener('get', callback);
 ```
 
 
@@ -496,10 +496,10 @@ Returns an array of listeners for the specified event. This array can be
 manipulated, e.g. to remove listeners.
 
 ```javascript
-server.on('get', function(value) {
+emitter.on('get', function(value) {
   console.log('someone connected!');
 });
-console.log(server.listeners('get')); // [ [Function] ]
+console.log(emitter.listeners('get')); // [ [Function] ]
 ```
 
 ### emitter.listenersAny()
@@ -508,10 +508,10 @@ Returns an array of listeners that are listening for any event that is
 specified. This array can be manipulated, e.g. to remove listeners.
 
 ```javascript
-server.onAny(function(value) {
+emitter.onAny(function(value) {
   console.log('someone connected!');
 });
-console.log(server.listenersAny()[0]); // [ [Function] ]
+console.log(emitter.listenersAny()[0]); // [ [Function] ]
 ```
 
 ### emitter.emit(event | eventNS, [arg1], [arg2], [...])
