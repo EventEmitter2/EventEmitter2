@@ -144,7 +144,6 @@ module.exports = simpleEvents({
 
     emitter.on('test7', functionA);
     emitter.on('wildcard.*', functionA);
-
     test.ok(emitter.emit('test7'), 'emit should return true after calling a listener');
     test.ok(emitter.emit('wildcard.7'), 'emit should return true after calling a wildcard listener');
     test.ok(!emitter.emit('other7'), 'emit should return false when no listener was called');
