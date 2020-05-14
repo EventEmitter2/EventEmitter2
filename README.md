@@ -92,7 +92,7 @@ emitter.emit('foo.bar', 1, 2); // 'foo.bar' 1 2
 emitter.emit(['foo', 'bar'], 3, 4); // 'foo.bar' 3 4
 
 emitter.emit(Symbol(), 5, 6); // Symbol() 5 6
-emitter.emit(['foo', Symbol(), 7, 8]); // ['foo', Symbol()] 7 8
+emitter.emit(['foo', Symbol()], 7, 8); // ['foo', Symbol()] 7 8
 ```
 **Note**: Generally this.event is normalized to a string ('event', 'event.test'),
 except the cases when event is a symbol or namespace contains a symbol. 
