@@ -239,7 +239,7 @@ A double wildcard (the string `**`) matches any number of levels (zero or more) 
 emitter.emit('foo');
 emitter.emit('foo.bar');
 emitter.emit('foo.bar.baz');
-emitter.emit(['foo', Symbol(), 'baz');
+emitter.emit(['foo', Symbol(), 'baz']);
 ````
 
 On the other hand, if the single-wildcard event name was passed to the on method, the callback would only observe the second of these events.
