@@ -606,15 +606,18 @@ emitter.emit('event', new Error('custom error')); // reject the promise
 ````
 ### emitter.eventNames(nsAsArray)
 
-Returns an array listing the events for which the emitter has registered listeners. The values in the array will be strings.
+Returns an array listing the events for which the emitter has registered listeners.
 ```javascript
 var emitter= new EventEmitter2();
 emitter.on('foo', () => {});
 emitter.on('bar', () => {});
+emitter.on(Symbol('test'), () => {});
+emitter.on(['foo', Symbol('test2')], () => {});
 
 console.log(emitter.eventNames());
-// Prints: [ 'foo', 'bar' ]
+// Prints: [ 'bar', 'foo', [ 'foo', Symbol(test2) ], [ 'foo', Symbol(test2) ] ]
 ```
+**Note**: Listeners order not guaranteed
 ### listenTo(targetEmitter, events: event | eventNS, options?)
 
 ### listenTo(targetEmitter, events: (event | eventNS)[], options?)
