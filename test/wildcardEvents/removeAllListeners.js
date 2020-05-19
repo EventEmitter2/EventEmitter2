@@ -21,7 +21,7 @@ module.exports= {
         ee.on('test.*', function(){
             counter++;
         });
-        debugger;
+
         assert.equal(ee.listenerCount('test.*'), 1);
 
         ee.emit('test.foo');
