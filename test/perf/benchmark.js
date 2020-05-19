@@ -10,6 +10,17 @@ var emitter = new EventEmitter;
 var EventEmitter2 = require('../../lib/eventemitter2').EventEmitter2;
 var emitter2 = new EventEmitter2;
 
+var wildcardEmitter = new EventEmitter2({
+  wildcard: true
+});
+
+var wildcardEmitter2 = new EventEmitter2({
+  wildcard: true
+});
+
+wildcardEmitter2.on('test2.foo', function () { 1==1; });
+wildcardEmitter2.on('test2', function () { 1==1; });
+
 var EventEmitterB = require('events').EventEmitter;
 var emitterB = new EventEmitterB;
 
@@ -65,10 +76,24 @@ console.log('----------------------------------------------------------------');
 
   .add('EventEmitter2 (wild)', function() {
 
-    emitter2.on('test2.foo', function () { 1==1; });
-    emitter2.emit('test2.foo');
-    emitter2.removeAllListeners('test2.foo');
+    wildcardEmitter.on('test2.foo', function () { 1==1; });
+    wildcardEmitter.emit('test2.foo');
+    wildcardEmitter.removeAllListeners('test2.foo');
 
+  })
+
+  .add('EventEmitter2 (wild) using plain events', function() {
+    wildcardEmitter.on('test2', function () { 1==1; });
+    wildcardEmitter.emit('test2');
+    wildcardEmitter.removeAllListeners('test2');
+  })
+
+  .add('EventEmitter2 (wild) emitting ns', function() {
+    wildcardEmitter2.emit('test2.foo');
+  })
+
+  .add('EventEmitter2 (wild) emitting a plain event', function() {
+    wildcardEmitter2.emit('test2');
   })
 
   .add('EventEmitter3', function() {

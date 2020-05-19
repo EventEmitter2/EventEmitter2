@@ -35,18 +35,21 @@ Platform: win32, x64, 15267MB
 Node version: v13.11.0
 CPU: 4 x AMD Ryzen 3 2200U with Radeon Vega Mobile Gfx @ 2495MHz
 ----------------------------------------------------------------
-EventEmitterHeatUp x 3,167,076 ops/sec ±3.17% (59 runs sampled)
-EventEmitter x 3,190,460 ops/sec ±3.20% (66 runs sampled)
-EventEmitter2 x 11,278,456 ops/sec ±4.26% (60 runs sampled)
-EventEmitter2 (wild) x 4,620,369 ops/sec ±4.46% (61 runs sampled)
-EventEmitter3 x 10,309,717 ops/sec ±3.89% (64 runs sampled)
+EventEmitterHeatUp x 2,897,056 ops/sec ±3.86% (67 runs sampled)
+EventEmitter x 3,232,934 ops/sec ±3.50% (65 runs sampled)
+EventEmitter2 x 12,261,042 ops/sec ±4.72% (59 runs sampled)
+EventEmitter2 (wild) x 242,751 ops/sec ±5.15% (68 runs sampled)
+EventEmitter2 (wild) using plain events x 358,916 ops/sec ±2.58% (78 runs sampled)
+EventEmitter2 (wild) emitting ns x 1,837,323 ops/sec ±3.50% (72 runs sampled)
+EventEmitter2 (wild) emitting a plain event x 2,743,707 ops/sec ±4.08% (65 runs sampled)
+EventEmitter3 x 10,380,258 ops/sec ±3.93% (67 runs sampled)
 
 Fastest is EventEmitter2
 ```
 
 ### What's new
 
-To find out what's new in the latest release see the project [CHANGELOG](https://github.com/EventEmitter2/EventEmitter2/blob/master/CHANGELOG.md)
+To find out what's new see the project [CHANGELOG](https://github.com/EventEmitter2/EventEmitter2/blob/master/CHANGELOG.md)
 
 ### Differences (Non-breaking, compatible with existing EventEmitter)
 
@@ -89,7 +92,7 @@ emitter.emit('foo.bar', 1, 2); // 'foo.bar' 1 2
 emitter.emit(['foo', 'bar'], 3, 4); // 'foo.bar' 3 4
 
 emitter.emit(Symbol(), 5, 6); // Symbol() 5 6
-emitter.emit(['foo', Symbol(), 7, 8]); // ['foo', Symbol()] 7 8
+emitter.emit(['foo', Symbol()], 7, 8); // ['foo', Symbol()] 7 8
 ```
 **Note**: Generally this.event is normalized to a string ('event', 'event.test'),
 except the cases when event is a symbol or namespace contains a symbol. 
@@ -98,7 +101,7 @@ In these cases this.event remains as is (symbol and array).
  - Fire an event N times and then remove it, an extension of the `once` concept.
 
 ```javascript
-server.many('foo', 4, function() {
+emitter.many('foo', 4, function() {
   console.log('hello');
 });
 ```
@@ -106,7 +109,7 @@ server.many('foo', 4, function() {
  - Pass in a namespaced event as an array rather than a delimited string.
 
 ```javascript
-server.many(['foo', 'bar', 'bazz'], 4, function() {
+emitter.many(['foo', 'bar', 'bazz'], 4, function() {
   console.log('hello');
 });
 ```
@@ -236,7 +239,7 @@ A double wildcard (the string `**`) matches any number of levels (zero or more) 
 emitter.emit('foo');
 emitter.emit('foo.bar');
 emitter.emit('foo.bar.baz');
-emitter.emit(['foo', Symbol(), 'baz');
+emitter.emit(['foo', Symbol(), 'baz']);
 ````
 
 On the other hand, if the single-wildcard event name was passed to the on method, the callback would only observe the second of these events.
@@ -248,12 +251,12 @@ On the other hand, if the single-wildcard event name was passed to the on method
 Adds a listener to the end of the listeners array for the specified event.
 
 ```javascript
-server.on('data', function(value1, value2, value3, ...) {
+emitter.on('data', function(value1, value2, value3, ...) {
   console.log('The event was raised!');
 });
 ```
 ```javascript
-server.on('data', function(value) {
+emitter.on('data', function(value) {
   console.log('The event was raised!');
 });
 ```
@@ -350,7 +353,7 @@ all listeners were resolved!
 Adds a listener to the beginning of the listeners array for the specified event.
 
 ```javascript
-server.prependListener('data', function(value1, value2, value3, ...) {
+emitter.prependListener('data', function(value1, value2, value3, ...) {
   console.log('The event was raised!');
 });
 ```
@@ -364,7 +367,7 @@ server.prependListener('data', function(value1, value2, value3, ...) {
 Adds a listener that will be fired when any event is emitted. The event name is passed as the first argument to the callback.
 
 ```javascript
-server.onAny(function(event, value) {
+emitter.onAny(function(event, value) {
   console.log('All events trigger this.');
 });
 ```
@@ -374,7 +377,7 @@ server.onAny(function(event, value) {
 Adds a listener that will be fired when any event is emitted. The event name is passed as the first argument to the callback. The listener is added to the beginning of the listeners array
 
 ```javascript
-server.prependAny(function(event, value) {
+emitter.prependAny(function(event, value) {
   console.log('All events trigger this.');
 });
 ```
@@ -384,7 +387,7 @@ server.prependAny(function(event, value) {
 Removes the listener that will be fired when any event is emitted.
 
 ```javascript
-server.offAny(function(value) {
+emitter.offAny(function(value) {
   console.log('The event was raised!');
 });
 ```
@@ -395,7 +398,7 @@ Adds a **one time** listener for the event. The listener is invoked
 only the first time the event is fired, after which it is removed.
 
 ```javascript
-server.once('get', function (value) {
+emitter.once('get', function (value) {
   console.log('Ah, we have our first value!');
 });
 ```
@@ -411,7 +414,7 @@ only the first time the event is fired, after which it is removed.
 The listener is added to the beginning of the listeners array
 
 ```javascript
-server.prependOnceListener('get', function (value) {
+emitter.prependOnceListener('get', function (value) {
   console.log('Ah, we have our first value!');
 });
 ```
@@ -427,7 +430,7 @@ removed. The listener is invoked only the first **n times** the event is
 fired, after which it is removed.
 
 ```javascript
-server.many('get', 4, function (value) {
+emitter.many('get', 4, function (value) {
   console.log('This event will be listened to exactly four times.');
 });
 ```
@@ -444,7 +447,7 @@ fired, after which it is removed.
 The listener is added to the beginning of the listeners array.
 
 ```javascript
-server.many('get', 4, function (value) {
+emitter.many('get', 4, function (value) {
   console.log('This event will be listened to exactly four times.');
 });
 ```
@@ -463,9 +466,9 @@ Remove a listener from the listener array for the specified event.
 var callback = function(value) {
   console.log('someone connected!');
 };
-server.on('get', callback);
+emitter.on('get', callback);
 // ...
-server.removeListener('get', callback);
+emitter.removeListener('get', callback);
 ```
 
 
@@ -493,10 +496,10 @@ Returns an array of listeners for the specified event. This array can be
 manipulated, e.g. to remove listeners.
 
 ```javascript
-server.on('get', function(value) {
+emitter.on('get', function(value) {
   console.log('someone connected!');
 });
-console.log(server.listeners('get')); // [ [Function] ]
+console.log(emitter.listeners('get')); // [ [Function] ]
 ```
 
 ### emitter.listenersAny()
@@ -505,10 +508,10 @@ Returns an array of listeners that are listening for any event that is
 specified. This array can be manipulated, e.g. to remove listeners.
 
 ```javascript
-server.onAny(function(value) {
+emitter.onAny(function(value) {
   console.log('someone connected!');
 });
-console.log(server.listenersAny()[0]); // [ [Function] ]
+console.log(emitter.listenersAny()[0]); // [ [Function] ]
 ```
 
 ### emitter.emit(event | eventNS, [arg1], [arg2], [...])
@@ -603,15 +606,18 @@ emitter.emit('event', new Error('custom error')); // reject the promise
 ````
 ### emitter.eventNames(nsAsArray)
 
-Returns an array listing the events for which the emitter has registered listeners. The values in the array will be strings.
+Returns an array listing the events for which the emitter has registered listeners.
 ```javascript
 var emitter= new EventEmitter2();
 emitter.on('foo', () => {});
 emitter.on('bar', () => {});
+emitter.on(Symbol('test'), () => {});
+emitter.on(['foo', Symbol('test2')], () => {});
 
 console.log(emitter.eventNames());
-// Prints: [ 'foo', 'bar' ]
+// Prints: [ 'bar', 'foo', [ 'foo', Symbol(test2) ], [ 'foo', Symbol(test2) ] ]
 ```
+**Note**: Listeners order not guaranteed
 ### listenTo(targetEmitter, events: event | eventNS, options?)
 
 ### listenTo(targetEmitter, events: (event | eventNS)[], options?)
@@ -675,23 +681,23 @@ setTimeout(function(){
 ````
 An example of using a wildcard emitter in a browser:
 ````javascript
-    const ee= new EventEmitter2({
-        wildcard: true
-    });
+const ee= new EventEmitter2({
+   wildcard: true
+});
 
-    ee.listenTo(document, {
-        'click': 'document.click',
-        'mouseup': 'document.mouseup',
-        'mousedown': 'document.mousedown'
-    });
+ee.listenTo(document.querySelector('#test'), {
+   'click': 'div.click',
+   'mouseup': 'div.mouseup',
+   'mousedown': 'div.mousedown'
+});
 
-    ee.on('document.*', function(evt){
-        console.log('listenTo: '+ evt.type);
-    });
+ee.on('div.*', function(evt){
+    console.log('listenTo: '+ evt.type);
+});
 
-    setTimeout(function(){
-      ee.stopListeningTo(document);
-    }, 30000);
+setTimeout(function(){
+    ee.stopListeningTo(document.querySelector('#test'));
+}, 30000);
 ````
 
 ### stopListeningTo(target?: Object, event: event | eventNS): Boolean
