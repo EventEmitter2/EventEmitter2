@@ -6,10 +6,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 For changes before version 2.2.0, please see the commit history
 
+## [6.4.2] - 2020-05-28
+
+### Fixed
+- removed eval usage to avoid Content Security Policy issue (#259) @DigitalBrainJS
+
 ## [6.4.1] - 2020-05-10
 
 ### Fixed
-- increased emitter performance in wildcard mode
+- increased emitter performance in wildcard mode @DigitalBrainJS
 
 ## [6.4.0] - 2020-05-04
 
