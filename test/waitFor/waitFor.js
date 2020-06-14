@@ -113,7 +113,7 @@ module.exports = simpleEvents({
         emitter.emit('foo', 2);
     },
 
-    '6. should clear internal listeners once its promise resolved': function (done) {
+    '6. should clean internal listeners once its promise resolved': function (done) {
         var emitter = new EventEmitter2({verbose: true});
 
         emitter.waitFor('foo', {
@@ -132,7 +132,7 @@ module.exports = simpleEvents({
         emitter.emit('foo', 2);
     },
 
-    '7. should clear internal listeners once its promise resolved (wildcard)': function (done) {
+    '7. should clean internal listeners once its promise resolved (wildcard)': function (done) {
         var emitter = new EventEmitter2({verbose: true, wildcard: true});
 
         emitter.waitFor('foo.*', {
