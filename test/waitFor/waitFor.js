@@ -1,6 +1,7 @@
 var simpleEvents = require('nodeunit').testCase;
 var file = '../../lib/eventemitter2';
 var EventEmitter2;
+var assert= require('assert');
 
 if (typeof require !== 'undefined') {
     EventEmitter2 = require(file).EventEmitter2;
@@ -110,5 +111,43 @@ module.exports = simpleEvents({
 
         emitter.emit('foo', 1);
         emitter.emit('foo', 2);
+    },
+
+    '6. should clear internal listeners once its promise resolved': function (done) {
+        var emitter = new EventEmitter2({verbose: true});
+
+        emitter.waitFor('foo', {
+            filter: function (arg0) {
+                return arg0 === 2;
+            },
+            timeout: 50
+        }).then(function (data) {
+            assert.equal(data[0], 2);
+            assert.equal(emitter.listenerCount(), 0);
+            done();
+        }).catch(done);
+
+        assert.equal(emitter.listenerCount(), 1);
+
+        emitter.emit('foo', 2);
+    },
+
+    '7. should clear internal listeners once its promise resolved (wildcard)': function (done) {
+        var emitter = new EventEmitter2({verbose: true, wildcard: true});
+
+        emitter.waitFor('foo.*', {
+            filter: function (arg0) {
+                return arg0 === 2;
+            },
+            timeout: 50
+        }).then(function (data) {
+            assert.equal(data[0], 2);
+            assert.equal(emitter.listenerCount('**'), 0);
+            done();
+        }).catch(done);
+
+        assert.equal(emitter.listenerCount('**'), 1);
+
+        emitter.emit('foo.bar', 2);
     }
 });
