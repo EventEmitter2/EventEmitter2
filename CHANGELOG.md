@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 For changes before version 2.2.0, please see the commit history
 
-## [6.4.3] - 2020-06-14
+# [6.4.3] - 2020-06-14
 
 ### Fixed
 - waitFor listeners leakage issue (#262) @DigitalBrainJS
