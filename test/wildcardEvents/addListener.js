@@ -333,6 +333,34 @@ module.exports = simpleEvents({
 
     test.expect(5);
     test.done();
-  }
+  },
+
+
+  '13. Use prepend on wildcards mode.': function (test) {
+
+    var emitter = new EventEmitter2({
+      wildcard: true
+    });
+
+    var type = ['some', 'listener', 'bar'];
+
+    const function1 = function () {
+      test.ok(true, 'The event was raised');
+    }
+
+    const function2 = function () {
+      test.ok(true, 'The event was raised');
+    }
+
+    emitter.on(type, function2);
+
+    emitter.prependListener(type, function1);
+
+    test.equal(emitter.listeners(type)[0], function1, 'Prepended listener is first');
+
+    test.expect(1);
+    test.done();
+
+  },
 
 });
