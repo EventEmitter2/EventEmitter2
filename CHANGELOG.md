@@ -6,6 +6,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 For changes before version 2.2.0, please see the commit history
 
+# [6.4.4] - 2021-02-23
+
+### Added 
+- `ETIMEDOUT` code property to timeout errors @HalleyAssist
+
+### Fixed
+- prepending listeners to wildcard emitters @Ilrilan
+
 # [6.4.3] - 2020-06-18
 
 ### Fixed
