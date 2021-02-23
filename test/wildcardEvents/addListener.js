@@ -334,4 +334,5 @@ module.exports = simpleEvents({
     test.expect(5);
     test.done();
   }
+
 });
