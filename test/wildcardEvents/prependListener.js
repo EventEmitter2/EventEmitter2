@@ -21,6 +21,6 @@ module.exports= {
 
         ee.on(type, function2);
         ee.prependListener(type, function1);
-        assert.equal(ee.listeners(type)[0], function1);
+        assert.deepStrictEqual(ee.listeners(type), [function1, function2])
     }
 };
