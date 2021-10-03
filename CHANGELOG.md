@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 For changes before version 2.2.0, please see the commit history
 
+# [6.4.5] - 2021-10-03
+
+### Fixed
+- invoking a wildcard listener when there is also a matching exact listener (#278) @DigitalBrainJS
+
 # [6.4.4] - 2021-02-23
 
 ### Added 
