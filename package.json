@@ -1,6 +1,6 @@
 {
   "name": "eventemitter2",
-  "version": "6.4.4",
+  "version": "6.4.5",
   "description": "A feature-rich Node.js event emitter implementation with namespaces, wildcards, TTL, async listeners and browser/worker support.",
   "keywords": [
     "event",
