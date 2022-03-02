@@ -108,4 +108,54 @@ module.exports = simpleEvents({
       test.done();
     });
   },
+  '5. Finish execution of all listeners regardless if any failed': function (test) {
+    var emitter = new EventEmitter2({ verbose: true });
+    var counter = 0;
+
+    emitter.on('foo', function() {
+      return Promise.reject('First Failed')
+    });
+    emitter.on('foo', function() {
+      return new Promise(function(resolve, reject){
+        setTimeout(function(){
+          reject('Second Failed');
+        },50);
+      });
+    });
+    emitter.on('foo', function() {
+      return new Promise(function(resolve){
+        setTimeout(function(){
+          resolve(counter++);
+        },50);
+      });
+    });
+    emitter.on('foo', function() {
+      return new Promise(function(resolve){
+        setTimeout(function(){
+          resolve(counter++);
+        },50);
+      });
+    });
+    emitter.on('foo', function() {
+      return new Promise(function(resolve){
+        setTimeout(function(){
+          resolve(counter++);
+        },50);
+      });
+    });
+    emitter.on('foo', function() {
+      return new Promise(function(resolve){
+        setTimeout(function(){
+          resolve(counter++);
+        },100);
+      });
+    });
+
+    emitter.emitAsync('foo')
+      .catch(function(firstError){
+        test.equal(firstError, 'First Failed')
+        test.equal(counter, 4) // but all were executed
+        test.done();
+      });
+  },
 });
