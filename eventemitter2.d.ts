@@ -148,3 +148,5 @@ export declare class EventEmitter2 {
     static once(emitter: EventEmitter2, event: event | eventNS, options?: OnceOptions): CancelablePromise<any[]>;
     static defaultMaxListeners: number;
 }
+
+export default EventEmitter2;
