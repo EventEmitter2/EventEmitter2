@@ -95,10 +95,19 @@ export interface ListenToOptions {
     reducers: Function | Object
 }
 
-export interface GeneralEventEmitter{
-    addEventListener: Function,
-    removeEventListener: Function
-}
+export type GeneralEventEmitter =
+    | {
+        addEventListener: Function,
+        removeEventListener: Function
+    }
+    | {
+        addListener: Function
+        removeListener: Function
+    }
+    | {
+        on: Function
+        off: Function
+    }
 
 export interface OnOptions {
     async?: boolean,
