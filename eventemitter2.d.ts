@@ -45,7 +45,7 @@ export interface EventAndListener {
     (event: string | string[], ...values: any[]): void;
 }
 
-interface WaitForFilter { (...values: any[]): boolean }
+export interface WaitForFilter { (...values: any[]): boolean }
 
 export interface WaitForOptions {
     /**
