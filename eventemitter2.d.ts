@@ -90,14 +90,14 @@ export interface OnceOptions {
 }
 
 export interface ListenToOptions {
-    on?: { (event: event | eventNS, handler: Function): void },
-    off?: { (event: event | eventNS, handler: Function): void },
+    on?: { (event: event | eventNS, handler: ListenerFn): void },
+    off?: { (event: event | eventNS, handler: ListenerFn): void },
     reducers: Function | Object
 }
 
 export interface GeneralEventEmitter{
-    addEventListener: Function,
-    removeEventListener: Function
+    addEventListener: ListenerFn,
+    removeEventListener: ListenerFn
 }
 
 export interface OnOptions {
