@@ -96,8 +96,8 @@ export interface ListenToOptions {
 }
 
 export interface GeneralEventEmitter{
-    addEventListener: (event: event, handler: ListenerFn) => void,
-    removeEventListener: (event: event, handler: ListenerFn) => void
+    addEventListener(event: event, handler: ListenerFn): this,
+    removeEventListener(event: event, handler: ListenerFn): this
 }
 
 export interface OnOptions {
