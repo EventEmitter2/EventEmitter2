@@ -807,25 +807,3 @@ emitter.emit('event', 'never handled');
 ### EventEmitter2.defaultMaxListeners
 
 Sets default max listeners count globally for all instances, including those created before the change is made.
-
-### Strongly typed events
-For using strongly type events (_available only in `TypeScript`_) you can create a new `EventEmitter` instance like this:
-
-```ts
-import EventEmitter2 from "eventemitter2";
-
-type events = {
-  error: (err: Error) => void
-  message: (sender: string, msg: string) => void
-}
-
-const emitter = new EventEmitter2<events>()
-
-// Ok
-emitter.emit("error", new Error("example"))
-emitter.emit("message", "someone", "hello")
-
-// TypeScript catches mistakes
-emitter.emit("error", true)
-emitter.emit("message", 1, "hello")
-```
