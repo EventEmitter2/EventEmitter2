@@ -105,9 +105,28 @@ export interface GeneralEventEmitter{
 }
 
 export interface OnOptions {
+    /**
+        * @default false
+        * @description invoke the listener in async mode using setImmediate (fallback to setTimeout if not available) or process.nextTick depending on the nextTick option.
+    */
     async?: boolean,
+    
+    /**
+        * @default false
+        * @description use process.nextTick instead of setImmediate to invoke the listener asynchronously.
+    */
     promisify?: boolean,
+    
+    /**
+        * @default false
+        * @description additionally wraps the listener to a Promise for later invocation using emitAsync method. This option will be activated by default if its value is undefined and the listener function is an asynchronous function (whose constructor name is AsyncFunction).
+    */
     nextTick?: boolean,
+    
+    /**
+        * @default false
+        * @description activates returning a listener object instead of 'this' by the subscription method
+    */
     objectify?: boolean
 }
 
