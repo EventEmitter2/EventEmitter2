@@ -121,6 +121,7 @@ export interface Listener {
 export declare class EventEmitter2 {
     constructor(options?: ConstructorOptions)
     emit(event: event | eventNS, ...values: any[]): boolean;
+    emitSerial(event: event | eventNS, ...values: any[]): Promise<boolean>;
     emitAsync(event: event | eventNS, ...values: any[]): Promise<any[]>;
     addListener(event: event | eventNS, listener: ListenerFn): this|Listener;
     on(event: event | eventNS, listener: ListenerFn, options?: boolean|OnOptions): this|Listener;
