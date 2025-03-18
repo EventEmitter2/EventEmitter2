@@ -447,7 +447,7 @@ fired, after which it is removed.
 The listener is added to the beginning of the listeners array.
 
 ```javascript
-emitter.many('get', 4, function (value) {
+emitter.prependMany('get', 4, function (value) {
   console.log('This event will be listened to exactly four times.');
 });
 ```
