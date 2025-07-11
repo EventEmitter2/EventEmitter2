@@ -28,20 +28,19 @@
   "license": "MIT",
   "repository": "git://github.com/hij1nx/EventEmitter2.git",
   "devDependencies": {
+    "@vitest/coverage-v8": "^3.2.4",
     "benchmark": "^2.1.4",
     "bluebird": "^3.7.2",
-    "coveralls": "^3.0.11",
-    "mocha": "^7.1.1",
-    "nodeunit": "*",
-    "nyc": "^15.0.0"
+    "coveralls": "^3.1.1",
+    "vitest": "^3.2.4"
   },
   "main": "./lib/eventemitter2.js",
   "scripts": {
-    "test": "mocha ./test/loader.js --exit --timeout=3000",
-    "test:legacy": "nodeunit test/simple/ test/wildcardEvents/",
-    "test:coverage": "nyc --check-coverage npm run test",
-    "coverage:report": "nyc report --reporter=html --reporter=text",
-    "coveralls": "nyc report --reporter=text-lcov | coveralls",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "coverage:report": "vitest run --coverage --reporter=html",
+    "coveralls": "vitest run --coverage --reporter=lcov | coveralls",
     "benchmark": "node test/perf/benchmark.js",
     "prepublishOnly": "npm run test:coverage",
     "postversion": "git push && git push --tags"
@@ -55,35 +54,14 @@
   "typescript": {
     "definition": "./eventemitter2.d.ts"
   },
-  "nyc": {
-    "lines": 80,
-    "functions": 80,
-    "branches": 75,
-    "statements": 80,
-    "watermarks": {
-      "lines": [
-        80,
-        95
-      ],
-      "functions": [
-        80,
-        95
-      ],
-      "branches": [
-        80,
-        95
-      ],
-      "statements": [
-        80,
-        95
-      ]
-    },
+  "coverage": {
     "include": [
       "lib/**/*.js"
     ],
     "reporter": [
       "lcov",
-      "text-summary"
+      "text-summary",
+      "html"
     ]
   }
 }

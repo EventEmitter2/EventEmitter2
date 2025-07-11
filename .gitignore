@@ -9,7 +9,6 @@ npm-debug.log
 *.o
 *.tmp
 .idea
-.nyc_output
 coverage
 
 package-lock.json
