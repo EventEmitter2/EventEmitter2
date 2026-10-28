@@ -131,7 +131,7 @@ export declare class EventEmitter2 {
     prependMany(event: event | eventNS, timesToListen: number, listener: ListenerFn, options?: boolean|OnOptions): this|Listener;
     onAny(listener: EventAndListener): this;
     prependAny(listener: EventAndListener): this;
-    offAny(listener: ListenerFn): this;
+    offAny(listener?: ListenerFn): this;
     removeListener(event: event | eventNS, listener: ListenerFn): this;
     off(event: event | eventNS, listener: ListenerFn): this;
     removeAllListeners(event?: event | eventNS): this;

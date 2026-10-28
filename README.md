@@ -153,7 +153,7 @@ Or you can use unpkg.com CDN to import this [module](https://unpkg.com/eventemit
 
 - [onAny(listener: EventAndListener): this](#emitteronanylistener)
 
-- [offAny(listener: ListenerFn): this](#emitteroffanylistener)
+- [offAny(listener?: ListenerFn): this](#emitteroffanylistener)
 
 - [removeListener(event: event | eventNS, listener: ListenerFn): this](#emitterremovelistenerevent--eventns-listener)
 
@@ -384,7 +384,8 @@ emitter.prependAny(function(event, value) {
 
 ### emitter.offAny(listener)
 
-Removes the listener that will be fired when any event is emitted.
+Removes the listener that will be fired when any event is emitted. If no listener
+is supplied, removes all listeners added with `onAny` or `prependAny`.
 
 ```javascript
 emitter.offAny(function(value) {
